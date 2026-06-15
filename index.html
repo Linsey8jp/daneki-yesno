@@ -328,6 +328,37 @@
       margin: 0;
     }
 
+    .hexagram-meta {
+      margin: 10px 0 12px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .yao-list {
+      margin: 12px auto 14px;
+      padding: 0;
+      list-style: none;
+      max-width: 150px;
+      text-align: left;
+      color: #5f554b;
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .yao-list li {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      border-bottom: 1px dotted rgba(184, 148, 85, 0.35);
+      padding: 2px 0;
+    }
+
+    .yao-moving {
+      color: var(--gold);
+      font-weight: 700;
+    }
+
     footer {
       margin-top: 28px;
       color: var(--muted);
@@ -422,7 +453,9 @@
         <aside class="hexagram-card" aria-label="断易風の卦">
           <div class="hexagram-title">DANEKI-LIKE SIGN</div>
           <div id="hexagramName" class="hexagram-name"></div>
+          <div id="hexagramMeta" class="hexagram-meta"></div>
           <div id="lines" class="lines"></div>
+          <ul id="yaoList" class="yao-list"></ul>
           <p id="hexagramNote" class="hexagram-note"></p>
         </aside>
       </section>
@@ -442,7 +475,9 @@
     const comment = document.getElementById("comment");
     const sub = document.getElementById("sub");
     const hexagramName = document.getElementById("hexagramName");
+    const hexagramMeta = document.getElementById("hexagramMeta");
     const lines = document.getElementById("lines");
+    const yaoList = document.getElementById("yaoList");
     const hexagramNote = document.getElementById("hexagramNote");
 
     const results = [
@@ -481,22 +516,89 @@
       }
     ];
 
-    const hexagramNames = [
-      "風を待つ卦",
-      "静かに進む卦",
-      "小さく開く卦",
-      "いったん止まる卦",
-      "余白を残す卦",
-      "軽く試す卦",
-      "見送って整える卦",
-      "返事を寝かせる卦"
-    ];
+    const trigrams = {
+      "111": { name: "乾", nature: "天" },
+      "110": { name: "兌", nature: "沢" },
+      "101": { name: "離", nature: "火" },
+      "100": { name: "震", nature: "雷" },
+      "011": { name: "巽", nature: "風" },
+      "010": { name: "坎", nature: "水" },
+      "001": { name: "艮", nature: "山" },
+      "000": { name: "坤", nature: "地" }
+    };
+
+    const hexagramMap = {
+      "111-111": "乾為天",
+      "000-000": "坤為地",
+      "100-010": "水雷屯",
+      "010-001": "山水蒙",
+      "111-010": "水天需",
+      "010-111": "天水訟",
+      "010-000": "地水師",
+      "000-010": "水地比",
+      "111-011": "風天小畜",
+      "110-111": "天沢履",
+      "111-000": "地天泰",
+      "000-111": "天地否",
+      "101-111": "天火同人",
+      "111-101": "火天大有",
+      "001-000": "地山謙",
+      "000-100": "雷地豫",
+      "100-110": "沢雷随",
+      "011-001": "山風蠱",
+      "110-000": "地沢臨",
+      "000-011": "風地観",
+      "100-101": "火雷噬嗑",
+      "101-001": "山火賁",
+      "000-001": "山地剥",
+      "100-000": "地雷復",
+      "100-111": "天雷无妄",
+      "111-001": "山天大畜",
+      "100-001": "山雷頤",
+      "011-110": "沢風大過",
+      "010-010": "坎為水",
+      "101-101": "離為火",
+      "001-110": "沢山咸",
+      "011-100": "雷風恒",
+      "001-111": "天山遯",
+      "111-100": "雷天大壮",
+      "000-101": "火地晋",
+      "101-000": "地火明夷",
+      "101-011": "風火家人",
+      "110-101": "火沢睽",
+      "001-010": "水山蹇",
+      "010-100": "雷水解",
+      "110-001": "山沢損",
+      "100-011": "風雷益",
+      "111-110": "沢天夬",
+      "011-111": "天風姤",
+      "000-110": "沢地萃",
+      "011-000": "地風升",
+      "010-110": "沢水困",
+      "011-010": "水風井",
+      "101-110": "沢火革",
+      "011-101": "火風鼎",
+      "100-100": "震為雷",
+      "001-001": "艮為山",
+      "001-011": "風山漸",
+      "110-100": "雷沢帰妹",
+      "101-100": "雷火豊",
+      "001-101": "火山旅",
+      "011-011": "巽為風",
+      "110-110": "兌為沢",
+      "010-011": "風水渙",
+      "110-010": "水沢節",
+      "110-011": "風沢中孚",
+      "001-100": "雷山小過",
+      "101-010": "水火既済",
+      "010-101": "火水未済"
+    };
 
     const hexagramNotes = [
-      "線の形は演出です。占断というより、問いを眺めるための小さな鏡です。",
-      "動きのある線は、気持ちがまだ揺れている場所を示す、という設定です。",
-      "この卦は本格的な断易の再現ではなく、日常用の軽いサインです。",
-      "結果よりも、結果を見た瞬間の反応を少し観察してみてください。"
+      "卦名と六爻は表示しますが、ここでは本格占断ではなく、問いを眺めるための軽いサインとして扱います。",
+      "動爻は、気持ちがまだ揺れている場所を示す、というこのアプリ内の演出です。",
+      "用神・世応・月建・日辰までは読まず、日常の小さな選択用に留めています。",
+      "結果よりも、結果を見た瞬間の自分の反応を少し観察してみてください。"
     ];
 
     function pickRandom(array) {
@@ -517,17 +619,49 @@
 
     function createHexagram() {
       lines.innerHTML = "";
+      yaoList.innerHTML = "";
+
+      const yaoNames = ["初爻", "二爻", "三爻", "四爻", "五爻", "上爻"];
+      const yao = [];
 
       for (let i = 0; i < 6; i++) {
-        const line = document.createElement("div");
-        const isYin = Math.random() < 0.5;
+        const isYang = Math.random() < 0.5;
         const isMoving = Math.random() < 0.22;
+        yao.push({ isYang, isMoving });
+      }
 
-        line.className = "line" + (isYin ? " yin" : "") + (isMoving ? " moving" : "");
+      // 画面表示は上爻から初爻へ。卦の内部計算は初爻から上爻へ。
+      for (let i = 5; i >= 0; i--) {
+        const line = document.createElement("div");
+        line.className = "line" + (yao[i].isYang ? "" : " yin") + (yao[i].isMoving ? " moving" : "");
         lines.appendChild(line);
       }
 
-      hexagramName.textContent = pickRandom(hexagramNames);
+      for (let i = 0; i < 6; i++) {
+        const item = document.createElement("li");
+        const left = document.createElement("span");
+        const right = document.createElement("span");
+
+        left.textContent = yaoNames[i];
+        right.textContent = (yao[i].isYang ? "陽" : "陰") + (yao[i].isMoving ? "・動" : "・静");
+
+        if (yao[i].isMoving) {
+          right.className = "yao-moving";
+        }
+
+        item.appendChild(left);
+        item.appendChild(right);
+        yaoList.appendChild(item);
+      }
+
+      const lowerKey = yao.slice(0, 3).map(line => line.isYang ? "1" : "0").join("");
+      const upperKey = yao.slice(3, 6).map(line => line.isYang ? "1" : "0").join("");
+      const lower = trigrams[lowerKey];
+      const upper = trigrams[upperKey];
+      const name = hexagramMap[lowerKey + "-" + upperKey] || "名のない卦";
+
+      hexagramName.textContent = name;
+      hexagramMeta.textContent = "上卦：" + upper.name + "（" + upper.nature + "）／ 下卦：" + lower.name + "（" + lower.nature + "）";
       hexagramNote.textContent = pickRandom(hexagramNotes);
     }
 
@@ -562,8 +696,10 @@
       comment.textContent = "";
       sub.textContent = "";
       hexagramName.textContent = "";
+      hexagramMeta.textContent = "";
       hexagramNote.textContent = "";
       lines.innerHTML = "";
+      yaoList.innerHTML = "";
       questionInput.focus();
     }
 
