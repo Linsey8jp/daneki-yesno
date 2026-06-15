@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>断易YES/NO</title>
+  <meta name="theme-color" content="#f6f1e8" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="断易YES/NO" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="icon-180.png" />
+  <style>
+    :root {
+      --bg: #f6f1e8;
+      --card: rgba(255, 253, 248, 0.92);
+      --ink: #2f2a25;
+      --muted: #7a6f63;
+      --soft: #f2ebe0;
+      --accent: #6f8f72;
+      --accent-dark: #4f6d52;
+      --border: #ddcfbd;
+      --gold: #b89455;
+      --yes: #4f7f5f;
+      --no: #8a5a55;
+      --hold: #8a744d;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family:
+        "Hiragino Mincho ProN",
+        "Yu Mincho",
+        "YuMincho",
+        "Hiragino Sans",
+        "Yu Gothic",
+        serif;
+      background:
+        radial-gradient(circle at top left, rgba(111, 143, 114, 0.20), transparent 32%),
+        radial-gradient(circle at bottom right, rgba(184, 148, 85, 0.16), transparent 34%),
+        linear-gradient(135deg, #f8f3ea 0%, #ede1d1 100%);
+      color: var(--ink);
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: max(18px, env(safe-area-inset-top)) 18px max(24px, env(safe-area-inset-bottom));
+    }
+
+    main {
+      position: relative;
+      width: 100%;
+      max-width: 780px;
+      background: var(--card);
+      border: 1px solid rgba(221, 207, 189, 0.95);
+      border-radius: 32px;
+      box-shadow:
+        0 24px 70px rgba(65, 49, 35, 0.16),
+        inset 0 1px 0 rgba(255, 255, 255, 0.85);
+      padding: clamp(26px, 5vw, 42px);
+      overflow: hidden;
+    }
+
+    main::before {
+      content: "";
+      position: absolute;
+      inset: 18px;
+      border: 1px solid rgba(184, 148, 85, 0.28);
+      border-radius: 24px;
+      pointer-events: none;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .topline {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .label {
+      display: inline-block;
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      color: var(--accent-dark);
+      text-transform: uppercase;
+    }
+
+    .coin-mark {
+      display: flex;
+      gap: 6px;
+      color: var(--gold);
+      font-size: 18px;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: clamp(30px, 5vw, 46px);
+      line-height: 1.22;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .lead {
+      margin: 0 0 26px;
+      color: var(--muted);
+      line-height: 1.95;
+      font-size: 15px;
+      max-width: 650px;
+    }
+
+    .notice {
+      border-left: 4px solid var(--accent);
+      background: rgba(242, 235, 224, 0.88);
+      padding: 13px 15px;
+      margin: 0 0 24px;
+      border-radius: 14px;
+      color: #5f554b;
+      font-size: 13px;
+      line-height: 1.75;
+    }
+
+    label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 10px;
+      font-size: 15px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 116px;
+      resize: vertical;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 17px;
+      font-size: 16px;
+      line-height: 1.75;
+      background: #fffaf2;
+      color: var(--ink);
+      outline: none;
+      box-shadow: inset 0 1px 3px rgba(65, 49, 35, 0.05);
+    }
+
+    textarea:focus {
+      border-color: var(--accent);
+      box-shadow:
+        0 0 0 4px rgba(111, 143, 114, 0.16),
+        inset 0 1px 3px rgba(65, 49, 35, 0.05);
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-top: 18px;
+    }
+
+    button {
+      border: none;
+      border-radius: 999px;
+      padding: 13px 25px;
+      font-size: 16px;
+      cursor: pointer;
+      transition:
+        transform 0.12s ease,
+        box-shadow 0.12s ease,
+        background 0.12s ease;
+      font-family: inherit;
+    }
+
+    #divineButton {
+      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+      color: white;
+      box-shadow: 0 9px 19px rgba(79, 109, 82, 0.28);
+      min-width: 130px;
+    }
+
+    #divineButton:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 24px rgba(79, 109, 82, 0.30);
+    }
+
+    #resetButton {
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+
+    #resetButton:hover {
+      background: #f4eee5;
+    }
+
+    .result {
+      margin-top: 30px;
+      padding: clamp(20px, 4vw, 28px);
+      border-radius: 26px;
+      background:
+        linear-gradient(135deg, rgba(248, 241, 231, 0.96), rgba(255, 252, 246, 0.96));
+      border: 1px solid var(--border);
+      display: none;
+      box-shadow: 0 10px 26px rgba(65, 49, 35, 0.08);
+    }
+
+    .result.show {
+      display: grid;
+      grid-template-columns: 1fr 190px;
+      gap: 24px;
+      align-items: center;
+      animation: fadeIn 0.25s ease-out;
+    }
+
+    .result-word {
+      font-size: clamp(44px, 10vw, 76px);
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+      line-height: 1;
+    }
+
+    .result-word.yes {
+      color: var(--yes);
+    }
+
+    .result-word.no {
+      color: var(--no);
+    }
+
+    .result-word.hold {
+      color: var(--hold);
+      font-size: clamp(36px, 8vw, 62px);
+    }
+
+    .comment {
+      font-size: 17px;
+      line-height: 1.95;
+      margin: 0;
+    }
+
+    .sub {
+      margin-top: 16px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.75;
+    }
+
+    .hexagram-card {
+      background: rgba(255, 250, 242, 0.85);
+      border: 1px solid rgba(184, 148, 85, 0.35);
+      border-radius: 22px;
+      padding: 18px 16px;
+      text-align: center;
+    }
+
+    .hexagram-title {
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      margin-bottom: 10px;
+    }
+
+    .hexagram-name {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+
+    .lines {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .line {
+      width: 96px;
+      height: 8px;
+      border-radius: 99px;
+      background: var(--ink);
+      position: relative;
+    }
+
+    .line.yin {
+      background: transparent;
+    }
+
+    .line.yin::before,
+    .line.yin::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      width: 40px;
+      height: 8px;
+      border-radius: 99px;
+      background: var(--ink);
+    }
+
+    .line.yin::before {
+      left: 0;
+    }
+
+    .line.yin::after {
+      right: 0;
+    }
+
+    .line.moving {
+      outline: 2px solid rgba(184, 148, 85, 0.55);
+      outline-offset: 3px;
+    }
+
+    .hexagram-note {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.65;
+      margin: 0;
+    }
+
+    footer {
+      margin-top: 28px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.8;
+      text-align: center;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 700px) {
+      .result.show {
+        grid-template-columns: 1fr;
+      }
+
+      .hexagram-card {
+        max-width: 240px;
+        margin: 0 auto;
+      }
+    }
+
+    @media (max-width: 520px) {
+      body {
+        padding: max(12px, env(safe-area-inset-top)) 12px max(18px, env(safe-area-inset-bottom));
+      }
+
+      main {
+        border-radius: 24px;
+      }
+
+      main::before {
+        inset: 12px;
+        border-radius: 18px;
+      }
+
+      .topline {
+        align-items: flex-start;
+      }
+
+      .coin-mark {
+        font-size: 15px;
+      }
+
+      button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="content">
+      <div class="topline">
+        <span class="label">AI × YES / NO</span>
+        <span class="coin-mark" aria-hidden="true">⚊ ⚋ ⚊</span>
+      </div>
+
+      <h1>断易YES/NO</h1>
+      <p class="lead">
+        人生を預けるためではなく、日常の小さな迷いを少しだけ軽くするための道具です。
+        質問を入れて、偶然から返ってくるひと押しを眺めてみてください。
+      </p>
+
+      <p class="notice">
+        ※これは本格的な断易ではなく、断易風のYES/NOおみくじです。医療・法律・金銭・進路・契約・人間関係など、重大な判断には使わないでください。
+      </p>
+
+      <label for="question">いま迷っていること</label>
+      <textarea id="question" placeholder="例：今日はコーヒーではなく紅茶にする？"></textarea>
+
+      <div class="actions">
+        <button id="divineButton">占う</button>
+        <button id="resetButton">もう一度考える</button>
+      </div>
+
+      <section id="result" class="result" aria-live="polite">
+        <div>
+          <div id="resultWord" class="result-word"></div>
+          <p id="comment" class="comment"></p>
+          <p id="sub" class="sub"></p>
+        </div>
+
+        <aside class="hexagram-card" aria-label="断易風の卦">
+          <div class="hexagram-title">DANEKI-LIKE SIGN</div>
+          <div id="hexagramName" class="hexagram-name"></div>
+          <div id="lines" class="lines"></div>
+          <p id="hexagramNote" class="hexagram-note"></p>
+        </aside>
+      </section>
+
+      <footer>
+        迷いを消すためではなく、迷いとの距離を少し取るために。
+      </footer>
+    </div>
+  </main>
+
+  <script>
+    const questionInput = document.getElementById("question");
+    const divineButton = document.getElementById("divineButton");
+    const resetButton = document.getElementById("resetButton");
+    const resultBox = document.getElementById("result");
+    const resultWord = document.getElementById("resultWord");
+    const comment = document.getElementById("comment");
+    const sub = document.getElementById("sub");
+    const hexagramName = document.getElementById("hexagramName");
+    const lines = document.getElementById("lines");
+    const hexagramNote = document.getElementById("hexagramNote");
+
+    const results = [
+      {
+        word: "YES",
+        type: "yes",
+        weight: 4,
+        comments: [
+          "今日は、少し進めてみてもよさそうです。",
+          "迷いながらでも、一歩だけなら悪くありません。",
+          "完璧な理由がなくても、選んでみる価値はありそうです。",
+          "気持ちが軽くなるなら、その方向でよいかもしれません。"
+        ]
+      },
+      {
+        word: "NO",
+        type: "no",
+        weight: 4,
+        comments: [
+          "今日は見送る、という選択も十分にありです。",
+          "急がなくてよい問いかもしれません。",
+          "少し距離を置くことで、見え方が変わりそうです。",
+          "いったん保留に近いNO。無理に進めなくてよさそうです。"
+        ]
+      },
+      {
+        word: "保留",
+        type: "hold",
+        weight: 2,
+        comments: [
+          "答えを急がないことが、今日の答えかもしれません。",
+          "もう少し材料が集まってから決めてもよさそうです。",
+          "迷っている自分を責めず、少し寝かせてみましょう。",
+          "今は白黒よりも、余白を残すほうが合っていそうです。"
+        ]
+      }
+    ];
+
+    const hexagramNames = [
+      "風を待つ卦",
+      "静かに進む卦",
+      "小さく開く卦",
+      "いったん止まる卦",
+      "余白を残す卦",
+      "軽く試す卦",
+      "見送って整える卦",
+      "返事を寝かせる卦"
+    ];
+
+    const hexagramNotes = [
+      "線の形は演出です。占断というより、問いを眺めるための小さな鏡です。",
+      "動きのある線は、気持ちがまだ揺れている場所を示す、という設定です。",
+      "この卦は本格的な断易の再現ではなく、日常用の軽いサインです。",
+      "結果よりも、結果を見た瞬間の反応を少し観察してみてください。"
+    ];
+
+    function pickRandom(array) {
+      return array[Math.floor(Math.random() * array.length)];
+    }
+
+    function weightedPick(items) {
+      const total = items.reduce((sum, item) => sum + item.weight, 0);
+      let random = Math.random() * total;
+
+      for (const item of items) {
+        random -= item.weight;
+        if (random <= 0) return item;
+      }
+
+      return items[0];
+    }
+
+    function createHexagram() {
+      lines.innerHTML = "";
+
+      for (let i = 0; i < 6; i++) {
+        const line = document.createElement("div");
+        const isYin = Math.random() < 0.5;
+        const isMoving = Math.random() < 0.22;
+
+        line.className = "line" + (isYin ? " yin" : "") + (isMoving ? " moving" : "");
+        lines.appendChild(line);
+      }
+
+      hexagramName.textContent = pickRandom(hexagramNames);
+      hexagramNote.textContent = pickRandom(hexagramNotes);
+    }
+
+    function divine() {
+      const question = questionInput.value.trim();
+
+      if (!question) {
+        resultBox.classList.add("show");
+        resultWord.textContent = "未入力";
+        resultWord.className = "result-word hold";
+        comment.textContent = "まずは、迷っていることを一文で書いてみてください。";
+        sub.textContent = "問いを言葉にした時点で、半分くらい占いは始まっています。";
+        createHexagram();
+        return;
+      }
+
+      const picked = weightedPick(results);
+      const pickedComment = pickRandom(picked.comments);
+
+      resultBox.classList.add("show");
+      resultWord.textContent = picked.word;
+      resultWord.className = "result-word " + picked.type;
+      comment.textContent = pickedComment;
+      sub.textContent = "結果を見た瞬間の自分の反応も、判断材料のひとつです。";
+      createHexagram();
+    }
+
+    function reset() {
+      questionInput.value = "";
+      resultBox.classList.remove("show");
+      resultWord.textContent = "";
+      comment.textContent = "";
+      sub.textContent = "";
+      hexagramName.textContent = "";
+      hexagramNote.textContent = "";
+      lines.innerHTML = "";
+      questionInput.focus();
+    }
+
+    divineButton.addEventListener("click", divine);
+    resetButton.addEventListener("click", reset);
+
+    questionInput.addEventListener("keydown", function(event) {
+      if ((event.ctrlKey || event.metaKey) && event.key === "Enter") {
+        divine();
+      }
+    });
+  </script>
+</body>
+</html>
