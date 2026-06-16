@@ -1,716 +1,4873 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>断易YES/NO</title>
-  <meta name="theme-color" content="#f6f1e8" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-title" content="断易YES/NO" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  <link rel="manifest" href="manifest.json" />
-  <link rel="apple-touch-icon" href="icon-180.png" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>断易YES/NO 試作版</title>
+  <meta name="theme-color" content="#f3eadb">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon-180.png">
   <style>
     :root {
-      --bg: #f6f1e8;
-      --card: rgba(255, 253, 248, 0.92);
-      --ink: #2f2a25;
-      --muted: #7a6f63;
-      --soft: #f2ebe0;
-      --accent: #6f8f72;
-      --accent-dark: #4f6d52;
-      --border: #ddcfbd;
-      --gold: #b89455;
-      --yes: #4f7f5f;
-      --no: #8a5a55;
-      --hold: #8a744d;
+      --card: rgba(255,255,255,.84);
+      --ink: #2d2720;
+      --muted: #766b5d;
+      --line: #5b4634;
+      --accent: #8a5a2b;
+      --yes: #7b4f1d;
+      --no: #4d4a46;
+      --wait: #7a674f;
+      --shadow: 0 20px 55px rgba(70, 45, 20, .16);
     }
-
-    * {
-      box-sizing: border-box;
-    }
-
+    * { box-sizing: border-box; }
     body {
       margin: 0;
-      min-height: 100vh;
-      font-family:
-        "Hiragino Mincho ProN",
-        "Yu Mincho",
-        "YuMincho",
-        "Hiragino Sans",
-        "Yu Gothic",
-        serif;
-      background:
-        radial-gradient(circle at top left, rgba(111, 143, 114, 0.20), transparent 32%),
-        radial-gradient(circle at bottom right, rgba(184, 148, 85, 0.16), transparent 34%),
-        linear-gradient(135deg, #f8f3ea 0%, #ede1d1 100%);
+      min-height: 100svh;
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", "YuGothic", "Meiryo", sans-serif;
       color: var(--ink);
-      display: flex;
-      align-items: flex-start;
-      justify-content: center;
-      padding: max(18px, env(safe-area-inset-top)) 18px max(24px, env(safe-area-inset-bottom));
-    }
-
-    main {
-      position: relative;
-      width: 100%;
-      max-width: 780px;
-      background: var(--card);
-      border: 1px solid rgba(221, 207, 189, 0.95);
-      border-radius: 32px;
-      box-shadow:
-        0 24px 70px rgba(65, 49, 35, 0.16),
-        inset 0 1px 0 rgba(255, 255, 255, 0.85);
-      padding: clamp(26px, 5vw, 42px);
-      overflow: hidden;
-    }
-
-    main::before {
-      content: "";
-      position: absolute;
-      inset: 18px;
-      border: 1px solid rgba(184, 148, 85, 0.28);
-      border-radius: 24px;
-      pointer-events: none;
-    }
-
-    .content {
-      position: relative;
-      z-index: 1;
-    }
-
-    .topline {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 18px;
-    }
-
-    .label {
-      display: inline-block;
-      font-size: 12px;
-      letter-spacing: 0.18em;
-      color: var(--accent-dark);
-      text-transform: uppercase;
-    }
-
-    .coin-mark {
-      display: flex;
-      gap: 6px;
-      color: var(--gold);
-      font-size: 18px;
-      letter-spacing: 0.08em;
-      white-space: nowrap;
-    }
-
-    h1 {
-      margin: 0 0 12px;
-      font-size: clamp(30px, 5vw, 46px);
-      line-height: 1.22;
-      font-weight: 700;
-      letter-spacing: 0.02em;
-    }
-
-    .lead {
-      margin: 0 0 26px;
-      color: var(--muted);
-      line-height: 1.95;
-      font-size: 15px;
-      max-width: 650px;
-    }
-
-    .notice {
-      border-left: 4px solid var(--accent);
-      background: rgba(242, 235, 224, 0.88);
-      padding: 13px 15px;
-      margin: 0 0 24px;
-      border-radius: 14px;
-      color: #5f554b;
-      font-size: 13px;
-      line-height: 1.75;
-    }
-
-    label {
-      display: block;
-      font-weight: 700;
-      margin-bottom: 10px;
-      font-size: 15px;
-    }
-
-    textarea {
-      width: 100%;
-      min-height: 116px;
-      resize: vertical;
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 17px;
-      font-size: 16px;
-      line-height: 1.75;
-      background: #fffaf2;
-      color: var(--ink);
-      outline: none;
-      box-shadow: inset 0 1px 3px rgba(65, 49, 35, 0.05);
-    }
-
-    textarea:focus {
-      border-color: var(--accent);
-      box-shadow:
-        0 0 0 4px rgba(111, 143, 114, 0.16),
-        inset 0 1px 3px rgba(65, 49, 35, 0.05);
-    }
-
-    .actions {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      align-items: center;
-      margin-top: 18px;
-    }
-
-    button {
-      border: none;
-      border-radius: 999px;
-      padding: 13px 25px;
-      font-size: 16px;
-      cursor: pointer;
-      transition:
-        transform 0.12s ease,
-        box-shadow 0.12s ease,
-        background 0.12s ease;
-      font-family: inherit;
-    }
-
-    #divineButton {
-      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
-      color: white;
-      box-shadow: 0 9px 19px rgba(79, 109, 82, 0.28);
-      min-width: 130px;
-    }
-
-    #divineButton:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 12px 24px rgba(79, 109, 82, 0.30);
-    }
-
-    #resetButton {
-      background: transparent;
-      color: var(--muted);
-      border: 1px solid var(--border);
-    }
-
-    #resetButton:hover {
-      background: #f4eee5;
-    }
-
-    .result {
-      margin-top: 30px;
-      padding: clamp(20px, 4vw, 28px);
-      border-radius: 26px;
       background:
-        linear-gradient(135deg, rgba(248, 241, 231, 0.96), rgba(255, 252, 246, 0.96));
-      border: 1px solid var(--border);
-      display: none;
-      box-shadow: 0 10px 26px rgba(65, 49, 35, 0.08);
-    }
-
-    .result.show {
+        radial-gradient(circle at 20% 5%, rgba(255,255,255,.82), transparent 26rem),
+        radial-gradient(circle at 80% 25%, rgba(214,174,112,.22), transparent 22rem),
+        linear-gradient(145deg, #f8f1e8 0%, #efe2d2 100%);
       display: grid;
-      grid-template-columns: 1fr 190px;
-      gap: 24px;
-      align-items: center;
-      animation: fadeIn 0.25s ease-out;
+      place-items: center;
+      padding: 22px;
     }
-
-    .result-word {
-      font-size: clamp(44px, 10vw, 76px);
-      font-weight: 800;
-      letter-spacing: 0.08em;
-      margin-bottom: 8px;
-      line-height: 1;
+    .app {
+      width: min(440px, 100%);
+      background: var(--card);
+      border: 1px solid rgba(110,83,54,.18);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      padding: 26px 22px 22px;
+      backdrop-filter: blur(10px);
     }
-
-    .result-word.yes {
-      color: var(--yes);
-    }
-
-    .result-word.no {
-      color: var(--no);
-    }
-
-    .result-word.hold {
-      color: var(--hold);
-      font-size: clamp(36px, 8vw, 62px);
-    }
-
-    .comment {
-      font-size: 17px;
-      line-height: 1.95;
-      margin: 0;
-    }
-
-    .sub {
-      margin-top: 16px;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.75;
-    }
-
-    .hexagram-card {
-      background: rgba(255, 250, 242, 0.85);
-      border: 1px solid rgba(184, 148, 85, 0.35);
-      border-radius: 22px;
-      padding: 18px 16px;
+    .title {
       text-align: center;
-    }
-
-    .hexagram-title {
-      color: var(--muted);
-      font-size: 12px;
-      letter-spacing: 0.12em;
-      margin-bottom: 10px;
-    }
-
-    .hexagram-name {
-      font-size: 16px;
+      margin: 0 0 6px;
+      font-size: 24px;
+      letter-spacing: .08em;
       font-weight: 700;
-      margin-bottom: 14px;
     }
-
-    .lines {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      align-items: center;
-      margin-bottom: 14px;
-    }
-
-    .line {
-      width: 96px;
-      height: 8px;
-      border-radius: 99px;
-      background: var(--ink);
-      position: relative;
-    }
-
-    .line.yin {
-      background: transparent;
-    }
-
-    .line.yin::before,
-    .line.yin::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      width: 40px;
-      height: 8px;
-      border-radius: 99px;
-      background: var(--ink);
-    }
-
-    .line.yin::before {
-      left: 0;
-    }
-
-    .line.yin::after {
-      right: 0;
-    }
-
-    .line.moving {
-      outline: 2px solid rgba(184, 148, 85, 0.55);
-      outline-offset: 3px;
-    }
-
-    .hexagram-note {
+    .subtitle {
+      text-align: center;
       color: var(--muted);
-      font-size: 12px;
-      line-height: 1.65;
-      margin: 0;
-    }
-
-    .hexagram-meta {
-      margin: 10px 0 12px;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.6;
-    }
-
-    .yao-list {
-      margin: 12px auto 14px;
-      padding: 0;
-      list-style: none;
-      max-width: 150px;
-      text-align: left;
-      color: #5f554b;
-      font-size: 12px;
+      margin: 0 0 22px;
+      font-size: 13px;
       line-height: 1.7;
     }
-
-    .yao-list li {
-      display: flex;
-      justify-content: space-between;
-      gap: 8px;
-      border-bottom: 1px dotted rgba(184, 148, 85, 0.35);
-      padding: 2px 0;
+    .wishBox {
+      border: 1px solid rgba(110,83,54,.18);
+      border-radius: 20px;
+      padding: 16px 14px;
+      background: rgba(255,255,255,.55);
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.8;
+      margin-bottom: 18px;
     }
-
-    .yao-moving {
-      color: var(--gold);
+    button {
+      width: 100%;
+      border: none;
+      border-radius: 18px;
+      padding: 16px 18px;
+      background: linear-gradient(135deg, #8f6235, #5d3e23);
+      color: #fffaf3;
+      font-size: 17px;
       font-weight: 700;
+      letter-spacing: .08em;
+      box-shadow: 0 12px 24px rgba(83, 52, 27, .24);
+      cursor: pointer;
     }
-
-    footer {
-      margin-top: 28px;
+    button:active { transform: translateY(1px); }
+    .result {
+      margin-top: 22px;
+      display: none;
+    }
+    .judgement {
+      text-align: center;
+      font-size: 42px;
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: .08em;
+      margin: 4px 0 10px;
+    }
+    .judgement.yes { color: var(--yes); }
+    .judgement.no { color: var(--no); }
+    .judgement.wait { color: var(--wait); }
+    .hexTitle {
+      text-align: center;
+      font-size: 16px;
+      font-weight: 700;
+      margin: 0 0 14px;
+      color: var(--accent);
+    }
+    .lines {
+      display: grid;
+      gap: 8px;
+      width: 150px;
+      margin: 16px auto 18px;
+    }
+    .yaoLine {
+      height: 10px;
+      display: flex;
+      justify-content: center;
+      gap: 22px;
+      align-items: center;
+    }
+    .solid::before {
+      content: "";
+      display: block;
+      width: 128px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--line);
+    }
+    .broken::before, .broken::after {
+      content: "";
+      display: block;
+      width: 52px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--line);
+    }
+    .moving {
+      filter: drop-shadow(0 0 4px rgba(141,89,35,.45));
+      opacity: .94;
+    }
+    .moving::before, .moving::after {
+      background: #8a5a2b;
+    }
+    .dataCard {
+      background: rgba(255,255,255,.62);
+      border: 1px solid rgba(110,83,54,.16);
+      border-radius: 20px;
+      padding: 16px 15px;
+    }
+    .row {
+      margin: 0 0 10px;
+      font-size: 14px;
+      line-height: 1.75;
+    }
+    .row:last-child { margin-bottom: 0; }
+    .label {
       color: var(--muted);
       font-size: 12px;
-      line-height: 1.8;
-      text-align: center;
+      display: block;
+      margin-bottom: 2px;
     }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(6px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    .original {
+      font-family: "Hiragino Mincho ProN", "Yu Mincho", "YuMincho", serif;
+      font-size: 17px;
+      letter-spacing: .03em;
     }
-
-    @media (max-width: 700px) {
-      .result.show {
-        grid-template-columns: 1fr;
-      }
-
-      .hexagram-card {
-        max-width: 240px;
-        margin: 0 auto;
-      }
-    }
-
-    @media (max-width: 520px) {
-      body {
-        padding: max(12px, env(safe-area-inset-top)) 12px max(18px, env(safe-area-inset-bottom));
-      }
-
-      main {
-        border-radius: 24px;
-      }
-
-      main::before {
-        inset: 12px;
-        border-radius: 18px;
-      }
-
-      .topline {
-        align-items: flex-start;
-      }
-
-      .coin-mark {
-        font-size: 15px;
-      }
-
-      button {
-        width: 100%;
-      }
+    .notice {
+      margin: 18px 4px 0;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.65;
     }
   </style>
 </head>
 <body>
-  <main>
-    <div class="content">
-      <div class="topline">
-        <span class="label">AI × YES / NO</span>
-        <span class="coin-mark" aria-hidden="true">⚊ ⚋ ⚊</span>
-      </div>
+  <main class="app">
+    <h1 class="title">断易YES/NO</h1>
+    <p class="subtitle">第1卦〜第64卦 完全版</p>
 
-      <h1>断易YES/NO</h1>
-      <p class="lead">
-        人生を預けるためではなく、日常の小さな迷いを少しだけ軽くするための道具です。
-        質問を入れて、偶然から返ってくるひと押しを眺めてみてください。
-      </p>
-
-      <p class="notice">
-        ※これは本格的な断易ではなく、断易風のYES/NOおみくじです。医療・法律・金銭・進路・契約・人間関係など、重大な判断には使わないでください。
-      </p>
-
-      <label for="question">いま迷っていること</label>
-      <textarea id="question" placeholder="例：今日はコーヒーではなく紅茶にする？"></textarea>
-
-      <div class="actions">
-        <button id="divineButton">占う</button>
-        <button id="resetButton">もう一度考える</button>
-      </div>
-
-      <section id="result" class="result" aria-live="polite">
-        <div>
-          <div id="resultWord" class="result-word"></div>
-          <p id="comment" class="comment"></p>
-          <p id="sub" class="sub"></p>
-        </div>
-
-        <aside class="hexagram-card" aria-label="断易風の卦">
-          <div class="hexagram-title">DANEKI-LIKE SIGN</div>
-          <div id="hexagramName" class="hexagram-name"></div>
-          <div id="hexagramMeta" class="hexagram-meta"></div>
-          <div id="lines" class="lines"></div>
-          <ul id="yaoList" class="yao-list"></ul>
-          <p id="hexagramNote" class="hexagram-note"></p>
-        </aside>
-      </section>
-
-      <footer>
-        迷いを消すためではなく、迷いとの距離を少し取るために。
-      </footer>
+    <div class="wishBox">
+      聞きたいことを、心の中でひとつ決めてください。<br>
+      書き込まずに、そのまま占います。
     </div>
+
+    <button id="drawBtn">占う</button>
+
+    <section class="result" id="result">
+      <div class="judgement" id="judgement">待つ</div>
+      <p class="hexTitle" id="hexTitle">第1卦　乾為天　初九</p>
+      <div class="lines" id="lines" aria-label="卦の線"></div>
+
+      <div class="dataCard">
+        <p class="row">
+          <span class="label">原文</span>
+          <span class="original" id="original">潛龍勿用。</span>
+        </p>
+        <p class="row">
+          <span class="label">訳意</span>
+          <span id="meaning">力はあるが、まだ表に出す時ではない。</span>
+        </p>
+        <p class="row">
+          <span class="label">吉凶</span>
+          <span id="fortune">時期尚早</span>
+        </p>
+        <p class="row">
+          <span class="label">ひとこと</span>
+          <span id="memo">今日は大きく動かない。準備や様子見に回る。</span>
+        </p>
+      </div>
+    </section>
+
+    <p class="notice">
+      ※これは本格的な断易ではなく、易経の文言をもとにした試作アプリです。医療・法律・金銭・進路・契約・人間関係など、重大な判断には使わないでください。
+    </p>
   </main>
 
   <script>
-    const questionInput = document.getElementById("question");
-    const divineButton = document.getElementById("divineButton");
-    const resetButton = document.getElementById("resetButton");
-    const resultBox = document.getElementById("result");
-    const resultWord = document.getElementById("resultWord");
-    const comment = document.getElementById("comment");
-    const sub = document.getElementById("sub");
-    const hexagramName = document.getElementById("hexagramName");
-    const hexagramMeta = document.getElementById("hexagramMeta");
-    const lines = document.getElementById("lines");
-    const yaoList = document.getElementById("yaoList");
-    const hexagramNote = document.getElementById("hexagramNote");
-
-    const results = [
-      {
-        word: "YES",
-        type: "yes",
-        weight: 4,
-        comments: [
-          "今日は、少し進めてみてもよさそうです。",
-          "迷いながらでも、一歩だけなら悪くありません。",
-          "完璧な理由がなくても、選んでみる価値はありそうです。",
-          "気持ちが軽くなるなら、その方向でよいかもしれません。"
-        ]
-      },
-      {
-        word: "NO",
-        type: "no",
-        weight: 4,
-        comments: [
-          "今日は見送る、という選択も十分にありです。",
-          "急がなくてよい問いかもしれません。",
-          "少し距離を置くことで、見え方が変わりそうです。",
-          "いったん保留に近いNO。無理に進めなくてよさそうです。"
-        ]
-      },
-      {
-        word: "保留",
-        type: "hold",
-        weight: 2,
-        comments: [
-          "答えを急がないことが、今日の答えかもしれません。",
-          "もう少し材料が集まってから決めてもよさそうです。",
-          "迷っている自分を責めず、少し寝かせてみましょう。",
-          "今は白黒よりも、余白を残すほうが合っていそうです。"
-        ]
-      }
-    ];
-
-    const trigrams = {
-      "111": { name: "乾", nature: "天" },
-      "110": { name: "兌", nature: "沢" },
-      "101": { name: "離", nature: "火" },
-      "100": { name: "震", nature: "雷" },
-      "011": { name: "巽", nature: "風" },
-      "010": { name: "坎", nature: "水" },
-      "001": { name: "艮", nature: "山" },
-      "000": { name: "坤", nature: "地" }
-    };
-
-    const hexagramMap = {
-      "111-111": "乾為天",
-      "000-000": "坤為地",
-      "100-010": "水雷屯",
-      "010-001": "山水蒙",
-      "111-010": "水天需",
-      "010-111": "天水訟",
-      "010-000": "地水師",
-      "000-010": "水地比",
-      "111-011": "風天小畜",
-      "110-111": "天沢履",
-      "111-000": "地天泰",
-      "000-111": "天地否",
-      "101-111": "天火同人",
-      "111-101": "火天大有",
-      "001-000": "地山謙",
-      "000-100": "雷地豫",
-      "100-110": "沢雷随",
-      "011-001": "山風蠱",
-      "110-000": "地沢臨",
-      "000-011": "風地観",
-      "100-101": "火雷噬嗑",
-      "101-001": "山火賁",
-      "000-001": "山地剥",
-      "100-000": "地雷復",
-      "100-111": "天雷无妄",
-      "111-001": "山天大畜",
-      "100-001": "山雷頤",
-      "011-110": "沢風大過",
-      "010-010": "坎為水",
-      "101-101": "離為火",
-      "001-110": "沢山咸",
-      "011-100": "雷風恒",
-      "001-111": "天山遯",
-      "111-100": "雷天大壮",
-      "000-101": "火地晋",
-      "101-000": "地火明夷",
-      "101-011": "風火家人",
-      "110-101": "火沢睽",
-      "001-010": "水山蹇",
-      "010-100": "雷水解",
-      "110-001": "山沢損",
-      "100-011": "風雷益",
-      "111-110": "沢天夬",
-      "011-111": "天風姤",
-      "000-110": "沢地萃",
-      "011-000": "地風升",
-      "010-110": "沢水困",
-      "011-010": "水風井",
-      "101-110": "沢火革",
-      "011-101": "火風鼎",
-      "100-100": "震為雷",
-      "001-001": "艮為山",
-      "001-011": "風山漸",
-      "110-100": "雷沢帰妹",
-      "101-100": "雷火豊",
-      "001-101": "火山旅",
-      "011-011": "巽為風",
-      "110-110": "兌為沢",
-      "010-011": "風水渙",
-      "110-010": "水沢節",
-      "110-011": "風沢中孚",
-      "001-100": "雷山小過",
-      "101-010": "水火既済",
-      "010-101": "火水未済"
-    };
-
-    const hexagramNotes = [
-      "卦名と六爻は表示しますが、ここでは本格占断ではなく、問いを眺めるための軽いサインとして扱います。",
-      "動爻は、気持ちがまだ揺れている場所を示す、というこのアプリ内の演出です。",
-      "用神・世応・月建・日辰までは読まず、日常の小さな選択用に留めています。",
-      "結果よりも、結果を見た瞬間の自分の反応を少し観察してみてください。"
-    ];
-
-    function pickRandom(array) {
-      return array[Math.floor(Math.random() * array.length)];
-    }
-
-    function weightedPick(items) {
-      const total = items.reduce((sum, item) => sum + item.weight, 0);
-      let random = Math.random() * total;
-
-      for (const item of items) {
-        random -= item.weight;
-        if (random <= 0) return item;
-      }
-
-      return items[0];
-    }
-
-    function createHexagram() {
-      lines.innerHTML = "";
-      yaoList.innerHTML = "";
-
-      const yaoNames = ["初爻", "二爻", "三爻", "四爻", "五爻", "上爻"];
-      const yao = [];
-
-      for (let i = 0; i < 6; i++) {
-        const isYang = Math.random() < 0.5;
-        const isMoving = Math.random() < 0.22;
-        yao.push({ isYang, isMoving });
-      }
-
-      // 画面表示は上爻から初爻へ。卦の内部計算は初爻から上爻へ。
-      for (let i = 5; i >= 0; i--) {
-        const line = document.createElement("div");
-        line.className = "line" + (yao[i].isYang ? "" : " yin") + (yao[i].isMoving ? " moving" : "");
-        lines.appendChild(line);
-      }
-
-      for (let i = 0; i < 6; i++) {
-        const item = document.createElement("li");
-        const left = document.createElement("span");
-        const right = document.createElement("span");
-
-        left.textContent = yaoNames[i];
-        right.textContent = (yao[i].isYang ? "陽" : "陰") + (yao[i].isMoving ? "・動" : "・静");
-
-        if (yao[i].isMoving) {
-          right.className = "yao-moving";
+    const oracleData = [
+        {
+                "id": 1,
+                "name": "乾為天",
+                "yao": "初九",
+                "pattern": "111111",
+                "original": "潛龍勿用。",
+                "meaning": "力はあるが、まだ表に出す時ではない。",
+                "fortune": "時期尚早",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "今日は大きく動かない。準備や様子見に回る。"
+        },
+        {
+                "id": 1,
+                "name": "乾為天",
+                "yao": "九二",
+                "pattern": "111111",
+                "original": "見龍在田，利見大人。",
+                "meaning": "力が外に現れ始める。助言者や目上の人に会うとよい。",
+                "fortune": "吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "進めてよい。迷うなら信頼できる人に確認する。"
+        },
+        {
+                "id": 1,
+                "name": "乾為天",
+                "yao": "九三",
+                "pattern": "111111",
+                "original": "君子終日乾乾，夕惕若，厲无咎。",
+                "meaning": "一日中努め、夜まで慎重であれば、危うくても咎はない。",
+                "fortune": "厲・无咎",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "やるなら慎重に。確認不足のまま進めない。"
+        },
+        {
+                "id": 1,
+                "name": "乾為天",
+                "yao": "九四",
+                "pattern": "111111",
+                "original": "或躍在淵，无咎。",
+                "meaning": "飛び出す手前の状態。進むか退くかを見極める時。",
+                "fortune": "无咎",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "すぐ決めず、条件が整えば進む。焦らない。"
+        },
+        {
+                "id": 1,
+                "name": "乾為天",
+                "yao": "九五",
+                "pattern": "111111",
+                "original": "飛龍在天，利見大人。",
+                "meaning": "力が十分に発揮される時。大きな流れに乗りやすい。",
+                "fortune": "大吉寄り",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "進めてよい。堂々と動く。ただし独断は避ける。"
+        },
+        {
+                "id": 1,
+                "name": "乾為天",
+                "yao": "上九",
+                "pattern": "111111",
+                "original": "亢龍有悔。",
+                "meaning": "行き過ぎた龍には悔いがある。勢いが強すぎると反動が来る。",
+                "fortune": "悔",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "今は押しすぎない。引く・止める・控える判断がよい。"
+        },
+        {
+                "id": 2,
+                "name": "坤為地",
+                "yao": "初六",
+                "pattern": "000000",
+                "original": "履霜，堅冰至。",
+                "meaning": "霜を踏めば、やがて堅い氷になると知る。小さな兆しを軽く見ない。",
+                "fortune": "警戒",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "今は小さな違和感を確認する。見ないふりをして進めない。"
+        },
+        {
+                "id": 2,
+                "name": "坤為地",
+                "yao": "六二",
+                "pattern": "000000",
+                "original": "直方大，不習无不利。",
+                "meaning": "まっすぐで、正しく、大きい。無理に作為しなくても不利はない。",
+                "fortune": "吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "自然体で進めてよい。余計な小細工はしない。"
+        },
+        {
+                "id": 2,
+                "name": "坤為地",
+                "yao": "六三",
+                "pattern": "000000",
+                "original": "含章，可貞。或從王事，无成有終。",
+                "meaning": "才能や成果を内に含み、正しさを守る。人に従って働けば、手柄はなくても終わりは整う。",
+                "fortune": "条件付き吉",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "自分が主役になろうとしない。補佐役なら進めてよい。"
+        },
+        {
+                "id": 2,
+                "name": "坤為地",
+                "yao": "六四",
+                "pattern": "000000",
+                "original": "括囊，无咎无譽。",
+                "meaning": "袋の口をくくるように、言動を控える。咎はないが、誉れもない。",
+                "fortune": "无咎",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "今日は余計なことを言わない。静かに控えるのが無難。"
+        },
+        {
+                "id": 2,
+                "name": "坤為地",
+                "yao": "六五",
+                "pattern": "000000",
+                "original": "黃裳，元吉。",
+                "meaning": "黄色い裳のように、中庸で控えめな徳がある。大いに吉。",
+                "fortune": "元吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "控えめに進めるならよい。目立つより、穏やかに整える。"
+        },
+        {
+                "id": 2,
+                "name": "坤為地",
+                "yao": "上六",
+                "pattern": "000000",
+                "original": "龍戰于野，其血玄黃。",
+                "meaning": "龍が野で争い、血は黒と黄色に染まる。行き過ぎた対立の象。",
+                "fortune": "凶",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "争いになるならやめる。押し通さず、距離を取る。"
+        },
+        {
+                "id": 3,
+                "name": "水雷屯",
+                "yao": "初九",
+                "pattern": "100010",
+                "original": "磐桓，利居貞，利建侯。",
+                "meaning": "進もうとしても足元が定まらない。まず正しく居場所を定め、人や体制を整えるとよい。",
+                "fortune": "条件付き吉",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "すぐ動かず、準備と足場づくりを優先する。"
+        },
+        {
+                "id": 3,
+                "name": "水雷屯",
+                "yao": "六二",
+                "pattern": "100010",
+                "original": "屯如邅如，乘馬班如。匪寇婚媾。女子貞不字，十年乃字。",
+                "meaning": "進みにくく、行きつ戻りつする。妨げに見えるものは敵ではなく、縁や条件の調整かもしれない。",
+                "fortune": "時を待つ",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "急がない。今は結論を出さず、時間を置く。"
+        },
+        {
+                "id": 3,
+                "name": "水雷屯",
+                "yao": "六三",
+                "pattern": "100010",
+                "original": "即鹿无虞，惟入于林中。君子幾不如舍，往吝。",
+                "meaning": "案内なしに鹿を追えば、森に迷い込む。見込みだけで進むと悔いが残る。",
+                "fortune": "吝",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "情報不足ならやめる。追いかけすぎない。"
+        },
+        {
+                "id": 3,
+                "name": "水雷屯",
+                "yao": "六四",
+                "pattern": "100010",
+                "original": "乘馬班如，求婚媾，往吉，无不利。",
+                "meaning": "迷いながらも、協力や縁を求めて進めば吉。",
+                "fortune": "吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "一人で抱えず、相談や協力を得て進む。"
+        },
+        {
+                "id": 3,
+                "name": "水雷屯",
+                "yao": "九五",
+                "pattern": "100010",
+                "original": "屯其膏。小貞吉，大貞凶。",
+                "meaning": "恵みや力が詰まって流れにくい。小さく正しければ吉、大きく構えると凶。",
+                "fortune": "小吉・大凶",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "小さくなら進める。大きな決断は避ける。"
+        },
+        {
+                "id": 3,
+                "name": "水雷屯",
+                "yao": "上六",
+                "pattern": "100010",
+                "original": "乘馬班如，泣血漣如。",
+                "meaning": "進退に迷い続け、ついには血の涙を流すほど苦しくなる。",
+                "fortune": "凶",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "これ以上こだわらない。いったん手放す。"
+        },
+        {
+                "id": 4,
+                "name": "山水蒙",
+                "yao": "初六",
+                "pattern": "010001",
+                "original": "發蒙，利用刑人，用說桎梏，以往吝。",
+                "meaning": "無知や迷いを開くには、まず規律が必要。束縛を外しても、そのまま進めば悔いがある。",
+                "fortune": "警戒",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "まず基本を整える。勢いだけで進めない。"
+        },
+        {
+                "id": 4,
+                "name": "山水蒙",
+                "yao": "九二",
+                "pattern": "010001",
+                "original": "包蒙吉。納婦吉。子克家。",
+                "meaning": "未熟さを包み込み、受け入れる姿勢が吉。家を担う力も育つ。",
+                "fortune": "吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "完璧でなくても進めてよい。育てながら整える。"
+        },
+        {
+                "id": 4,
+                "name": "山水蒙",
+                "yao": "六三",
+                "pattern": "010001",
+                "original": "勿用取女，見金夫，不有躬，无攸利。",
+                "meaning": "目先の魅力に引かれて自分を失う。進んでも得るところがない。",
+                "fortune": "凶",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "目先の得や見栄で選ばない。今日は見送る。"
+        },
+        {
+                "id": 4,
+                "name": "山水蒙",
+                "yao": "六四",
+                "pattern": "010001",
+                "original": "困蒙，吝。",
+                "meaning": "未熟なまま行き詰まる。視野が狭く、悔いが残りやすい。",
+                "fortune": "吝",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "今のままでは詰まりやすい。先に学ぶ・聞く。"
+        },
+        {
+                "id": 4,
+                "name": "山水蒙",
+                "yao": "六五",
+                "pattern": "010001",
+                "original": "童蒙，吉。",
+                "meaning": "子どものような素直さがある。教えを受ければ吉。",
+                "fortune": "吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "素直に聞けるなら進めてよい。独断しない。"
+        },
+        {
+                "id": 4,
+                "name": "山水蒙",
+                "yao": "上九",
+                "pattern": "010001",
+                "original": "擊蒙。不利為寇，利禦寇。",
+                "meaning": "迷いを打ち払う時。ただし攻めるのではなく、害を防ぐのがよい。",
+                "fortune": "条件付き吉",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "守りを固める。攻めずに、問題を遠ざける。"
+        },
+        {
+                "id": 5,
+                "name": "水天需",
+                "yao": "初九",
+                "pattern": "111010",
+                "original": "需于郊，利用恆，无咎。",
+                "meaning": "郊外で待つように、危険から距離を置いて待つ。普段通りを守れば咎はない。",
+                "fortune": "无咎",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "近づきすぎない。いつも通りで待つ。"
+        },
+        {
+                "id": 5,
+                "name": "水天需",
+                "yao": "九二",
+                "pattern": "111010",
+                "original": "需于沙，小有言，終吉。",
+                "meaning": "砂地で待つ。少し言われることはあっても、最後は吉。",
+                "fortune": "終吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "少し気になる点があっても、落ち着いて進めてよい。"
+        },
+        {
+                "id": 5,
+                "name": "水天需",
+                "yao": "九三",
+                "pattern": "111010",
+                "original": "需于泥，致寇至。",
+                "meaning": "泥の中で待つように、危険に近づきすぎている。災いを招きやすい。",
+                "fortune": "凶寄り",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "今は踏み込まない。距離を取る。"
+        },
+        {
+                "id": 5,
+                "name": "水天需",
+                "yao": "六四",
+                "pattern": "111010",
+                "original": "需于血，出自穴。",
+                "meaning": "血のある場所で待つ。危ういが、穴から出る道もある。",
+                "fortune": "危ういが脱出可",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "無理に進まず、まず安全な出口を探す。"
+        },
+        {
+                "id": 5,
+                "name": "水天需",
+                "yao": "九五",
+                "pattern": "111010",
+                "original": "需于酒食，貞吉。",
+                "meaning": "酒食の場でゆったり待つ。正しさを守れば吉。",
+                "fortune": "吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "焦らず進めてよい。余裕を持つと整う。"
+        },
+        {
+                "id": 5,
+                "name": "水天需",
+                "yao": "上六",
+                "pattern": "111010",
+                "original": "入于穴，有不速之客三人來，敬之終吉。",
+                "meaning": "穴に入る。思いがけない客が三人来るが、敬って接すれば最後は吉。",
+                "fortune": "終吉",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "想定外を拒まず、丁寧に対応してから決める。"
+        },
+        {
+                "id": 6,
+                "name": "天水訟",
+                "yao": "初六",
+                "pattern": "010111",
+                "original": "不永所事，小有言，終吉。",
+                "meaning": "争いごとを長引かせなければ、少し言われることがあっても最後は吉。",
+                "fortune": "終吉",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "今は押し通さない。早めに引けば整う。"
+        },
+        {
+                "id": 6,
+                "name": "天水訟",
+                "yao": "九二",
+                "pattern": "010111",
+                "original": "不克訟，歸而逋，其邑人三百戶，无眚。",
+                "meaning": "争って勝てない。退いて身を低くすれば、大きな災いは避けられる。",
+                "fortune": "无眚",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "勝ちに行かない。今回は退くほうが安全。"
+        },
+        {
+                "id": 6,
+                "name": "天水訟",
+                "yao": "六三",
+                "pattern": "010111",
+                "original": "食舊德，貞厲，終吉。或從王事，无成。",
+                "meaning": "これまでの蓄えや信頼に頼る。正しくしても危ういが、最後は吉。功を求めすぎない。",
+                "fortune": "厲・終吉",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "新しく攻めず、今ある信頼を守る。"
+        },
+        {
+                "id": 6,
+                "name": "天水訟",
+                "yao": "九四",
+                "pattern": "010111",
+                "original": "不克訟，復即命，渝，安貞吉。",
+                "meaning": "争って勝てない。方針を改め、落ち着いて正しさに戻れば吉。",
+                "fortune": "改めて吉",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "いったん方針変更。無理に通さない。"
+        },
+        {
+                "id": 6,
+                "name": "天水訟",
+                "yao": "九五",
+                "pattern": "010111",
+                "original": "訟，元吉。",
+                "meaning": "争いを正しく裁ける。筋が通り、中心が定まれば大いに吉。",
+                "fortune": "元吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "筋が通っているなら進めてよい。冷静に判断する。"
+        },
+        {
+                "id": 6,
+                "name": "天水訟",
+                "yao": "上九",
+                "pattern": "010111",
+                "original": "或錫之鞶帶，終朝三褫之。",
+                "meaning": "名誉や褒美を得ても、すぐに何度も奪われる。勝っても安定しない。",
+                "fortune": "凶寄り",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "勝ち負けにこだわらない。得ても失いやすい。"
+        },
+        {
+                "id": 7,
+                "name": "地水師",
+                "yao": "初六",
+                "pattern": "010000",
+                "original": "師出以律，否臧凶。",
+                "meaning": "物事を始めるには規律や手順が必要。それがなければ、よく見えても凶に傾く。",
+                "fortune": "凶",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "勢いで始めない。先に手順と条件を整える。"
+        },
+        {
+                "id": 7,
+                "name": "地水師",
+                "yao": "九二",
+                "pattern": "010000",
+                "original": "在師中，吉无咎，王三錫命。",
+                "meaning": "組織や流れの中心にいて、正しく任を果たせば吉で咎なし。",
+                "fortune": "吉・无咎",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "役割が明確なら進めてよい。責任を持って動く。"
+        },
+        {
+                "id": 7,
+                "name": "地水師",
+                "yao": "六三",
+                "pattern": "010000",
+                "original": "師或輿尸，凶。",
+                "meaning": "軍が屍を車に載せるような象。進め方を誤ると損失が大きい。",
+                "fortune": "凶",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "今は進めない。無理をすると被害が出やすい。"
+        },
+        {
+                "id": 7,
+                "name": "地水師",
+                "yao": "六四",
+                "pattern": "010000",
+                "original": "師左次，无咎。",
+                "meaning": "軍が退いて陣を移す。前進しなくても、退くことで咎を避ける。",
+                "fortune": "无咎",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "今日は退く・位置を変える。無理に進まない。"
+        },
+        {
+                "id": 7,
+                "name": "地水師",
+                "yao": "六五",
+                "pattern": "010000",
+                "original": "田有禽，利執言，无咎。長子帥師，弟子輿尸，貞凶。",
+                "meaning": "獲物はあるが、指揮を誤ると凶。任せる相手や進め方が重要。",
+                "fortune": "条件付き",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "誰に任せるかを見直す。軽い判断で進めない。"
+        },
+        {
+                "id": 7,
+                "name": "地水師",
+                "yao": "上六",
+                "pattern": "010000",
+                "original": "大君有命，開國承家，小人勿用。",
+                "meaning": "大きな任命や区切りの時。ただし小人物を用いると乱れる。",
+                "fortune": "条件付き吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "人選がよければ進めてよい。信用できない相手は避ける。"
+        },
+        {
+                "id": 8,
+                "name": "水地比",
+                "yao": "初六",
+                "pattern": "000010",
+                "original": "有孚比之，无咎。有孚盈缶，終來有他吉。",
+                "meaning": "誠意をもって親しめば咎はない。飾らない信頼があれば、後から別の吉も来る。",
+                "fortune": "吉・无咎",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "素直な気持ちで関わるならよい。飾らず進める。"
+        },
+        {
+                "id": 8,
+                "name": "水地比",
+                "yao": "六二",
+                "pattern": "000010",
+                "original": "比之自內，貞吉。",
+                "meaning": "内側から自然に親しむ。正しさを守れば吉。",
+                "fortune": "貞吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "無理に外へ広げず、身近なところから進める。"
+        },
+        {
+                "id": 8,
+                "name": "水地比",
+                "yao": "六三",
+                "pattern": "000010",
+                "original": "比之匪人。",
+                "meaning": "親しむ相手がふさわしくない。関わる相手を誤っている。",
+                "fortune": "凶寄り",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "相手や環境を見直す。違和感があるなら近づかない。"
+        },
+        {
+                "id": 8,
+                "name": "水地比",
+                "yao": "六四",
+                "pattern": "000010",
+                "original": "外比之，貞吉。",
+                "meaning": "外の相手と親しむ。正しい関係なら吉。",
+                "fortune": "貞吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "外部との協力はよい。礼儀と距離感を守る。"
+        },
+        {
+                "id": 8,
+                "name": "水地比",
+                "yao": "九五",
+                "pattern": "000010",
+                "original": "顯比，王用三驅，失前禽。邑人不誡，吉。",
+                "meaning": "公明に親しむ。追い詰めず、去るものは追わないことで吉。",
+                "fortune": "吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "無理に囲い込まない。来るものを受け、去るものは追わない。"
+        },
+        {
+                "id": 8,
+                "name": "水地比",
+                "yao": "上六",
+                "pattern": "000010",
+                "original": "比之无首，凶。",
+                "meaning": "親しみの中心や始まりを失っている。まとまりがなく凶。",
+                "fortune": "凶",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "今はまとまりに欠ける。関係や目的を立て直す。"
+        },
+        {
+                "id": 9,
+                "name": "風天小畜",
+                "yao": "初九",
+                "pattern": "111011",
+                "original": "復自道，何其咎，吉。",
+                "meaning": "自分の正しい道に戻る。咎められることはなく吉。",
+                "fortune": "吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "元の方針に戻るなら進めてよい。無理に変えない。"
+        },
+        {
+                "id": 9,
+                "name": "風天小畜",
+                "yao": "九二",
+                "pattern": "111011",
+                "original": "牽復，吉。",
+                "meaning": "引かれるように正しいところへ戻る。戻ることが吉。",
+                "fortune": "吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "軌道修正して進める。やり直しは悪くない。"
+        },
+        {
+                "id": 9,
+                "name": "風天小畜",
+                "yao": "九三",
+                "pattern": "111011",
+                "original": "輿說輻，夫妻反目。",
+                "meaning": "車の輻が外れ、夫婦が反目する。足元や関係が噛み合わない。",
+                "fortune": "凶寄り",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "今は進めない。関係や土台のズレを直す。"
+        },
+        {
+                "id": 9,
+                "name": "風天小畜",
+                "yao": "六四",
+                "pattern": "111011",
+                "original": "有孚，血去惕出，无咎。",
+                "meaning": "誠意があれば、傷や恐れから抜け出し、咎はない。",
+                "fortune": "无咎",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "不安を減らしてから進む。誠実に対応する。"
+        },
+        {
+                "id": 9,
+                "name": "風天小畜",
+                "yao": "九五",
+                "pattern": "111011",
+                "original": "有孚攣如，富以其鄰。",
+                "meaning": "誠意で強く結ばれ、豊かさを隣人と分かち合う。",
+                "fortune": "吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "一人で抱えず、周囲と分け合えばよい。"
+        },
+        {
+                "id": 9,
+                "name": "風天小畜",
+                "yao": "上九",
+                "pattern": "111011",
+                "original": "既雨既處，尚德載。婦貞厲，月幾望，君子征凶。",
+                "meaning": "雨が降り、物事はいったん収まる。満ちきる直前は危うく、進みすぎると凶。",
+                "fortune": "厲・凶",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "ここで止める。これ以上押すと崩れやすい。"
+        },
+        {
+                "id": 10,
+                "name": "天沢履",
+                "yao": "初九",
+                "pattern": "110111",
+                "original": "素履，往无咎。",
+                "meaning": "飾らず素直に踏み行えば、進んでも咎はない。",
+                "fortune": "无咎",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "シンプルに進めてよい。背伸びしない。"
+        },
+        {
+                "id": 10,
+                "name": "天沢履",
+                "yao": "九二",
+                "pattern": "110111",
+                "original": "履道坦坦，幽人貞吉。",
+                "meaning": "道は平らで安定している。静かに正しさを守れば吉。",
+                "fortune": "貞吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "落ち着いて進める。目立たず淡々と行う。"
+        },
+        {
+                "id": 10,
+                "name": "天沢履",
+                "yao": "六三",
+                "pattern": "110111",
+                "original": "眇能視，跛能履，履虎尾，咥人，凶。武人為于大君。",
+                "meaning": "片目で見ようとし、足が不自由でも踏み出す。虎の尾を踏めば噛まれる。",
+                "fortune": "凶",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "無理をして進まない。危ない相手や場所には近づかない。"
+        },
+        {
+                "id": 10,
+                "name": "天沢履",
+                "yao": "九四",
+                "pattern": "110111",
+                "original": "履虎尾，愬愬，終吉。",
+                "meaning": "虎の尾を踏むような危うさはあるが、恐れて慎重なら最後は吉。",
+                "fortune": "終吉",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "慎重に条件を確認する。怖さがあるならゆっくり進む。"
+        },
+        {
+                "id": 10,
+                "name": "天沢履",
+                "yao": "九五",
+                "pattern": "110111",
+                "original": "夬履，貞厲。",
+                "meaning": "強く決断して踏み出す。ただし正しくても危うさがある。",
+                "fortune": "厲",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "決める力はあるが、強引さに注意する。"
+        },
+        {
+                "id": 10,
+                "name": "天沢履",
+                "yao": "上九",
+                "pattern": "110111",
+                "original": "視履考祥，其旋元吉。",
+                "meaning": "歩んできた道を振り返り、よい兆しを確かめる。よく巡れば大いに吉。",
+                "fortune": "元吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "これまでの流れが整っているなら進めてよい。"
+        },
+        {
+                "id": 11,
+                "name": "地天泰",
+                "yao": "初九",
+                "pattern": "111000",
+                "original": "拔茅茹，以其彙，征吉。",
+                "meaning": "茅を抜くと根が連なって抜ける。同類とともに進めば吉。",
+                "fortune": "吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "一人でなく、流れに乗って進める。"
+        },
+        {
+                "id": 11,
+                "name": "地天泰",
+                "yao": "九二",
+                "pattern": "111000",
+                "original": "包荒，用馮河，不遐遺。朋亡，得尚于中行。",
+                "meaning": "荒いものも包み、大河を渡る勇気を持つ。遠いものを捨てず、仲間に偏らず、中道を得る。",
+                "fortune": "吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "広く受け止めて進む。偏らず中庸を取る。"
+        },
+        {
+                "id": 11,
+                "name": "地天泰",
+                "yao": "九三",
+                "pattern": "111000",
+                "original": "无平不陂，无往不復。艱貞无咎。勿恤其孚，于食有福。",
+                "meaning": "平らなものも傾き、行けば戻る。困難を知って正しければ咎はない。",
+                "fortune": "无咎",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "順調でも油断しない。変化を見込んで進める。"
+        },
+        {
+                "id": 11,
+                "name": "地天泰",
+                "yao": "六四",
+                "pattern": "111000",
+                "original": "翩翩，不富以其鄰，不戒以孚。",
+                "meaning": "軽やかに下る。富によらず、隣人と誠で通じ合う。",
+                "fortune": "吉寄り",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "利害より信頼で動くならよい。軽やかに進める。"
+        },
+        {
+                "id": 11,
+                "name": "地天泰",
+                "yao": "六五",
+                "pattern": "111000",
+                "original": "帝乙歸妹，以祉元吉。",
+                "meaning": "帝乙が妹を嫁がせるように、調和ある結びつきによって大いに吉。",
+                "fortune": "元吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "関係を整えることは吉。穏やかに結ぶ。"
+        },
+        {
+                "id": 11,
+                "name": "地天泰",
+                "yao": "上六",
+                "pattern": "111000",
+                "original": "城復于隍，勿用師。自邑告命，貞吝。",
+                "meaning": "城壁が堀に崩れ戻る。兵を用いてはならない。正しくしても悔いが残る。",
+                "fortune": "吝",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "崩れかけたものを力で戻さない。撤退や整理を優先する。"
+        },
+        {
+                "id": 12,
+                "name": "天地否",
+                "yao": "初六",
+                "pattern": "000111",
+                "original": "拔茅茹，以其彙，貞吉亨。",
+                "meaning": "茅を抜くと根が連なって抜ける。同類とともに正しくあれば吉で通じる。",
+                "fortune": "貞吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "仲間や流れを見て進める。単独で無理をしない。"
+        },
+        {
+                "id": 12,
+                "name": "天地否",
+                "yao": "六二",
+                "pattern": "000111",
+                "original": "包承，小人吉，大人否亨。",
+                "meaning": "包み従うことで小人には吉。大人は閉塞の中でも道を保つ。",
+                "fortune": "条件付き",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "迎合しすぎない。今は様子を見て、無理に前へ出ない。"
+        },
+        {
+                "id": 12,
+                "name": "天地否",
+                "yao": "六三",
+                "pattern": "000111",
+                "original": "包羞。",
+                "meaning": "恥や不都合を包み隠している。内側に問題が残る。",
+                "fortune": "吝寄り",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "違和感を隠したまま進めない。今日は見送る。"
+        },
+        {
+                "id": 12,
+                "name": "天地否",
+                "yao": "九四",
+                "pattern": "000111",
+                "original": "有命无咎，疇離祉。",
+                "meaning": "命に従って動けば咎はない。同類も福を受ける。",
+                "fortune": "无咎",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "自分勝手に動かず、条件や役割が整うのを待つ。"
+        },
+        {
+                "id": 12,
+                "name": "天地否",
+                "yao": "九五",
+                "pattern": "000111",
+                "original": "休否，大人吉。其亡其亡，繫于苞桑。",
+                "meaning": "閉塞が休まり始める。大人には吉。ただし危機感を忘れない。",
+                "fortune": "吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "流れは改善に向かう。油断せず、慎重に進める。"
+        },
+        {
+                "id": 12,
+                "name": "天地否",
+                "yao": "上九",
+                "pattern": "000111",
+                "original": "傾否，先否後喜。",
+                "meaning": "閉塞が傾き、崩れ始める。先は塞がっても後には喜びがある。",
+                "fortune": "後吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "今の停滞は抜けつつある。終わらせて次へ進む。"
+        },
+        {
+                "id": 13,
+                "name": "天火同人",
+                "yao": "初九",
+                "pattern": "101111",
+                "original": "同人于門，无咎。",
+                "meaning": "門の外で人と同じくする。開かれた関わりなら咎はない。",
+                "fortune": "无咎",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "オープンに関わるならよい。隠さず進める。"
+        },
+        {
+                "id": 13,
+                "name": "天火同人",
+                "yao": "六二",
+                "pattern": "101111",
+                "original": "同人于宗，吝。",
+                "meaning": "身内や仲間内だけで固まる。偏りが出て悔いがある。",
+                "fortune": "吝",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "内輪だけで決めない。外の視点を入れる。"
+        },
+        {
+                "id": 13,
+                "name": "天火同人",
+                "yao": "九三",
+                "pattern": "101111",
+                "original": "伏戎于莽，升其高陵，三歲不興。",
+                "meaning": "草むらに兵を伏せ、高みに登って様子を見る。長く動けない。",
+                "fortune": "停滞",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "疑いや構えが強すぎる。今は進めにくい。"
+        },
+        {
+                "id": 13,
+                "name": "天火同人",
+                "yao": "九四",
+                "pattern": "101111",
+                "original": "乘其墉，弗克攻，吉。",
+                "meaning": "垣に登るが攻めきらない。攻めずに止まることで吉。",
+                "fortune": "吉",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "攻めない判断がよい。距離を置けば整う。"
+        },
+        {
+                "id": 13,
+                "name": "天火同人",
+                "yao": "九五",
+                "pattern": "101111",
+                "original": "同人，先號咷而後笑。大師克相遇。",
+                "meaning": "はじめは泣き叫ぶほど隔たりがあるが、後には笑い合える。大きな力で出会える。",
+                "fortune": "後吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "最初は難しくても、誠実に向き合えば通じる。"
+        },
+        {
+                "id": 13,
+                "name": "天火同人",
+                "yao": "上九",
+                "pattern": "101111",
+                "original": "同人于郊，无悔。",
+                "meaning": "郊外で人と同じくする。中心から離れているが悔いはない。",
+                "fortune": "无悔",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "深く入りすぎない。ほどよい距離なら問題ない。"
+        },
+        {
+                "id": 14,
+                "name": "火天大有",
+                "yao": "初九",
+                "pattern": "111101",
+                "original": "无交害，匪咎。艱則无咎。",
+                "meaning": "害と交わらなければ咎はない。困難を意識すれば問題は避けられる。",
+                "fortune": "无咎",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "調子に乗らず、リスクを避けてから進める。"
+        },
+        {
+                "id": 14,
+                "name": "火天大有",
+                "yao": "九二",
+                "pattern": "111101",
+                "original": "大車以載，有攸往，无咎。",
+                "meaning": "大きな車で荷を載せる。行くところがあっても咎はない。",
+                "fortune": "无咎",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "受け止める力がある。範囲を決めて進める。"
+        },
+        {
+                "id": 14,
+                "name": "火天大有",
+                "yao": "九三",
+                "pattern": "111101",
+                "original": "公用亨于天子，小人弗克。",
+                "meaning": "公が天子に献じる。大きな器があれば通じるが、小人には扱えない。",
+                "fortune": "条件付き吉",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "器量や責任が必要。軽い気持ちならまだ待つ。"
+        },
+        {
+                "id": 14,
+                "name": "火天大有",
+                "yao": "九四",
+                "pattern": "111101",
+                "original": "匪其彭，无咎。",
+                "meaning": "盛んさを誇りすぎなければ咎はない。",
+                "fortune": "无咎",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "持っているものを見せびらかさない。控えめならよい。"
+        },
+        {
+                "id": 14,
+                "name": "火天大有",
+                "yao": "六五",
+                "pattern": "111101",
+                "original": "厥孚交如，威如，吉。",
+                "meaning": "誠意が交わり、威厳もある。吉。",
+                "fortune": "吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "信頼と節度があるなら進めてよい。"
+        },
+        {
+                "id": 14,
+                "name": "火天大有",
+                "yao": "上九",
+                "pattern": "111101",
+                "original": "自天祐之，吉无不利。",
+                "meaning": "天から助けられる。吉で不利はない。",
+                "fortune": "大吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "進めてよい。流れが味方している。"
+        },
+        {
+                "id": 15,
+                "name": "地山謙",
+                "yao": "初六",
+                "pattern": "001000",
+                "original": "謙謙君子，用涉大川，吉。",
+                "meaning": "謙虚にまた謙虚である君子。大川を渡っても吉。",
+                "fortune": "吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "控えめに進めるならよい。大きなことにも挑める。"
+        },
+        {
+                "id": 15,
+                "name": "地山謙",
+                "yao": "六二",
+                "pattern": "001000",
+                "original": "鳴謙，貞吉。",
+                "meaning": "謙虚さが自然に表れる。正しければ吉。",
+                "fortune": "貞吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "誠実に進める。自分を大きく見せない。"
+        },
+        {
+                "id": 15,
+                "name": "地山謙",
+                "yao": "九三",
+                "pattern": "001000",
+                "original": "勞謙，君子有終，吉。",
+                "meaning": "労してなお謙虚である。君子は終わりを得て吉。",
+                "fortune": "吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "地道にやればよい。最後まで丁寧に進める。"
+        },
+        {
+                "id": 15,
+                "name": "地山謙",
+                "yao": "六四",
+                "pattern": "001000",
+                "original": "无不利，撝謙。",
+                "meaning": "謙虚さを行動に表せば、不利はない。",
+                "fortune": "无不利",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "控えめな態度で動くなら問題ない。"
+        },
+        {
+                "id": 15,
+                "name": "地山謙",
+                "yao": "六五",
+                "pattern": "001000",
+                "original": "不富以其鄰，利用侵伐，无不利。",
+                "meaning": "富でなく隣人と通じる。必要な処置を取るには利があり、不利はない。",
+                "fortune": "条件付き吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "穏やかさを保ちつつ、必要な線引きはしてよい。"
+        },
+        {
+                "id": 15,
+                "name": "地山謙",
+                "yao": "上六",
+                "pattern": "001000",
+                "original": "鳴謙，利用行師，征邑國。",
+                "meaning": "謙虚さを掲げる。軍を動かし、内側の問題を正すのによい。",
+                "fortune": "条件付き吉",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "外へ攻めるより、まず身内や足元を整える。"
+        },
+        {
+                "id": 16,
+                "name": "雷地豫",
+                "yao": "初六",
+                "pattern": "000100",
+                "original": "鳴豫，凶。",
+                "meaning": "喜びや勢いを声高に出しすぎる。凶。",
+                "fortune": "凶",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "浮かれて進めない。いったん落ち着く。"
+        },
+        {
+                "id": 16,
+                "name": "雷地豫",
+                "yao": "六二",
+                "pattern": "000100",
+                "original": "介于石，不終日，貞吉。",
+                "meaning": "石のように固く節度を守る。終日待たずに見切れば吉。",
+                "fortune": "貞吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "早めに見極めればよい。だらだら迷わない。"
+        },
+        {
+                "id": 16,
+                "name": "雷地豫",
+                "yao": "六三",
+                "pattern": "000100",
+                "original": "盱豫，悔。遲有悔。",
+                "meaning": "上を見て期待しすぎる。遅れると悔いがある。",
+                "fortune": "悔",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "人任せにしない。決めるなら早めに条件を切る。"
+        },
+        {
+                "id": 16,
+                "name": "雷地豫",
+                "yao": "九四",
+                "pattern": "000100",
+                "original": "由豫，大有得。勿疑。朋盍簪。",
+                "meaning": "喜びの中心となり、大いに得る。疑わなければ仲間が集まる。",
+                "fortune": "大吉寄り",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "進めてよい。迷いすぎず、仲間と動く。"
+        },
+        {
+                "id": 16,
+                "name": "雷地豫",
+                "yao": "六五",
+                "pattern": "000100",
+                "original": "貞疾，恒不死。",
+                "meaning": "正しくても病のような重さがある。ただし長く続いても滅びない。",
+                "fortune": "厲寄り",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "無理に明るく進めない。負担を減らして様子を見る。"
+        },
+        {
+                "id": 16,
+                "name": "雷地豫",
+                "yao": "上六",
+                "pattern": "000100",
+                "original": "冥豫，成有渝，无咎。",
+                "meaning": "喜びに暗く沈む。成ったあとに改めれば咎はない。",
+                "fortune": "改めて无咎",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "浮かれた後なら修正する。今から整え直せばよい。"
+        },
+        {
+                "id": 17,
+                "name": "沢雷随",
+                "yao": "初九",
+                "pattern": "100110",
+                "original": "官有渝，貞吉。出門交有功。",
+                "meaning": "立場や役目に変化がある。正しさを守り、外に出て交われば功がある。",
+                "fortune": "貞吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "変化を受け入れてよい。外に出て人と関わる。"
+        },
+        {
+                "id": 17,
+                "name": "沢雷随",
+                "yao": "六二",
+                "pattern": "100110",
+                "original": "係小子，失丈夫。",
+                "meaning": "小さなものに関わりすぎて、大事なものを失う。",
+                "fortune": "凶寄り",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "目先のことに引っ張られない。大事なものを優先する。"
+        },
+        {
+                "id": 17,
+                "name": "沢雷随",
+                "yao": "六三",
+                "pattern": "100110",
+                "original": "係丈夫，失小子。隨有求得，利居貞。",
+                "meaning": "大事なものに従えば、小さなものは失う。求めるものは得られるが、正しく留まるのがよい。",
+                "fortune": "条件付き吉",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "何を優先するか決める。小さな損は受け入れる。"
+        },
+        {
+                "id": 17,
+                "name": "沢雷随",
+                "yao": "九四",
+                "pattern": "100110",
+                "original": "隨有獲，貞凶。有孚在道，以明，何咎。",
+                "meaning": "従って得るものはあるが、正しいだけでは凶に傾く。誠意と明るい判断があれば咎はない。",
+                "fortune": "凶含み",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "得になる話ほど慎重に見る。誠実さと透明性が必要。"
+        },
+        {
+                "id": 17,
+                "name": "沢雷随",
+                "yao": "九五",
+                "pattern": "100110",
+                "original": "孚于嘉，吉。",
+                "meaning": "よいものに誠を尽くす。吉。",
+                "fortune": "吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "信頼できる相手や良い流れなら進めてよい。"
+        },
+        {
+                "id": 17,
+                "name": "沢雷随",
+                "yao": "上六",
+                "pattern": "100110",
+                "original": "拘係之，乃從維之。王用亨于西山。",
+                "meaning": "強く結び留め、さらに従わせる。祭りに用いるほど深い結びつき。",
+                "fortune": "強い結びつき",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "縛りが強い。簡単に決めず、責任の重さを見る。"
+        },
+        {
+                "id": 18,
+                "name": "山風蠱",
+                "yao": "初六",
+                "pattern": "011001",
+                "original": "幹父之蠱，有子，考无咎。厲終吉。",
+                "meaning": "父の代からの乱れを正す。受け継ぐ者がいれば咎はなく、危うくても最後は吉。",
+                "fortune": "厲・終吉",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "古い問題を整える時。急がず、根本から直す。"
+        },
+        {
+                "id": 18,
+                "name": "山風蠱",
+                "yao": "九二",
+                "pattern": "011001",
+                "original": "幹母之蠱，不可貞。",
+                "meaning": "母の側の乱れを正す。正しさを押し通しすぎてはならない。",
+                "fortune": "注意",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "正論で押さない。やわらかく修正する。"
+        },
+        {
+                "id": 18,
+                "name": "山風蠱",
+                "yao": "九三",
+                "pattern": "011001",
+                "original": "幹父之蠱，小有悔，无大咎。",
+                "meaning": "古い乱れを正す時、少し悔いはあるが大きな咎はない。",
+                "fortune": "小悔・无大咎",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "少し面倒でも直す価値はある。大きな失敗ではない。"
+        },
+        {
+                "id": 18,
+                "name": "山風蠱",
+                "yao": "六四",
+                "pattern": "011001",
+                "original": "裕父之蠱，往見吝。",
+                "meaning": "古い乱れをゆるく放置する。進めば悔いを見る。",
+                "fortune": "吝",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "問題を放置して進まない。先に片づける。"
+        },
+        {
+                "id": 18,
+                "name": "山風蠱",
+                "yao": "六五",
+                "pattern": "011001",
+                "original": "幹父之蠱，用譽。",
+                "meaning": "古い乱れを正し、誉れを得る。",
+                "fortune": "吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "修正や整理に向く。丁寧に直せば評価につながる。"
+        },
+        {
+                "id": 18,
+                "name": "山風蠱",
+                "yao": "上九",
+                "pattern": "011001",
+                "original": "不事王侯，高尚其事。",
+                "meaning": "王侯に仕えず、自分の志を高く保つ。",
+                "fortune": "高尚",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "利益より筋を取る。無理に関わらない。"
+        },
+        {
+                "id": 19,
+                "name": "地沢臨",
+                "yao": "初九",
+                "pattern": "110000",
+                "original": "咸臨，貞吉。",
+                "meaning": "感じ合いながら近づく。正しければ吉。",
+                "fortune": "貞吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "相手や状況に自然に近づいてよい。礼儀は守る。"
+        },
+        {
+                "id": 19,
+                "name": "地沢臨",
+                "yao": "九二",
+                "pattern": "110000",
+                "original": "咸臨，吉无不利。",
+                "meaning": "感じ合いながら近づく。吉で不利はない。",
+                "fortune": "吉无不利",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "進めてよい。協調して近づく。"
+        },
+        {
+                "id": 19,
+                "name": "地沢臨",
+                "yao": "六三",
+                "pattern": "110000",
+                "original": "甘臨，无攸利。既憂之，无咎。",
+                "meaning": "甘く近づくだけでは利がない。問題を憂えて改めれば咎はない。",
+                "fortune": "无利・无咎",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "甘く見ない。見直してから進める。"
+        },
+        {
+                "id": 19,
+                "name": "地沢臨",
+                "yao": "六四",
+                "pattern": "110000",
+                "original": "至臨，无咎。",
+                "meaning": "近づくべきところに至る。咎はない。",
+                "fortune": "无咎",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "必要なところまで近づいてよい。踏み込みすぎない。"
+        },
+        {
+                "id": 19,
+                "name": "地沢臨",
+                "yao": "六五",
+                "pattern": "110000",
+                "original": "知臨，大君之宜，吉。",
+                "meaning": "知恵をもって近づく。上に立つ者にふさわしく吉。",
+                "fortune": "吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "感情ではなく、見通しを持って進める。"
+        },
+        {
+                "id": 19,
+                "name": "地沢臨",
+                "yao": "上六",
+                "pattern": "110000",
+                "original": "敦臨，吉无咎。",
+                "meaning": "厚く誠実に近づく。吉で咎はない。",
+                "fortune": "吉无咎",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "誠実に関わればよい。丁寧さを保つ。"
+        },
+        {
+                "id": 20,
+                "name": "風地観",
+                "yao": "初六",
+                "pattern": "000011",
+                "original": "童觀，小人无咎，君子吝。",
+                "meaning": "子どものような浅い見方。小人なら咎はないが、君子には悔いがある。",
+                "fortune": "吝",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "見方が浅い。もう少し観察してから決める。"
+        },
+        {
+                "id": 20,
+                "name": "風地観",
+                "yao": "六二",
+                "pattern": "000011",
+                "original": "闚觀，利女貞。",
+                "meaning": "すき間からのぞき見るような観察。控えめに正しさを守るには利がある。",
+                "fortune": "条件付き",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "情報が限られている。小さく様子を見る。"
+        },
+        {
+                "id": 20,
+                "name": "風地観",
+                "yao": "六三",
+                "pattern": "000011",
+                "original": "觀我生，進退。",
+                "meaning": "自分のあり方を観て、進むか退くかを決める。",
+                "fortune": "判断時",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "外より自分の状態を見る。進退を見極める。"
+        },
+        {
+                "id": 20,
+                "name": "風地観",
+                "yao": "六四",
+                "pattern": "000011",
+                "original": "觀國之光，利用賓于王。",
+                "meaning": "国の光を見る。上位の場に客として入るのによい。",
+                "fortune": "吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "よい場や人から学ぶなら進めてよい。"
+        },
+        {
+                "id": 20,
+                "name": "風地観",
+                "yao": "九五",
+                "pattern": "000011",
+                "original": "觀我生，君子无咎。",
+                "meaning": "自分の生き方や行いを観る。君子なら咎はない。",
+                "fortune": "无咎",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "自分の姿勢を点検する。整っていれば進める。"
+        },
+        {
+                "id": 20,
+                "name": "風地観",
+                "yao": "上九",
+                "pattern": "000011",
+                "original": "觀其生，君子无咎。",
+                "meaning": "相手や全体のあり方を観る。君子なら咎はない。",
+                "fortune": "无咎",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "周囲をよく見てから判断する。急がない。"
+        },
+        {
+                "id": 21,
+                "name": "火雷噬嗑",
+                "yao": "初九",
+                "pattern": "100101",
+                "original": "屨校滅趾，无咎。",
+                "meaning": "足かせで足先を傷める程度。早めの制止なら大きな咎はない。",
+                "fortune": "无咎",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "小さいうちに止める。軽い注意や修正で済ませる。"
+        },
+        {
+                "id": 21,
+                "name": "火雷噬嗑",
+                "yao": "六二",
+                "pattern": "100101",
+                "original": "噬膚滅鼻，无咎。",
+                "meaning": "柔らかい肉を噛み、鼻まで沈む。やり過ぎに見えても咎はない。",
+                "fortune": "无咎",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "問題を処理してよい。ただし踏み込みすぎに注意する。"
+        },
+        {
+                "id": 21,
+                "name": "火雷噬嗑",
+                "yao": "六三",
+                "pattern": "100101",
+                "original": "噬腊肉，遇毒。小吝，无咎。",
+                "meaning": "干し肉を噛んで毒に当たる。少し悔いはあるが大きな咎はない。",
+                "fortune": "小吝・无咎",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "面倒なものに当たりやすい。慎重に処理する。"
+        },
+        {
+                "id": 21,
+                "name": "火雷噬嗑",
+                "yao": "九四",
+                "pattern": "100101",
+                "original": "噬乾胏，得金矢。利艱貞，吉。",
+                "meaning": "骨つきの固い肉を噛み、金の矢を得る。困難でも正しくあれば吉。",
+                "fortune": "艱貞吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "難しいが進めてよい。手間を惜しまず処理する。"
+        },
+        {
+                "id": 21,
+                "name": "火雷噬嗑",
+                "yao": "六五",
+                "pattern": "100101",
+                "original": "噬乾肉，得黃金。貞厲，无咎。",
+                "meaning": "乾いた肉を噛み、黄金を得る。正しくしても危ういが咎はない。",
+                "fortune": "厲・无咎",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "得るものはあるが負担もある。条件を確認して進める。"
+        },
+        {
+                "id": 21,
+                "name": "火雷噬嗑",
+                "yao": "上九",
+                "pattern": "100101",
+                "original": "何校滅耳，凶。",
+                "meaning": "首かせで耳を傷める。罰や制約が重く、凶。",
+                "fortune": "凶",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "ここまで行くと重すぎる。今はやめる。"
+        },
+        {
+                "id": 22,
+                "name": "山火賁",
+                "yao": "初九",
+                "pattern": "101001",
+                "original": "賁其趾，舍車而徒。",
+                "meaning": "足元を飾り、車を捨てて歩く。見栄より実直さを選ぶ。",
+                "fortune": "无咎寄り",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "小さく整えて進める。派手さより身軽さを取る。"
+        },
+        {
+                "id": 22,
+                "name": "山火賁",
+                "yao": "六二",
+                "pattern": "101001",
+                "original": "賁其須。",
+                "meaning": "ひげを飾る。外見や添え物を整える。",
+                "fortune": "小吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "見た目や細部を整えるにはよい。中身は変えすぎない。"
+        },
+        {
+                "id": 22,
+                "name": "山火賁",
+                "yao": "九三",
+                "pattern": "101001",
+                "original": "賁如濡如，永貞吉。",
+                "meaning": "飾りが潤い美しい。長く正しさを守れば吉。",
+                "fortune": "貞吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "丁寧に整えるなら進めてよい。長く保てる形にする。"
+        },
+        {
+                "id": 22,
+                "name": "山火賁",
+                "yao": "六四",
+                "pattern": "101001",
+                "original": "賁如皤如，白馬翰如。匪寇婚媾。",
+                "meaning": "白く飾られ、白馬が飛ぶように来る。敵ではなく縁や調和の兆し。",
+                "fortune": "吉寄り",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "怪しまず、よい縁なら受けてよい。清潔感を重視する。"
+        },
+        {
+                "id": 22,
+                "name": "山火賁",
+                "yao": "六五",
+                "pattern": "101001",
+                "original": "賁于丘園，束帛戔戔。吝，終吉。",
+                "meaning": "丘や園を飾る。贈り物は少ないが、悔いはあっても最後は吉。",
+                "fortune": "吝・終吉",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "豪華でなくてよい。小さく整えれば最後はまとまる。"
+        },
+        {
+                "id": 22,
+                "name": "山火賁",
+                "yao": "上九",
+                "pattern": "101001",
+                "original": "白賁，无咎。",
+                "meaning": "白く飾る。飾りを極めるとかえって素に戻り、咎はない。",
+                "fortune": "无咎",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "盛りすぎない。シンプルに戻すとよい。"
+        },
+        {
+                "id": 23,
+                "name": "山地剝",
+                "yao": "初六",
+                "pattern": "000001",
+                "original": "剝牀以足，蔑貞，凶。",
+                "meaning": "寝台の足元から剥がれる。土台が崩れ始め、正しさも損なわれ凶。",
+                "fortune": "凶",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "小さな崩れを軽視しない。今日は進めない。"
+        },
+        {
+                "id": 23,
+                "name": "山地剝",
+                "yao": "六二",
+                "pattern": "000001",
+                "original": "剝牀以辨，蔑貞，凶。",
+                "meaning": "寝台の縁まで剥がれる。崩れが広がり、凶。",
+                "fortune": "凶",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "すでに傷みが広がっている。撤退や修理を優先する。"
+        },
+        {
+                "id": 23,
+                "name": "山地剝",
+                "yao": "六三",
+                "pattern": "000001",
+                "original": "剝之，无咎。",
+                "meaning": "剥がれるが、咎はない。不要なものが落ちるだけなら問題は小さい。",
+                "fortune": "无咎",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "失うものがあっても必要な整理かもしれない。様子を見る。"
+        },
+        {
+                "id": 23,
+                "name": "山地剝",
+                "yao": "六四",
+                "pattern": "000001",
+                "original": "剝牀以膚，凶。",
+                "meaning": "寝台が剥がれて肌に及ぶ。危険が身近に迫り凶。",
+                "fortune": "凶",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "かなり近い危険。すぐ距離を取る。"
+        },
+        {
+                "id": 23,
+                "name": "山地剝",
+                "yao": "六五",
+                "pattern": "000001",
+                "original": "貫魚，以宮人寵，无不利。",
+                "meaning": "魚を連ねるように順序を整える。内側をうまく治めれば不利はない。",
+                "fortune": "无不利",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "順序立てて整えるならよい。人や物を並べ直す。"
+        },
+        {
+                "id": 23,
+                "name": "山地剝",
+                "yao": "上九",
+                "pattern": "000001",
+                "original": "碩果不食，君子得輿，小人剝廬。",
+                "meaning": "大きな果実は食べられず残る。君子は車を得るが、小人は住まいを剥がされる。",
+                "fortune": "分かれ目",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "何を残すか見極める。軽い気持ちで動かない。"
+        },
+        {
+                "id": 24,
+                "name": "地雷復",
+                "yao": "初九",
+                "pattern": "100000",
+                "original": "不遠復，无祇悔，元吉。",
+                "meaning": "遠く行かずに戻る。大きな悔いはなく、大いに吉。",
+                "fortune": "元吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "早めに戻ればよい。修正して進める。"
+        },
+        {
+                "id": 24,
+                "name": "地雷復",
+                "yao": "六二",
+                "pattern": "100000",
+                "original": "休復，吉。",
+                "meaning": "よく休み、よい形で戻る。吉。",
+                "fortune": "吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "休んでから戻るならよい。無理に急がない。"
+        },
+        {
+                "id": 24,
+                "name": "地雷復",
+                "yao": "六三",
+                "pattern": "100000",
+                "original": "頻復，厲无咎。",
+                "meaning": "何度も戻る。危うさはあるが咎はない。",
+                "fortune": "厲・无咎",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "同じ迷いを繰り返している。少し立ち止まって整える。"
+        },
+        {
+                "id": 24,
+                "name": "地雷復",
+                "yao": "六四",
+                "pattern": "100000",
+                "original": "中行獨復。",
+                "meaning": "中道を行き、ひとりで戻る。",
+                "fortune": "无咎寄り",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "周囲に合わせすぎず、自分だけでも正しい位置に戻る。"
+        },
+        {
+                "id": 24,
+                "name": "地雷復",
+                "yao": "六五",
+                "pattern": "100000",
+                "original": "敦復，无悔。",
+                "meaning": "厚く誠実に戻る。悔いはない。",
+                "fortune": "无悔",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "素直に戻ればよい。やり直しを恐れない。"
+        },
+        {
+                "id": 24,
+                "name": "地雷復",
+                "yao": "上六",
+                "pattern": "100000",
+                "original": "迷復，凶。有災眚。用行師，終有大敗。以其國君，凶。至于十年不克征。",
+                "meaning": "戻る道に迷い、凶。災いがあり、強く進めば大敗する。長く立て直せない。",
+                "fortune": "大凶",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "迷ったまま進めない。今日は完全に見送る。"
+        },
+        {
+                "id": 25,
+                "name": "天雷无妄",
+                "yao": "初九",
+                "pattern": "100111",
+                "original": "无妄，往吉。",
+                "meaning": "私心なく自然に進むなら吉。余計な作為をしない。",
+                "fortune": "吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "素直に進めてよい。変に小細工しない。"
+        },
+        {
+                "id": 25,
+                "name": "天雷无妄",
+                "yao": "六二",
+                "pattern": "100111",
+                "original": "不耕穫，不菑畬，則利有攸往。",
+                "meaning": "耕さず収穫を求めず、開墾せず畑を得ようとしない。欲を出さなければ進んでよい。",
+                "fortune": "利あり",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "見返りを欲張らないなら進める。自然な流れを選ぶ。"
+        },
+        {
+                "id": 25,
+                "name": "天雷无妄",
+                "yao": "六三",
+                "pattern": "100111",
+                "original": "无妄之災，或繋之牛，行人之得，邑人之災。",
+                "meaning": "思いがけない災い。誰かの得が、別の誰かの損になる。",
+                "fortune": "災い",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "巻き込まれやすい。今日は関わらないほうがよい。"
+        },
+        {
+                "id": 25,
+                "name": "天雷无妄",
+                "yao": "九四",
+                "pattern": "100111",
+                "original": "可貞，无咎。",
+                "meaning": "正しさを守れば咎はない。無理に動かず、筋を通す。",
+                "fortune": "无咎",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "今は正しい位置を守る。急いで動かない。"
+        },
+        {
+                "id": 25,
+                "name": "天雷无妄",
+                "yao": "九五",
+                "pattern": "100111",
+                "original": "无妄之疾，勿藥有喜。",
+                "meaning": "思いがけない不調。薬を使わずとも喜びがある。自然に任せると整う。",
+                "fortune": "吉寄り",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "手を入れすぎない。少し様子を見ると回復しやすい。"
+        },
+        {
+                "id": 25,
+                "name": "天雷无妄",
+                "yao": "上九",
+                "pattern": "100111",
+                "original": "无妄，行有眚，无攸利。",
+                "meaning": "私心がなくても、今進めば災いがある。進んでも利はない。",
+                "fortune": "眚・不利",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "正しくても今は動かない。タイミングが悪い。"
+        },
+        {
+                "id": 26,
+                "name": "山天大畜",
+                "yao": "初九",
+                "pattern": "111001",
+                "original": "有厲，利已。",
+                "meaning": "危うさがある。止まることに利がある。",
+                "fortune": "厲",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "今は止める。勢いで進めない。"
+        },
+        {
+                "id": 26,
+                "name": "山天大畜",
+                "yao": "九二",
+                "pattern": "111001",
+                "original": "輿說輹。",
+                "meaning": "車の軸が外れる。進むための仕組みが一時的に止まる。",
+                "fortune": "停止",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "無理に動かさない。足回りや段取りを直す。"
+        },
+        {
+                "id": 26,
+                "name": "山天大畜",
+                "yao": "九三",
+                "pattern": "111001",
+                "original": "良馬逐，利艱貞。曰閑輿衛，利有攸往。",
+                "meaning": "良馬が進む。困難に耐えて正しく、備えを整えれば進んでよい。",
+                "fortune": "艱貞吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "準備があるなら進める。守りも整える。"
+        },
+        {
+                "id": 26,
+                "name": "山天大畜",
+                "yao": "六四",
+                "pattern": "111001",
+                "original": "童牛之牿，元吉。",
+                "meaning": "若い牛に横木をつけて暴走を防ぐ。早めの制御が大いに吉。",
+                "fortune": "元吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "早めにルールを決めればよい。小さいうちに整える。"
+        },
+        {
+                "id": 26,
+                "name": "山天大畜",
+                "yao": "六五",
+                "pattern": "111001",
+                "original": "豶豕之牙，吉。",
+                "meaning": "去勢された豚の牙。力を適切に抑えれば吉。",
+                "fortune": "吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "強さをそのまま出さず、抑えて使うならよい。"
+        },
+        {
+                "id": 26,
+                "name": "山天大畜",
+                "yao": "上九",
+                "pattern": "111001",
+                "original": "何天之衢，亨。",
+                "meaning": "天の大通りに至る。道が開け、通じる。",
+                "fortune": "亨",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "進めてよい。大きく道が開いている。"
+        },
+        {
+                "id": 27,
+                "name": "山雷頤",
+                "yao": "初九",
+                "pattern": "100001",
+                "original": "舍爾靈龜，觀我朵頤，凶。",
+                "meaning": "自分の霊亀を捨て、人の食べる姿を見て欲しがる。",
+                "fortune": "凶",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "人をうらやんで選ばない。今日は見送る。"
+        },
+        {
+                "id": 27,
+                "name": "山雷頤",
+                "yao": "六二",
+                "pattern": "100001",
+                "original": "顛頤，拂經，于丘頤，征凶。",
+                "meaning": "養う道が逆さまになる。筋を外して求めると、進めば凶。",
+                "fortune": "凶",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "頼る先が違う。今は進めない。"
+        },
+        {
+                "id": 27,
+                "name": "山雷頤",
+                "yao": "六三",
+                "pattern": "100001",
+                "original": "拂頤，貞凶。十年勿用，无攸利。",
+                "meaning": "養う道に逆らう。正しくしても凶。長く用いず、利はない。",
+                "fortune": "凶",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "かなり不向き。今回は完全に見送る。"
+        },
+        {
+                "id": 27,
+                "name": "山雷頤",
+                "yao": "六四",
+                "pattern": "100001",
+                "original": "顛頤，吉。虎視眈眈，其欲逐逐，无咎。",
+                "meaning": "逆に養いを求めるが吉。虎のように慎重に見定めれば咎はない。",
+                "fortune": "吉・无咎",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "必要な支えを求めてよい。慎重に選ぶ。"
+        },
+        {
+                "id": 27,
+                "name": "山雷頤",
+                "yao": "六五",
+                "pattern": "100001",
+                "original": "拂經，居貞吉，不可涉大川。",
+                "meaning": "通常の筋とは違う。留まって正しければ吉だが、大きな冒険は不可。",
+                "fortune": "貞吉",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "小さく守るならよい。大きく動かない。"
+        },
+        {
+                "id": 27,
+                "name": "山雷頤",
+                "yao": "上九",
+                "pattern": "100001",
+                "original": "由頤，厲吉。利涉大川。",
+                "meaning": "養いの源となる。危うさはあるが吉。大川を渡る利もある。",
+                "fortune": "厲吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "責任を持つなら進める。大きなことにも向く。"
+        },
+        {
+                "id": 28,
+                "name": "沢風大過",
+                "yao": "初六",
+                "pattern": "011110",
+                "original": "藉用白茅，无咎。",
+                "meaning": "白い茅を敷くように、丁寧に受け止めれば咎はない。",
+                "fortune": "无咎",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "慎重に扱う。準備を敷いてから進める。"
+        },
+        {
+                "id": 28,
+                "name": "沢風大過",
+                "yao": "九二",
+                "pattern": "011110",
+                "original": "枯楊生稊，老夫得其女妻，无不利。",
+                "meaning": "枯れた柳に芽が出る。老夫が若い妻を得るように、新しい力が生じる。",
+                "fortune": "无不利",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "再生の芽がある。無理なく進めてよい。"
+        },
+        {
+                "id": 28,
+                "name": "沢風大過",
+                "yao": "九三",
+                "pattern": "011110",
+                "original": "棟橈，凶。",
+                "meaning": "棟木がたわむ。支えきれず凶。",
+                "fortune": "凶",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "負荷が大きすぎる。今はやめる。"
+        },
+        {
+                "id": 28,
+                "name": "沢風大過",
+                "yao": "九四",
+                "pattern": "011110",
+                "original": "棟隆，吉。有它吝。",
+                "meaning": "棟木が高くしっかりする。吉。ただし余計なものがあれば悔い。",
+                "fortune": "吉・吝",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "中心がしっかりしていれば進める。余計な条件は外す。"
+        },
+        {
+                "id": 28,
+                "name": "沢風大過",
+                "yao": "九五",
+                "pattern": "011110",
+                "original": "枯楊生華，老婦得其士夫，无咎无譽。",
+                "meaning": "枯れた柳に花が咲く。咎はないが誉れもない。",
+                "fortune": "无咎无譽",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "見た目ほど実りはない。大きく期待しない。"
+        },
+        {
+                "id": 28,
+                "name": "沢風大過",
+                "yao": "上六",
+                "pattern": "011110",
+                "original": "過涉滅頂，凶，无咎。",
+                "meaning": "深く渡りすぎて頭まで沈む。凶だが、志には咎がない。",
+                "fortune": "凶",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "やりすぎると沈む。善意でも今日は止める。"
+        },
+        {
+                "id": 29,
+                "name": "坎為水",
+                "yao": "初六",
+                "pattern": "010010",
+                "original": "習坎，入于坎窞，凶。",
+                "meaning": "危険の中でさらに深い穴へ入る。抜け道が見えず凶。",
+                "fortune": "凶",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "今は進めない。深みに入る前に止める。"
+        },
+        {
+                "id": 29,
+                "name": "坎為水",
+                "yao": "九二",
+                "pattern": "010010",
+                "original": "坎有險，求小得。",
+                "meaning": "危険はあるが、小さなものなら得られる。",
+                "fortune": "小得",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "大きく狙わない。小さく確認する程度にする。"
+        },
+        {
+                "id": 29,
+                "name": "坎為水",
+                "yao": "六三",
+                "pattern": "010010",
+                "original": "來之坎坎，險且枕，入于坎窞，勿用。",
+                "meaning": "行っても来ても危険。危うさに身を置き、深みに入る。用いてはならない。",
+                "fortune": "凶",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "どちらに動いても危ない。今日はやめる。"
+        },
+        {
+                "id": 29,
+                "name": "坎為水",
+                "yao": "六四",
+                "pattern": "010010",
+                "original": "樽酒簋貳，用缶，納約自牖，終无咎。",
+                "meaning": "粗末な器でも誠意をもって差し入れる。小さな窓口から通じ、最後は咎がない。",
+                "fortune": "終无咎",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "正面突破しない。小さく誠実に通す。"
+        },
+        {
+                "id": 29,
+                "name": "坎為水",
+                "yao": "九五",
+                "pattern": "010010",
+                "original": "坎不盈，祇既平，无咎。",
+                "meaning": "穴はまだ満ちないが、平らになりつつある。咎はない。",
+                "fortune": "无咎",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "もう少しで整う。焦らず水位が下がるのを待つ。"
+        },
+        {
+                "id": 29,
+                "name": "坎為水",
+                "yao": "上六",
+                "pattern": "010010",
+                "original": "係用徽纆，寘于叢棘，三歲不得，凶。",
+                "meaning": "縄で縛られ、いばらの中に置かれる。長く抜け出せず凶。",
+                "fortune": "凶",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "拘束が強すぎる。関わらないほうがよい。"
+        },
+        {
+                "id": 30,
+                "name": "離為火",
+                "yao": "初九",
+                "pattern": "101101",
+                "original": "履錯然，敬之无咎。",
+                "meaning": "足元が乱れている。慎んで扱えば咎はない。",
+                "fortune": "无咎",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "まず足元を整える。軽く見ず、丁寧に始める。"
+        },
+        {
+                "id": 30,
+                "name": "離為火",
+                "yao": "六二",
+                "pattern": "101101",
+                "original": "黃離，元吉。",
+                "meaning": "中央の黄色い明るさ。中庸で明らかなら大いに吉。",
+                "fortune": "元吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "進めてよい。明るく、偏らず、正面から扱う。"
+        },
+        {
+                "id": 30,
+                "name": "離為火",
+                "yao": "九三",
+                "pattern": "101101",
+                "original": "日昃之離，不鼓缶而歌，則大耋之嗟，凶。",
+                "meaning": "日が傾く明るさ。楽しまずに老いを嘆くなら凶。",
+                "fortune": "凶寄り",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "気持ちが沈みすぎている。今日は進めない。"
+        },
+        {
+                "id": 30,
+                "name": "離為火",
+                "yao": "九四",
+                "pattern": "101101",
+                "original": "突如其來如，焚如，死如，棄如。",
+                "meaning": "突然来て、燃え、尽き、捨てられる。勢いが激しすぎる。",
+                "fortune": "凶",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "急展開に乗らない。燃え上がる話ほど止める。"
+        },
+        {
+                "id": 30,
+                "name": "離為火",
+                "yao": "六五",
+                "pattern": "101101",
+                "original": "出涕沱若，戚嗟若，吉。",
+                "meaning": "涙を流し、嘆きつつも、真剣に向き合えば吉。",
+                "fortune": "吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "不安があっても向き合えばよい。誠実に進める。"
+        },
+        {
+                "id": 30,
+                "name": "離為火",
+                "yao": "上九",
+                "pattern": "101101",
+                "original": "王用出征，有嘉折首，獲匪其醜，无咎。",
+                "meaning": "王が征伐に出て、首領を正し、従う者まで責めない。咎はない。",
+                "fortune": "无咎",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "問題の核心だけを処理するならよい。やりすぎない。"
+        },
+        {
+                "id": 31,
+                "name": "沢山咸",
+                "yao": "初六",
+                "pattern": "001110",
+                "original": "咸其拇。",
+                "meaning": "足の親指が感じ動く。まだ反応は小さい。",
+                "fortune": "兆し",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "まだ小さな気配。すぐ動かず様子を見る。"
+        },
+        {
+                "id": 31,
+                "name": "沢山咸",
+                "yao": "六二",
+                "pattern": "001110",
+                "original": "咸其腓，凶，居吉。",
+                "meaning": "ふくらはぎが感じ動く。動けば凶、留まれば吉。",
+                "fortune": "居吉",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "反応で動かない。今は留まるのがよい。"
+        },
+        {
+                "id": 31,
+                "name": "沢山咸",
+                "yao": "九三",
+                "pattern": "001110",
+                "original": "咸其股，執其隨，往吝。",
+                "meaning": "ももが感じて動き、後を追う。進めば悔いがある。",
+                "fortune": "吝",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "流されて追わない。衝動で動くと後悔しやすい。"
+        },
+        {
+                "id": 31,
+                "name": "沢山咸",
+                "yao": "九四",
+                "pattern": "001110",
+                "original": "貞吉悔亡，憧憧往來，朋從爾思。",
+                "meaning": "正しければ吉で悔いは消える。ただし思いが行き来しすぎると、仲間もその思いに従う。",
+                "fortune": "貞吉",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "気持ちが揺れている。軸を決めてから進める。"
+        },
+        {
+                "id": 31,
+                "name": "沢山咸",
+                "yao": "九五",
+                "pattern": "001110",
+                "original": "咸其脢，无悔。",
+                "meaning": "背のあたりが感じる。深く反応しすぎず、悔いはない。",
+                "fortune": "无悔",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "感情に飲まれない。距離を保てば問題ない。"
+        },
+        {
+                "id": 31,
+                "name": "沢山咸",
+                "yao": "上六",
+                "pattern": "001110",
+                "original": "咸其輔頰舌。",
+                "meaning": "頬や舌が感じる。言葉だけが動きやすい。",
+                "fortune": "軽い",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "口先だけになりやすい。言う前に実態を見る。"
+        },
+        {
+                "id": 32,
+                "name": "雷風恒",
+                "yao": "初六",
+                "pattern": "011100",
+                "original": "浚恒，貞凶，无攸利。",
+                "meaning": "恒久を深く求めすぎる。正しくても凶で、利はない。",
+                "fortune": "凶",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "最初から重くしすぎない。今は見送る。"
+        },
+        {
+                "id": 32,
+                "name": "雷風恒",
+                "yao": "九二",
+                "pattern": "011100",
+                "original": "悔亡。",
+                "meaning": "悔いが消える。位置を得て、落ち着く。",
+                "fortune": "悔亡",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "進めてよい。余計な迷いは手放す。"
+        },
+        {
+                "id": 32,
+                "name": "雷風恒",
+                "yao": "九三",
+                "pattern": "011100",
+                "original": "不恒其德，或承之羞，貞吝。",
+                "meaning": "徳が一定せず、恥を受けることがある。正しくしても悔いが残る。",
+                "fortune": "吝",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "方針がぶれている。今は進めない。"
+        },
+        {
+                "id": 32,
+                "name": "雷風恒",
+                "yao": "九四",
+                "pattern": "011100",
+                "original": "田无禽。",
+                "meaning": "狩りに行っても獲物がない。得るものがない。",
+                "fortune": "无得",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "動いても収穫が少ない。今回はやめる。"
+        },
+        {
+                "id": 32,
+                "name": "雷風恒",
+                "yao": "六五",
+                "pattern": "011100",
+                "original": "恒其德，貞。婦人吉，夫子凶。",
+                "meaning": "徳を保ち正しくある。受け身なら吉だが、主導する者には凶。",
+                "fortune": "条件付き",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "受ける立場ならよい。主導権を握るなら待つ。"
+        },
+        {
+                "id": 32,
+                "name": "雷風恒",
+                "yao": "上六",
+                "pattern": "011100",
+                "original": "振恒，凶。",
+                "meaning": "恒常を揺さぶりすぎる。落ち着きがなく凶。",
+                "fortune": "凶",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "変えすぎない。今は動かすほど悪化しやすい。"
+        },
+        {
+                "id": 33,
+                "name": "天山遯",
+                "yao": "初六",
+                "pattern": "001111",
+                "original": "遯尾，厲，勿用有攸往。",
+                "meaning": "退くのが遅れて、尾をつかまれる。危うく、進んではならない。",
+                "fortune": "厲",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "今は進めない。遅れる前に退く。"
+        },
+        {
+                "id": 33,
+                "name": "天山遯",
+                "yao": "六二",
+                "pattern": "001111",
+                "original": "執之用黃牛之革，莫之勝說。",
+                "meaning": "黄牛の革でしっかり結び留める。簡単にはほどけない。",
+                "fortune": "固定",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "すぐ動けない。縛りや条件を確認する。"
+        },
+        {
+                "id": 33,
+                "name": "天山遯",
+                "yao": "九三",
+                "pattern": "001111",
+                "original": "係遯，有疾厲，畜臣妾吉。",
+                "meaning": "退こうとしても引っかかる。危ういが、身近なものを養うには吉。",
+                "fortune": "厲・小吉",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "大きく動かず、身近な用事や守りに回る。"
+        },
+        {
+                "id": 33,
+                "name": "天山遯",
+                "yao": "九四",
+                "pattern": "001111",
+                "original": "好遯，君子吉，小人否。",
+                "meaning": "よい退き方。君子には吉だが、小人には通じない。",
+                "fortune": "吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "きれいに引くならよい。無理に粘らない。"
+        },
+        {
+                "id": 33,
+                "name": "天山遯",
+                "yao": "九五",
+                "pattern": "001111",
+                "original": "嘉遯，貞吉。",
+                "meaning": "立派に退く。正しければ吉。",
+                "fortune": "貞吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "今は退く判断がよい。体面より安全を取る。"
+        },
+        {
+                "id": 33,
+                "name": "天山遯",
+                "yao": "上九",
+                "pattern": "001111",
+                "original": "肥遯，无不利。",
+                "meaning": "ゆとりをもって退く。不利はない。",
+                "fortune": "无不利",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "余裕を持って離れるならよい。撤退は悪くない。"
+        },
+        {
+                "id": 34,
+                "name": "雷天大壮",
+                "yao": "初九",
+                "pattern": "111100",
+                "original": "壯于趾，征凶，有孚。",
+                "meaning": "足先だけが強く動こうとする。進めば凶。",
+                "fortune": "凶",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "勢いだけで始めない。まだ足元が先走っている。"
+        },
+        {
+                "id": 34,
+                "name": "雷天大壮",
+                "yao": "九二",
+                "pattern": "111100",
+                "original": "貞吉。",
+                "meaning": "正しさを守れば吉。",
+                "fortune": "貞吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "筋が通っているなら進めてよい。"
+        },
+        {
+                "id": 34,
+                "name": "雷天大壮",
+                "yao": "九三",
+                "pattern": "111100",
+                "original": "小人用壯，君子用罔，貞厲。羝羊觸藩，羸其角。",
+                "meaning": "小人は力を使い、君子はむやみに使わない。雄羊が垣に角をかけるように危うい。",
+                "fortune": "厲",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "強引に押すと引っかかる。今日は抑える。"
+        },
+        {
+                "id": 34,
+                "name": "雷天大壮",
+                "yao": "九四",
+                "pattern": "111100",
+                "original": "貞吉，悔亡。藩決不羸，壯于大輿之輹。",
+                "meaning": "正しければ吉で悔いは消える。垣が開き、車軸も強い。",
+                "fortune": "吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "道が開いている。準備があるなら進める。"
+        },
+        {
+                "id": 34,
+                "name": "雷天大壮",
+                "yao": "六五",
+                "pattern": "111100",
+                "original": "喪羊于易，无悔。",
+                "meaning": "羊を失うが、穏やかに済み悔いはない。",
+                "fortune": "无悔",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "少し失ってもよい。執着せず、軽く手放す。"
+        },
+        {
+                "id": 34,
+                "name": "雷天大壮",
+                "yao": "上六",
+                "pattern": "111100",
+                "original": "羝羊觸藩，不能退，不能遂，无攸利，艱則吉。",
+                "meaning": "雄羊が垣に角をかけ、退けず進めない。利はないが、苦労を知れば吉。",
+                "fortune": "艱則吉",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "詰まりを認める。無理に進まず、苦労して整える。"
+        },
+        {
+                "id": 35,
+                "name": "火地晋",
+                "yao": "初六",
+                "pattern": "000101",
+                "original": "晉如摧如，貞吉。罔孚，裕无咎。",
+                "meaning": "進もうとして押し戻される。信じられなくても、余裕を持てば咎はない。",
+                "fortune": "貞吉",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "すぐ通らなくても焦らない。余裕を持って待つ。"
+        },
+        {
+                "id": 35,
+                "name": "火地晋",
+                "yao": "六二",
+                "pattern": "000101",
+                "original": "晉如愁如，貞吉。受茲介福，于其王母。",
+                "meaning": "進むが憂いもある。正しければ吉で、大きな福を受ける。",
+                "fortune": "貞吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "不安があっても、正しい道なら進めてよい。"
+        },
+        {
+                "id": 35,
+                "name": "火地晋",
+                "yao": "六三",
+                "pattern": "000101",
+                "original": "眾允，悔亡。",
+                "meaning": "多くの人が認め、悔いが消える。",
+                "fortune": "悔亡",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "周囲の理解があるなら進める。"
+        },
+        {
+                "id": 35,
+                "name": "火地晋",
+                "yao": "九四",
+                "pattern": "000101",
+                "original": "晉如鼫鼠，貞厲。",
+                "meaning": "進むが大ねずみのように欲深い。正しくしても危うい。",
+                "fortune": "厲",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "欲張ると危ない。今日は控える。"
+        },
+        {
+                "id": 35,
+                "name": "火地晋",
+                "yao": "六五",
+                "pattern": "000101",
+                "original": "悔亡，失得勿恤，往吉，无不利。",
+                "meaning": "悔いは消える。損得を気にしなければ、進んで吉で不利はない。",
+                "fortune": "吉无不利",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "損得勘定を離れれば進めてよい。"
+        },
+        {
+                "id": 35,
+                "name": "火地晋",
+                "yao": "上九",
+                "pattern": "000101",
+                "original": "晉其角，維用伐邑，厲吉无咎，貞吝。",
+                "meaning": "角で進む。内側の問題を正すにはよいが、危うく悔いもある。",
+                "fortune": "厲吉・吝",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "外へ攻めず、内側の整理に使う。"
+        },
+        {
+                "id": 36,
+                "name": "地火明夷",
+                "yao": "初九",
+                "pattern": "101000",
+                "original": "明夷于飛，垂其翼。君子于行，三日不食。有攸往，主人有言。",
+                "meaning": "明るさが傷つき、飛ぶ翼が垂れる。進めば苦労し、言われることもある。",
+                "fortune": "厲寄り",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "今は無理に進めない。消耗が大きい。"
+        },
+        {
+                "id": 36,
+                "name": "地火明夷",
+                "yao": "六二",
+                "pattern": "101000",
+                "original": "明夷，夷于左股，用拯馬壯，吉。",
+                "meaning": "明るさが傷つき、左ももを傷める。強い馬で救えば吉。",
+                "fortune": "吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "助けや手段があるなら進める。無理はしない。"
+        },
+        {
+                "id": 36,
+                "name": "地火明夷",
+                "yao": "九三",
+                "pattern": "101000",
+                "original": "明夷于南狩，得其大首，不可疾貞。",
+                "meaning": "南で狩りをして大きな首を得る。急いで正そうとしてはならない。",
+                "fortune": "条件付き吉",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "問題の核心は見える。急がず慎重に処理する。"
+        },
+        {
+                "id": 36,
+                "name": "地火明夷",
+                "yao": "六四",
+                "pattern": "101000",
+                "original": "入于左腹，獲明夷之心，于出門庭。",
+                "meaning": "内側深くに入り、傷ついた明るさの心を知り、外へ出る。",
+                "fortune": "脱出",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "内情を見てから離れる。深追いしない。"
+        },
+        {
+                "id": 36,
+                "name": "地火明夷",
+                "yao": "六五",
+                "pattern": "101000",
+                "original": "箕子之明夷，利貞。",
+                "meaning": "箕子のように明るさを隠して守る。正しさを保つのによい。",
+                "fortune": "利貞",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "今は目立たない。内心を守り、静かに正しさを保つ。"
+        },
+        {
+                "id": 36,
+                "name": "地火明夷",
+                "yao": "上六",
+                "pattern": "101000",
+                "original": "不明晦，初登于天，後入于地。",
+                "meaning": "明らかでなく暗い。初めは天に昇るが、後には地に落ちる。",
+                "fortune": "凶",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "一見よく見えても落差が大きい。今日は見送る。"
+        },
+        {
+                "id": 37,
+                "name": "風火家人",
+                "yao": "初九",
+                "pattern": "101011",
+                "original": "閑有家，悔亡。",
+                "meaning": "家にけじめや守りを設ける。悔いは消える。",
+                "fortune": "悔亡",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "ルールを決めるなら進めてよい。身内ほど線引きをする。"
+        },
+        {
+                "id": 37,
+                "name": "風火家人",
+                "yao": "六二",
+                "pattern": "101011",
+                "original": "无攸遂，在中饋，貞吉。",
+                "meaning": "自分から成し遂げようとせず、内側の務めを守れば吉。",
+                "fortune": "貞吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "表に出すぎず、今の役割を丁寧に果たす。"
+        },
+        {
+                "id": 37,
+                "name": "風火家人",
+                "yao": "九三",
+                "pattern": "101011",
+                "original": "家人嗃嗃，悔厲吉。婦子嘻嘻，終吝。",
+                "meaning": "家の中で厳しすぎると危ういが吉。ゆるみすぎると最後は悔い。",
+                "fortune": "厲吉・終吝",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "厳しさと甘さの加減を見る。ゆるめすぎない。"
+        },
+        {
+                "id": 37,
+                "name": "風火家人",
+                "yao": "六四",
+                "pattern": "101011",
+                "original": "富家，大吉。",
+                "meaning": "家を豊かにする。大いに吉。",
+                "fortune": "大吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "内側を整えることは吉。暮らしや基盤を充実させる。"
+        },
+        {
+                "id": 37,
+                "name": "風火家人",
+                "yao": "九五",
+                "pattern": "101011",
+                "original": "王假有家，勿恤。吉。",
+                "meaning": "王が家を治めるように、中心が整う。心配しなくてよい。",
+                "fortune": "吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "中心を整えれば進めてよい。心配しすぎない。"
+        },
+        {
+                "id": 37,
+                "name": "風火家人",
+                "yao": "上九",
+                "pattern": "101011",
+                "original": "有孚威如，終吉。",
+                "meaning": "誠実さと威厳がある。最後は吉。",
+                "fortune": "終吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "優しさだけでなく締まりも必要。誠実に通せばよい。"
+        },
+        {
+                "id": 38,
+                "name": "火沢睽",
+                "yao": "初九",
+                "pattern": "110101",
+                "original": "悔亡，喪馬勿逐，自復。見惡人，无咎。",
+                "meaning": "悔いは消える。失った馬は追わなくても戻る。嫌な相手に会っても咎はない。",
+                "fortune": "无咎",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "追いかけない。自然に戻るものを待つ。"
+        },
+        {
+                "id": 38,
+                "name": "火沢睽",
+                "yao": "九二",
+                "pattern": "110101",
+                "original": "遇主于巷，无咎。",
+                "meaning": "路地で主人に会う。正式でなくても通じ、咎はない。",
+                "fortune": "无咎",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "思わぬ形でも話は通じる。柔らかく進める。"
+        },
+        {
+                "id": 38,
+                "name": "火沢睽",
+                "yao": "六三",
+                "pattern": "110101",
+                "original": "見輿曳，其牛掣，其人天且劓，无初有終。",
+                "meaning": "車は引かれ、牛は止められ、人は傷つく。初めは悪いが終わりはある。",
+                "fortune": "後に通じる",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "最初はこじれやすい。すぐ結論を出さない。"
+        },
+        {
+                "id": 38,
+                "name": "火沢睽",
+                "yao": "九四",
+                "pattern": "110101",
+                "original": "睽孤，遇元夫，交孚，厲无咎。",
+                "meaning": "そむき孤立するが、よい相手に会い、誠で交われば危うくても咎はない。",
+                "fortune": "厲・无咎",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "孤立しても、信頼できる相手がいれば整う。"
+        },
+        {
+                "id": 38,
+                "name": "火沢睽",
+                "yao": "六五",
+                "pattern": "110101",
+                "original": "悔亡，厥宗噬膚，往何咎。",
+                "meaning": "悔いは消える。身近な者が柔らかく噛むように通じる。進んで何の咎があろうか。",
+                "fortune": "吉寄り",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "身近な助けがあるなら進めてよい。"
+        },
+        {
+                "id": 38,
+                "name": "火沢睽",
+                "yao": "上九",
+                "pattern": "110101",
+                "original": "睽孤，見豕負塗，載鬼一車。先張之弧，後說之弧。匪寇婚媾，往遇雨則吉。",
+                "meaning": "孤立して疑いが強まり、汚れた豚や鬼の車を見るように見誤る。敵ではなく縁であり、雨に会えば吉。",
+                "fortune": "後吉",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "疑いすぎている。敵と決めつけず、流れが和らぐのを待つ。"
+        },
+        {
+                "id": 39,
+                "name": "水山蹇",
+                "yao": "初六",
+                "pattern": "001010",
+                "original": "往蹇，來譽。",
+                "meaning": "進めば困難、戻れば誉れがある。",
+                "fortune": "戻って吉",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "今は進まない。引き返す判断がよい。"
+        },
+        {
+                "id": 39,
+                "name": "水山蹇",
+                "yao": "六二",
+                "pattern": "001010",
+                "original": "王臣蹇蹇，匪躬之故。",
+                "meaning": "王の臣が困難に重ねて当たる。自分のためではない苦労。",
+                "fortune": "苦労あり",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "自分の得だけで動かない。役割なら慎重に受ける。"
+        },
+        {
+                "id": 39,
+                "name": "水山蹇",
+                "yao": "九三",
+                "pattern": "001010",
+                "original": "往蹇，來反。",
+                "meaning": "進めば困難、戻って反省する。",
+                "fortune": "戻るべき",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "前進より立て直し。いったん戻る。"
+        },
+        {
+                "id": 39,
+                "name": "水山蹇",
+                "yao": "六四",
+                "pattern": "001010",
+                "original": "往蹇，來連。",
+                "meaning": "進めば困難、戻ればつながりを得る。",
+                "fortune": "戻って連携",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "単独で進まない。戻って協力を探す。"
+        },
+        {
+                "id": 39,
+                "name": "水山蹇",
+                "yao": "九五",
+                "pattern": "001010",
+                "original": "大蹇，朋來。",
+                "meaning": "大きな困難だが、仲間が来る。",
+                "fortune": "困難中の助け",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "一人で突破しない。助けを待てば道が出る。"
+        },
+        {
+                "id": 39,
+                "name": "水山蹇",
+                "yao": "上六",
+                "pattern": "001010",
+                "original": "往蹇，來碩，吉。利見大人。",
+                "meaning": "進めば困難、戻れば大きな成果があり吉。大人に会うとよい。",
+                "fortune": "吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "相談相手を得てから進める。戻ることで大きく整う。"
+        },
+        {
+                "id": 40,
+                "name": "雷水解",
+                "yao": "初六",
+                "pattern": "010100",
+                "original": "无咎。",
+                "meaning": "咎はない。ほどけ始めている。",
+                "fortune": "无咎",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "軽く進めてよい。大きな問題はなさそう。"
+        },
+        {
+                "id": 40,
+                "name": "雷水解",
+                "yao": "九二",
+                "pattern": "010100",
+                "original": "田獲三狐，得黃矢，貞吉。",
+                "meaning": "狩りで三匹の狐を得、黄色い矢を得る。正しければ吉。",
+                "fortune": "貞吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "問題の元を処理できる。正面から進める。"
+        },
+        {
+                "id": 40,
+                "name": "雷水解",
+                "yao": "六三",
+                "pattern": "010100",
+                "original": "負且乘，致寇至，貞吝。",
+                "meaning": "荷を背負う身で車に乗り、盗賊を招く。分不相応で悔いがある。",
+                "fortune": "吝",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "背伸びすると問題を招く。今回は見送る。"
+        },
+        {
+                "id": 40,
+                "name": "雷水解",
+                "yao": "九四",
+                "pattern": "010100",
+                "original": "解而拇，朋至斯孚。",
+                "meaning": "足の親指の束縛を解けば、友が来て信頼が通じる。",
+                "fortune": "信頼回復",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "小さな引っかかりを外す。そこから関係が戻る。"
+        },
+        {
+                "id": 40,
+                "name": "雷水解",
+                "yao": "六五",
+                "pattern": "010100",
+                "original": "君子維有解，吉。有孚于小人。",
+                "meaning": "君子が解き放つことができれば吉。小人にも誠が伝わる。",
+                "fortune": "吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "許す・ほどく方向ならよい。こじれを解消する。"
+        },
+        {
+                "id": 40,
+                "name": "雷水解",
+                "yao": "上六",
+                "pattern": "010100",
+                "original": "公用射隼，于高墉之上，獲之，无不利。",
+                "meaning": "高い城壁の上の隼を射て捕らえる。不利はない。",
+                "fortune": "无不利",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "問題の核心を狙えばよい。的を絞って処理する。"
+        },
+        {
+                "id": 41,
+                "name": "山沢損",
+                "yao": "初九",
+                "pattern": "110001",
+                "original": "已事遄往，无咎，酌損之。",
+                "meaning": "用事を終えたら速やかに行く。咎はないが、減らし方をよく考える。",
+                "fortune": "无咎",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "不要なものを減らすなら進めてよい。やりすぎない。"
+        },
+        {
+                "id": 41,
+                "name": "山沢損",
+                "yao": "九二",
+                "pattern": "110001",
+                "original": "利貞，征凶，弗損益之。",
+                "meaning": "正しさを守るには利があるが、進めば凶。無理に減らさず、むしろ益する。",
+                "fortune": "貞利・征凶",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "動いて削りすぎない。今は現状を守る。"
+        },
+        {
+                "id": 41,
+                "name": "山沢損",
+                "yao": "六三",
+                "pattern": "110001",
+                "original": "三人行，則損一人。一人行，則得其友。",
+                "meaning": "三人で行けば一人を減らす。一人で行けば友を得る。",
+                "fortune": "調整",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "人数や関係を整理する。多すぎるなら絞る。"
+        },
+        {
+                "id": 41,
+                "name": "山沢損",
+                "yao": "六四",
+                "pattern": "110001",
+                "original": "損其疾，使遄有喜，无咎。",
+                "meaning": "病や悪いところを減らす。早くすれば喜びがあり、咎はない。",
+                "fortune": "喜・无咎",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "悪い習慣や負担を減らすならよい。早めに動く。"
+        },
+        {
+                "id": 41,
+                "name": "山沢損",
+                "yao": "六五",
+                "pattern": "110001",
+                "original": "或益之，十朋之龜弗克違，元吉。",
+                "meaning": "大きな助けがあり、十朋の亀でも逆らえない。大いに吉。",
+                "fortune": "元吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "助けが来る流れ。素直に受けて進める。"
+        },
+        {
+                "id": 41,
+                "name": "山沢損",
+                "yao": "上九",
+                "pattern": "110001",
+                "original": "弗損益之，无咎，貞吉，利有攸往，得臣无家。",
+                "meaning": "減らさず益する。咎なく、正しければ吉。進む利があり、私心のない助けを得る。",
+                "fortune": "貞吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "減らす段階は終わり。増やす・進める方向でよい。"
+        },
+        {
+                "id": 42,
+                "name": "風雷益",
+                "yao": "初九",
+                "pattern": "100011",
+                "original": "利用為大作，元吉，无咎。",
+                "meaning": "大きな働きをするのに利がある。大いに吉で咎はない。",
+                "fortune": "元吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "大きめに動いてよい。準備したことを形にする。"
+        },
+        {
+                "id": 42,
+                "name": "風雷益",
+                "yao": "六二",
+                "pattern": "100011",
+                "original": "或益之，十朋之龜弗克違，永貞吉。王用享于帝，吉。",
+                "meaning": "大きな助けがあり、逆らえないほどの益を受ける。長く正しければ吉。",
+                "fortune": "永貞吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "助けを受けてよい。長く続く形にする。"
+        },
+        {
+                "id": 42,
+                "name": "風雷益",
+                "yao": "六三",
+                "pattern": "100011",
+                "original": "益之用凶事，无咎。有孚中行，告公用圭。",
+                "meaning": "凶事を通して益を得る。誠をもって中道を行けば咎はない。",
+                "fortune": "无咎",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "困りごとの処理から益が出る。正直に進める。"
+        },
+        {
+                "id": 42,
+                "name": "風雷益",
+                "yao": "六四",
+                "pattern": "100011",
+                "original": "中行，告公從。利用為依遷國。",
+                "meaning": "中道を行き、公に告げれば従われる。拠り所を移すような大きな変更に利がある。",
+                "fortune": "利あり",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "相談して動くならよい。環境変更にも向く。"
+        },
+        {
+                "id": 42,
+                "name": "風雷益",
+                "yao": "九五",
+                "pattern": "100011",
+                "original": "有孚惠心，勿問元吉。有孚惠我德。",
+                "meaning": "誠と恵みの心がある。問わずとも大いに吉。徳が伝わる。",
+                "fortune": "元吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "善意で進めてよい。見返りを求めすぎない。"
+        },
+        {
+                "id": 42,
+                "name": "風雷益",
+                "yao": "上九",
+                "pattern": "100011",
+                "original": "莫益之，或擊之，立心勿恒，凶。",
+                "meaning": "誰も益してくれず、攻撃されることもある。心が定まらなければ凶。",
+                "fortune": "凶",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "欲張りすぎている。方針が定まらないならやめる。"
+        },
+        {
+                "id": 43,
+                "name": "沢天夬",
+                "yao": "初九",
+                "pattern": "111110",
+                "original": "壯于前趾，往不勝，為咎。",
+                "meaning": "足先だけが強く進もうとする。進んでも勝てず、咎となる。",
+                "fortune": "咎",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "勢いだけで行かない。今は踏み出しすぎ。"
+        },
+        {
+                "id": 43,
+                "name": "沢天夬",
+                "yao": "九二",
+                "pattern": "111110",
+                "original": "惕號，莫夜有戎，勿恤。",
+                "meaning": "警戒して呼びかける。夜に敵があっても、心配しすぎなくてよい。",
+                "fortune": "警戒して可",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "備えがあれば大丈夫。すぐ動かず警戒する。"
+        },
+        {
+                "id": 43,
+                "name": "沢天夬",
+                "yao": "九三",
+                "pattern": "111110",
+                "original": "壯于頄，有凶。君子夬夬，獨行遇雨，若濡有慍，无咎。",
+                "meaning": "頬に強さが出て凶。決然と一人で行けば濡れて不快でも咎はない。",
+                "fortune": "凶含み・无咎",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "感情を顔に出さない。一人で静かに処理する。"
+        },
+        {
+                "id": 43,
+                "name": "沢天夬",
+                "yao": "九四",
+                "pattern": "111110",
+                "original": "臀无膚，其行次且。牽羊悔亡，聞言不信。",
+                "meaning": "腰を落ち着けられず進みづらい。羊に引かれるように従えば悔いは消えるが、忠告を信じにくい。",
+                "fortune": "悔亡条件",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "忠告を聞く。自力で押すより従うほうがよい。"
+        },
+        {
+                "id": 43,
+                "name": "沢天夬",
+                "yao": "九五",
+                "pattern": "111110",
+                "original": "莧陸夬夬，中行无咎。",
+                "meaning": "雑草を決然と断つ。中道を守れば咎はない。",
+                "fortune": "无咎",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "不要なものを切るならよい。やりすぎず中道で。"
+        },
+        {
+                "id": 43,
+                "name": "沢天夬",
+                "yao": "上六",
+                "pattern": "111110",
+                "original": "无號，終有凶。",
+                "meaning": "呼びかける声もなく、最後には凶がある。",
+                "fortune": "凶",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "孤立している。今は進めない。"
+        },
+        {
+                "id": 44,
+                "name": "天風姤",
+                "yao": "初六",
+                "pattern": "011111",
+                "original": "繫于金柅，貞吉。有攸往，見凶。羸豕孚蹢躅。",
+                "meaning": "金の止め具につなぐ。留めれば吉だが、進めば凶。弱い豚も本気で暴れる。",
+                "fortune": "貞吉・往凶",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "まず止める。動かすと乱れやすい。"
+        },
+        {
+                "id": 44,
+                "name": "天風姤",
+                "yao": "九二",
+                "pattern": "011111",
+                "original": "包有魚，无咎，不利賓。",
+                "meaning": "包みの中に魚がある。咎はないが、外客には利がない。",
+                "fortune": "无咎",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "内々で処理する。外へ広げないほうがよい。"
+        },
+        {
+                "id": 44,
+                "name": "天風姤",
+                "yao": "九三",
+                "pattern": "011111",
+                "original": "臀无膚，其行次且，厲，无大咎。",
+                "meaning": "腰を落ち着けられず進みにくい。危ういが大きな咎はない。",
+                "fortune": "厲・无大咎",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "無理に進まず、足場が整うまで待つ。"
+        },
+        {
+                "id": 44,
+                "name": "天風姤",
+                "yao": "九四",
+                "pattern": "011111",
+                "original": "包无魚，起凶。",
+                "meaning": "包みに魚がない。中身がないのに動けば凶。",
+                "fortune": "凶",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "期待した中身がない。今日は見送る。"
+        },
+        {
+                "id": 44,
+                "name": "天風姤",
+                "yao": "九五",
+                "pattern": "011111",
+                "original": "以杞包瓜，含章，有隕自天。",
+                "meaning": "杞で瓜を包み、内に美質を含む。天から落ちてくるものがある。",
+                "fortune": "吉兆",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "内側に価値がある。焦らず受け取ればよい。"
+        },
+        {
+                "id": 44,
+                "name": "天風姤",
+                "yao": "上九",
+                "pattern": "011111",
+                "original": "姤其角，吝，无咎。",
+                "meaning": "角で出会う。悔いはあるが咎はない。",
+                "fortune": "吝・无咎",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "ぶつかりやすい。強く出ず、距離を取る。"
+        },
+        {
+                "id": 45,
+                "name": "沢地萃",
+                "yao": "初六",
+                "pattern": "000110",
+                "original": "有孚不終，乃亂乃萃。若號，一握為笑，勿恤，往无咎。",
+                "meaning": "誠はあるが続かず、乱れて集まる。呼びかければ笑いに変わる。心配せず進めば咎はない。",
+                "fortune": "无咎",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "まとまりきらなくても進めてよい。声をかけて整える。"
+        },
+        {
+                "id": 45,
+                "name": "沢地萃",
+                "yao": "六二",
+                "pattern": "000110",
+                "original": "引吉，无咎。孚乃利用禴。",
+                "meaning": "引き寄せられて吉、咎はない。誠があれば簡素な祭りでも利がある。",
+                "fortune": "吉・无咎",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "自然に引かれる流れならよい。飾らず誠実に進める。"
+        },
+        {
+                "id": 45,
+                "name": "沢地萃",
+                "yao": "六三",
+                "pattern": "000110",
+                "original": "萃如，嗟如，无攸利。往无咎，小吝。",
+                "meaning": "集まってもため息が出る。大きな利はないが、進んでも咎はなく少し悔いがある。",
+                "fortune": "小吝",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "期待ほど得るものは少ない。小さく関わる程度にする。"
+        },
+        {
+                "id": 45,
+                "name": "沢地萃",
+                "yao": "九四",
+                "pattern": "000110",
+                "original": "大吉，无咎。",
+                "meaning": "大いに吉で、咎はない。",
+                "fortune": "大吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "進めてよい。人や物が集まる流れを活かす。"
+        },
+        {
+                "id": 45,
+                "name": "沢地萃",
+                "yao": "九五",
+                "pattern": "000110",
+                "original": "萃有位，无咎。匪孚，元永貞，悔亡。",
+                "meaning": "集まりの中に位があり、咎はない。信頼が薄くても、長く正しければ悔いは消える。",
+                "fortune": "无咎・悔亡",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "立場を整えて進める。信頼は時間をかけて作る。"
+        },
+        {
+                "id": 45,
+                "name": "沢地萃",
+                "yao": "上六",
+                "pattern": "000110",
+                "original": "齎咨涕洟，无咎。",
+                "meaning": "嘆き、涙や鼻水を流すような状態だが、咎はない。",
+                "fortune": "无咎",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "感情が強い。泣き言を出してから落ち着いて決める。"
+        },
+        {
+                "id": 46,
+                "name": "地風升",
+                "yao": "初六",
+                "pattern": "011000",
+                "original": "允升，大吉。",
+                "meaning": "信じられて上っていく。大いに吉。",
+                "fortune": "大吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "進めてよい。自然に上がっていく流れ。"
+        },
+        {
+                "id": 46,
+                "name": "地風升",
+                "yao": "九二",
+                "pattern": "011000",
+                "original": "孚乃利用禴，无咎。",
+                "meaning": "誠があれば簡素な祭りでも利があり、咎はない。",
+                "fortune": "无咎",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "飾らなくてよい。誠実に進める。"
+        },
+        {
+                "id": 46,
+                "name": "地風升",
+                "yao": "九三",
+                "pattern": "011000",
+                "original": "升虛邑。",
+                "meaning": "空の邑に上る。妨げは少ないが、中身も薄い。",
+                "fortune": "通じる",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "進みやすい。中身を確認しながら進める。"
+        },
+        {
+                "id": 46,
+                "name": "地風升",
+                "yao": "六四",
+                "pattern": "011000",
+                "original": "王用亨于岐山，吉无咎。",
+                "meaning": "王が岐山で祭る。吉で咎はない。",
+                "fortune": "吉无咎",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "正式な手順を踏めばよい。礼を整えて進める。"
+        },
+        {
+                "id": 46,
+                "name": "地風升",
+                "yao": "六五",
+                "pattern": "011000",
+                "original": "貞吉，升階。",
+                "meaning": "正しければ吉。階段を上るように進む。",
+                "fortune": "貞吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "段階を踏めば進めてよい。急がず上がる。"
+        },
+        {
+                "id": 46,
+                "name": "地風升",
+                "yao": "上六",
+                "pattern": "011000",
+                "original": "冥升，利于不息之貞。",
+                "meaning": "暗い中で上る。休まず正しさを守るには利がある。",
+                "fortune": "条件付き",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "見通しが暗い。続けるなら慎重に、無理はしない。"
+        },
+        {
+                "id": 47,
+                "name": "沢水困",
+                "yao": "初六",
+                "pattern": "010110",
+                "original": "臀困于株木，入于幽谷，三歲不覿。",
+                "meaning": "切り株に座って困り、暗い谷に入り、長く人に会えない。",
+                "fortune": "凶",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "孤立しやすい。今は進めない。"
+        },
+        {
+                "id": 47,
+                "name": "沢水困",
+                "yao": "九二",
+                "pattern": "010110",
+                "original": "困于酒食，朱紱方來，利用享祀，征凶，无咎。",
+                "meaning": "酒食に困るほど満ちているが、正式な役目が来る。祭りには利があるが、進めば凶。",
+                "fortune": "待機吉・進凶",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "受け身で整える。自分から攻めない。"
+        },
+        {
+                "id": 47,
+                "name": "沢水困",
+                "yao": "六三",
+                "pattern": "010110",
+                "original": "困于石，據于蒺藜，入于其宮，不見其妻，凶。",
+                "meaning": "石に困り、いばらに寄りかかり、家に入っても妻に会えない。",
+                "fortune": "凶",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "居場所が悪い。今は完全に見送る。"
+        },
+        {
+                "id": 47,
+                "name": "沢水困",
+                "yao": "九四",
+                "pattern": "010110",
+                "original": "來徐徐，困于金車，吝，有終。",
+                "meaning": "ゆっくり来る。金の車に困る。悔いはあるが終わりはある。",
+                "fortune": "吝・有終",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "時間がかかる。急がず、詰まりが解けるのを待つ。"
+        },
+        {
+                "id": 47,
+                "name": "沢水困",
+                "yao": "九五",
+                "pattern": "010110",
+                "original": "劓刖，困于赤紱，乃徐有說，利用祭祀。",
+                "meaning": "鼻や足を傷つけられ、役目に困る。やがて少しずつ解け、祭祀に利がある。",
+                "fortune": "後に解ける",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "苦しいが、少しずつ解ける。急な前進は避ける。"
+        },
+        {
+                "id": 47,
+                "name": "沢水困",
+                "yao": "上六",
+                "pattern": "010110",
+                "original": "困于葛藟，于臲卼，曰動悔。有悔，征吉。",
+                "meaning": "つる草に絡まり、不安定。動けば悔いと言うが、悔いを知って進めば吉。",
+                "fortune": "悔後吉",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "絡まりを自覚する。反省してからなら動ける。"
+        },
+        {
+                "id": 48,
+                "name": "水風井",
+                "yao": "初六",
+                "pattern": "011010",
+                "original": "井泥不食，舊井无禽。",
+                "meaning": "井戸が泥で濁り、飲めない。古い井戸には鳥も来ない。",
+                "fortune": "凶寄り",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "今は使えない。まず掃除や再整備が必要。"
+        },
+        {
+                "id": 48,
+                "name": "水風井",
+                "yao": "九二",
+                "pattern": "011010",
+                "original": "井谷射鮒，甕敝漏。",
+                "meaning": "井戸の谷で小魚を射る。甕は壊れて漏れる。",
+                "fortune": "不十分",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "器や仕組みが足りない。進めても漏れが出る。"
+        },
+        {
+                "id": 48,
+                "name": "水風井",
+                "yao": "九三",
+                "pattern": "011010",
+                "original": "井渫不食，為我心惻。可用汲，王明，並受其福。",
+                "meaning": "井戸はさらわれているのに飲まれず、心が痛む。汲めば使え、王が明らかなら皆が福を受ける。",
+                "fortune": "用いれば吉",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "能力や準備はある。使ってもらえる場を整える。"
+        },
+        {
+                "id": 48,
+                "name": "水風井",
+                "yao": "六四",
+                "pattern": "011010",
+                "original": "井甃，无咎。",
+                "meaning": "井戸を修理して整える。咎はない。",
+                "fortune": "无咎",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "まず補修する。使う前に土台を整える。"
+        },
+        {
+                "id": 48,
+                "name": "水風井",
+                "yao": "九五",
+                "pattern": "011010",
+                "original": "井冽，寒泉食。",
+                "meaning": "井戸は清く、冷たい泉が飲める。",
+                "fortune": "吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "使える状態。素直に活用してよい。"
+        },
+        {
+                "id": 48,
+                "name": "水風井",
+                "yao": "上六",
+                "pattern": "011010",
+                "original": "井收勿幕，有孚元吉。",
+                "meaning": "井戸を汲み上げ、覆わない。誠があれば大いに吉。",
+                "fortune": "元吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "開いて分かち合うとよい。隠さず使う。"
+        },
+        {
+                "id": 49,
+                "name": "沢火革",
+                "yao": "初九",
+                "pattern": "101110",
+                "original": "鞏用黃牛之革。",
+                "meaning": "黄牛の革で固く縛る。まだ変革に動く段階ではない。",
+                "fortune": "固守",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "まず固定する。今すぐ変えない。"
+        },
+        {
+                "id": 49,
+                "name": "沢火革",
+                "yao": "六二",
+                "pattern": "101110",
+                "original": "己日乃革之，征吉，无咎。",
+                "meaning": "時が満ちてから変える。進めば吉で咎はない。",
+                "fortune": "吉・无咎",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "タイミングが来ているなら変えてよい。"
+        },
+        {
+                "id": 49,
+                "name": "沢火革",
+                "yao": "九三",
+                "pattern": "101110",
+                "original": "征凶，貞厲。革言三就，有孚。",
+                "meaning": "進めば凶で、正しくしても危うい。変革の話を三度重ね、信を得てから。",
+                "fortune": "厲",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "まだ強行しない。何度も確認してから。"
+        },
+        {
+                "id": 49,
+                "name": "沢火革",
+                "yao": "九四",
+                "pattern": "101110",
+                "original": "悔亡，有孚改命，吉。",
+                "meaning": "悔いは消える。信頼があれば命を改めて吉。",
+                "fortune": "吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "信頼があるなら変更してよい。"
+        },
+        {
+                "id": 49,
+                "name": "沢火革",
+                "yao": "九五",
+                "pattern": "101110",
+                "original": "大人虎變，未占有孚。",
+                "meaning": "大人は虎のように鮮やかに変わる。占うまでもなく信がある。",
+                "fortune": "大吉寄り",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "堂々と変えてよい。説得力がある。"
+        },
+        {
+                "id": 49,
+                "name": "沢火革",
+                "yao": "上六",
+                "pattern": "101110",
+                "original": "君子豹變，小人革面。征凶，居貞吉。",
+                "meaning": "君子は豹のように変わり、小人は表面だけ変わる。進めば凶、留まって正しければ吉。",
+                "fortune": "居貞吉",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "仕上げ段階。さらに攻めず、定着させる。"
+        },
+        {
+                "id": 50,
+                "name": "火風鼎",
+                "yao": "初六",
+                "pattern": "011101",
+                "original": "鼎顚趾，利出否。得妾以其子，无咎。",
+                "meaning": "鼎が足をひっくり返す。悪いものを出すには利がある。",
+                "fortune": "无咎",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "古いものを捨てるならよい。入れ替えの始まり。"
+        },
+        {
+                "id": 50,
+                "name": "火風鼎",
+                "yao": "九二",
+                "pattern": "011101",
+                "original": "鼎有實，我仇有疾，不我能即，吉。",
+                "meaning": "鼎に実がある。妨げる者に問題があり、近づけない。吉。",
+                "fortune": "吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "中身がある。邪魔はあっても進める。"
+        },
+        {
+                "id": 50,
+                "name": "火風鼎",
+                "yao": "九三",
+                "pattern": "011101",
+                "original": "鼎耳革，其行塞，雉膏不食。方雨虧悔，終吉。",
+                "meaning": "鼎の耳が変わり、運べず詰まる。よいものを食べられないが、雨が降れば悔いは減り、最後は吉。",
+                "fortune": "終吉",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "仕組みが詰まっている。整えば後で使える。"
+        },
+        {
+                "id": 50,
+                "name": "火風鼎",
+                "yao": "九四",
+                "pattern": "011101",
+                "original": "鼎折足，覆公餗，其形渥，凶。",
+                "meaning": "鼎の足が折れ、公の食物をこぼす。恥があり凶。",
+                "fortune": "凶",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "支えが壊れている。今は進めない。"
+        },
+        {
+                "id": 50,
+                "name": "火風鼎",
+                "yao": "六五",
+                "pattern": "011101",
+                "original": "鼎黃耳金鉉，利貞。",
+                "meaning": "鼎に黄色い耳と金のつるがある。正しさに利がある。",
+                "fortune": "利貞",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "器が整っている。正しく扱えばよい。"
+        },
+        {
+                "id": 50,
+                "name": "火風鼎",
+                "yao": "上九",
+                "pattern": "011101",
+                "original": "鼎玉鉉，大吉，无不利。",
+                "meaning": "鼎に玉のつるがある。大いに吉で不利はない。",
+                "fortune": "大吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "かなりよい。品よく整えて進める。"
+        },
+        {
+                "id": 51,
+                "name": "震為雷",
+                "yao": "初九",
+                "pattern": "100100",
+                "original": "震來虩虩，後笑言啞啞，吉。",
+                "meaning": "雷が来て恐れるが、後には笑って話せる。吉。",
+                "fortune": "吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "驚きはあるが大丈夫。落ち着けば進める。"
+        },
+        {
+                "id": 51,
+                "name": "震為雷",
+                "yao": "六二",
+                "pattern": "100100",
+                "original": "震來厲，億喪貝，躋于九陵，勿逐，七日得。",
+                "meaning": "雷が来て危うく、財を失う。高い丘へ逃げる。追わなくても七日で戻る。",
+                "fortune": "後に回復",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "慌てて追わない。時間が経てば戻る。"
+        },
+        {
+                "id": 51,
+                "name": "震為雷",
+                "yao": "六三",
+                "pattern": "100100",
+                "original": "震蘇蘇，震行无眚。",
+                "meaning": "雷におののくが、それをきっかけに動けば災いはない。",
+                "fortune": "无眚",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "不安を合図にして動けばよい。"
+        },
+        {
+                "id": 51,
+                "name": "震為雷",
+                "yao": "九四",
+                "pattern": "100100",
+                "original": "震遂泥。",
+                "meaning": "雷が泥に沈む。勢いが鈍り、動きが悪い。",
+                "fortune": "停滞",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "勢いが泥に取られている。今は無理に進めない。"
+        },
+        {
+                "id": 51,
+                "name": "震為雷",
+                "yao": "六五",
+                "pattern": "100100",
+                "original": "震往來厲，億无喪，有事。",
+                "meaning": "雷が行き来して危ういが、大きく失うことはない。するべき事がある。",
+                "fortune": "厲・有事",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "揺れはある。必要なことだけ処理する。"
+        },
+        {
+                "id": 51,
+                "name": "震為雷",
+                "yao": "上六",
+                "pattern": "100100",
+                "original": "震索索，視矍矍，征凶。震不于其躬，于其鄰，无咎。婚媾有言。",
+                "meaning": "恐れて目が泳ぐ。進めば凶。災いが自分でなく隣に来るなら咎はないが、縁談には言葉が出る。",
+                "fortune": "征凶",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "びくついたまま進まない。噂や周辺事情にも注意。"
+        },
+        {
+                "id": 52,
+                "name": "艮為山",
+                "yao": "初六",
+                "pattern": "001001",
+                "original": "艮其趾，无咎，利永貞。",
+                "meaning": "足を止める。咎はなく、長く正しさを守るのに利がある。",
+                "fortune": "无咎",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "まず止まる。動く前に足元を固定する。"
+        },
+        {
+                "id": 52,
+                "name": "艮為山",
+                "yao": "六二",
+                "pattern": "001001",
+                "original": "艮其腓，不拯其隨，其心不快。",
+                "meaning": "ふくらはぎを止めるが、従うものを救えず心が快くない。",
+                "fortune": "不快",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "止まるしかないが、気持ちは残る。急がない。"
+        },
+        {
+                "id": 52,
+                "name": "艮為山",
+                "yao": "九三",
+                "pattern": "001001",
+                "original": "艮其限，列其夤，厲薰心。",
+                "meaning": "腰を止め、背筋が裂けるように緊張する。危うさが心を焼く。",
+                "fortune": "厲",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "固まりすぎている。今は無理。"
+        },
+        {
+                "id": 52,
+                "name": "艮為山",
+                "yao": "六四",
+                "pattern": "001001",
+                "original": "艮其身，无咎。",
+                "meaning": "身を止める。咎はない。",
+                "fortune": "无咎",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "自分を抑える。動かないことで保てる。"
+        },
+        {
+                "id": 52,
+                "name": "艮為山",
+                "yao": "六五",
+                "pattern": "001001",
+                "original": "艮其輔，言有序，悔亡。",
+                "meaning": "頬を止める。言葉に順序があれば悔いは消える。",
+                "fortune": "悔亡",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "口を慎む。話すなら順序立てる。"
+        },
+        {
+                "id": 52,
+                "name": "艮為山",
+                "yao": "上九",
+                "pattern": "001001",
+                "original": "敦艮，吉。",
+                "meaning": "厚く止まる。吉。",
+                "fortune": "吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "しっかり止める判断がよい。無理に動かないことが吉。"
+        },
+        {
+                "id": 53,
+                "name": "風山漸",
+                "yao": "初六",
+                "pattern": "001011",
+                "original": "鴻漸于干，小子厲，有言，无咎。",
+                "meaning": "雁が水辺に少しずつ進む。未熟な者には危うく、言われることもあるが咎はない。",
+                "fortune": "无咎",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "まだ入口。急がず、批判を受けても落ち着く。"
+        },
+        {
+                "id": 53,
+                "name": "風山漸",
+                "yao": "六二",
+                "pattern": "001011",
+                "original": "鴻漸于磐，飲食衎衎，吉。",
+                "meaning": "雁が岩の上に進む。飲食して安らかに楽しむ。吉。",
+                "fortune": "吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "足場が安定している。ゆっくり進めてよい。"
+        },
+        {
+                "id": 53,
+                "name": "風山漸",
+                "yao": "九三",
+                "pattern": "001011",
+                "original": "鴻漸于陸，夫征不復，婦孕不育，凶。利禦寇。",
+                "meaning": "雁が陸へ進む。夫は戻らず、妻は育てられず凶。ただし外敵を防ぐには利がある。",
+                "fortune": "凶",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "進みすぎると失う。守りに回る。"
+        },
+        {
+                "id": 53,
+                "name": "風山漸",
+                "yao": "六四",
+                "pattern": "001011",
+                "original": "鴻漸于木，或得其桷，无咎。",
+                "meaning": "雁が木に進む。枝に足場を得れば咎はない。",
+                "fortune": "无咎",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "不安定だが足場はある。安定点を探す。"
+        },
+        {
+                "id": 53,
+                "name": "風山漸",
+                "yao": "九五",
+                "pattern": "001011",
+                "original": "鴻漸于陵，婦三歲不孕，終莫之勝，吉。",
+                "meaning": "雁が丘へ進む。長く実らなくても、最後には妨げられず吉。",
+                "fortune": "終吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "時間はかかるが進めてよい。焦らない。"
+        },
+        {
+                "id": 53,
+                "name": "風山漸",
+                "yao": "上九",
+                "pattern": "001011",
+                "original": "鴻漸于陸，其羽可用為儀，吉。",
+                "meaning": "雁が高みに進む。その羽は儀礼に用いられる。吉。",
+                "fortune": "吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "形が整う。品よく仕上げるならよい。"
+        },
+        {
+                "id": 54,
+                "name": "雷沢帰妹",
+                "yao": "初九",
+                "pattern": "110100",
+                "original": "歸妹以娣，跛能履，征吉。",
+                "meaning": "妹が従う立場で嫁ぐ。足が不自由でも歩ける。進めば吉。",
+                "fortune": "吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "主役でなく補助なら進める。控えめに動く。"
+        },
+        {
+                "id": 54,
+                "name": "雷沢帰妹",
+                "yao": "九二",
+                "pattern": "110100",
+                "original": "眇能視，利幽人之貞。",
+                "meaning": "片目でも見ることはできる。静かに正しさを守る人には利がある。",
+                "fortune": "利貞",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "見える範囲が限られる。静かに守る。"
+        },
+        {
+                "id": 54,
+                "name": "雷沢帰妹",
+                "yao": "六三",
+                "pattern": "110100",
+                "original": "歸妹以須，反歸以娣。",
+                "meaning": "妹が待たされ、結局は従う立場で戻る。",
+                "fortune": "不本意",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "条件が弱い。望む形では進みにくい。"
+        },
+        {
+                "id": 54,
+                "name": "雷沢帰妹",
+                "yao": "九四",
+                "pattern": "110100",
+                "original": "歸妹愆期，遲歸有時。",
+                "meaning": "嫁ぐ時期を過ぎるが、遅れても時がある。",
+                "fortune": "後に時あり",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "今でなくてもよい。時期を待つ。"
+        },
+        {
+                "id": 54,
+                "name": "雷沢帰妹",
+                "yao": "六五",
+                "pattern": "110100",
+                "original": "帝乙歸妹，其君之袂，不如其娣之袂良，月幾望，吉。",
+                "meaning": "帝乙が妹を嫁がせる。正妻の袖は従者ほど立派でないが、月は満ちようとして吉。",
+                "fortune": "吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "見た目より中身。控えめでも進めてよい。"
+        },
+        {
+                "id": 54,
+                "name": "雷沢帰妹",
+                "yao": "上六",
+                "pattern": "110100",
+                "original": "女承筐无實，士刲羊无血，无攸利。",
+                "meaning": "女は空のかごを受け、男は羊を裂いても血がない。利はない。",
+                "fortune": "无利",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "中身がない。形だけなら見送る。"
+        },
+        {
+                "id": 55,
+                "name": "雷火豊",
+                "yao": "初九",
+                "pattern": "101100",
+                "original": "遇其配主，雖旬无咎，往有尚。",
+                "meaning": "ふさわしい相手に会う。十日ほどなら咎はなく、進めば評価される。",
+                "fortune": "有尚",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "相手や条件が合う。短期なら進めてよい。"
+        },
+        {
+                "id": 55,
+                "name": "雷火豊",
+                "yao": "六二",
+                "pattern": "101100",
+                "original": "豐其蔀，日中見斗。往得疑疾，有孚發若，吉。",
+                "meaning": "覆いが厚く、昼に北斗を見るほど暗い。進めば疑われるが、誠が明らかになれば吉。",
+                "fortune": "後吉",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "見通しが悪い。誠実さが伝わるまで待つ。"
+        },
+        {
+                "id": 55,
+                "name": "雷火豊",
+                "yao": "九三",
+                "pattern": "101100",
+                "original": "豐其沛，日中見沬。折其右肱，无咎。",
+                "meaning": "覆いがさらに厚く、昼に小星を見る。右腕を折るような不自由があるが咎はない。",
+                "fortune": "无咎",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "力を十分に使えない。無理に進めない。"
+        },
+        {
+                "id": 55,
+                "name": "雷火豊",
+                "yao": "九四",
+                "pattern": "101100",
+                "original": "豐其蔀，日中見斗。遇其夷主，吉。",
+                "meaning": "覆いが厚く昼に北斗を見るが、同等の相手に会えば吉。",
+                "fortune": "吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "見通しが悪くても、合う相手がいれば進める。"
+        },
+        {
+                "id": 55,
+                "name": "雷火豊",
+                "yao": "六五",
+                "pattern": "101100",
+                "original": "來章，有慶譽，吉。",
+                "meaning": "明らかなものが来る。祝いと誉れがあり吉。",
+                "fortune": "吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "良い知らせが来る。進めてよい。"
+        },
+        {
+                "id": 55,
+                "name": "雷火豊",
+                "yao": "上六",
+                "pattern": "101100",
+                "original": "豐其屋，蔀其家，闚其戶，闃其无人，三歲不覿，凶。",
+                "meaning": "家を大きくしすぎ、覆い隠し、のぞいても人がいない。長く会えず凶。",
+                "fortune": "凶",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "大きく見せすぎて空洞化。今回は見送る。"
+        },
+        {
+                "id": 56,
+                "name": "火山旅",
+                "yao": "初六",
+                "pattern": "001101",
+                "original": "旅瑣瑣，斯其所取災。",
+                "meaning": "旅先で細かいことにこだわる。それが災いを招く。",
+                "fortune": "災い",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "小さなことに執着しない。今日はやめる。"
+        },
+        {
+                "id": 56,
+                "name": "火山旅",
+                "yao": "六二",
+                "pattern": "001101",
+                "original": "旅即次，懷其資，得童僕貞。",
+                "meaning": "旅先で宿に入り、資財を持ち、従者も得る。正しければよい。",
+                "fortune": "貞",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "最低限の拠点と助けがある。進めてよい。"
+        },
+        {
+                "id": 56,
+                "name": "火山旅",
+                "yao": "九三",
+                "pattern": "001101",
+                "original": "旅焚其次，喪其童僕，貞厲。",
+                "meaning": "旅先の宿を焼き、従者を失う。正しくしても危うい。",
+                "fortune": "厲",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "拠点や助けを失いやすい。見送る。"
+        },
+        {
+                "id": 56,
+                "name": "火山旅",
+                "yao": "九四",
+                "pattern": "001101",
+                "original": "旅于處，得其資斧，我心不快。",
+                "meaning": "旅先で一時の居場所を得て、資財と道具もあるが、心は快くない。",
+                "fortune": "不快",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "形は整うが気が進まない。急がない。"
+        },
+        {
+                "id": 56,
+                "name": "火山旅",
+                "yao": "六五",
+                "pattern": "001101",
+                "original": "射雉，一矢亡，終以譽命。",
+                "meaning": "雉を射て矢を一本失うが、最後には誉れと命を得る。",
+                "fortune": "終吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "少し失っても結果はよい。進めてよい。"
+        },
+        {
+                "id": 56,
+                "name": "火山旅",
+                "yao": "上九",
+                "pattern": "001101",
+                "original": "鳥焚其巢，旅人先笑後號咷。喪牛于易，凶。",
+                "meaning": "鳥が巣を焼かれる。旅人は初め笑い、後に泣く。牛を失い凶。",
+                "fortune": "凶",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "一見よくても後で崩れる。進めない。"
+        },
+        {
+                "id": 57,
+                "name": "巽為風",
+                "yao": "初六",
+                "pattern": "011011",
+                "original": "進退，利武人之貞。",
+                "meaning": "進むか退くか迷う。武人のように決めて守るなら利がある。",
+                "fortune": "条件付き",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "迷いがある。方針を決めてから動く。"
+        },
+        {
+                "id": 57,
+                "name": "巽為風",
+                "yao": "九二",
+                "pattern": "011011",
+                "original": "巽在牀下，用史巫紛若，吉，无咎。",
+                "meaning": "寝台の下に入るほど低く従う。史官や巫のように細かく調べれば吉で咎はない。",
+                "fortune": "吉・无咎",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "丁寧に調べれば進めてよい。低姿勢がよい。"
+        },
+        {
+                "id": 57,
+                "name": "巽為風",
+                "yao": "九三",
+                "pattern": "011011",
+                "original": "頻巽，吝。",
+                "meaning": "何度もへりくだる。かえって悔いがある。",
+                "fortune": "吝",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "気を使いすぎている。今日はやめる。"
+        },
+        {
+                "id": 57,
+                "name": "巽為風",
+                "yao": "六四",
+                "pattern": "011011",
+                "original": "悔亡，田獲三品。",
+                "meaning": "悔いは消える。狩りで三種類の獲物を得る。",
+                "fortune": "悔亡",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "小さな成果が複数得られる。進めてよい。"
+        },
+        {
+                "id": 57,
+                "name": "巽為風",
+                "yao": "九五",
+                "pattern": "011011",
+                "original": "貞吉悔亡，无不利。无初有終。先庚三日，後庚三日，吉。",
+                "meaning": "正しければ吉で悔いは消え、不利はない。初めは不十分でも終わりはある。前後をよく整えれば吉。",
+                "fortune": "吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "準備と後始末を整えれば進めてよい。"
+        },
+        {
+                "id": 57,
+                "name": "巽為風",
+                "yao": "上九",
+                "pattern": "011011",
+                "original": "巽在牀下，喪其資斧，貞凶。",
+                "meaning": "寝台の下に入るほど低くなり、資財や道具を失う。正しくしても凶。",
+                "fortune": "凶",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "下手に出すぎて失う。これ以上は引く。"
+        },
+        {
+                "id": 58,
+                "name": "兌為沢",
+                "yao": "初九",
+                "pattern": "110110",
+                "original": "和兌，吉。",
+                "meaning": "和やかに喜ぶ。吉。",
+                "fortune": "吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "穏やかに楽しめる。進めてよい。"
+        },
+        {
+                "id": 58,
+                "name": "兌為沢",
+                "yao": "九二",
+                "pattern": "110110",
+                "original": "孚兌，吉，悔亡。",
+                "meaning": "誠のある喜び。吉で悔いは消える。",
+                "fortune": "吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "信頼できる楽しさならよい。"
+        },
+        {
+                "id": 58,
+                "name": "兌為沢",
+                "yao": "六三",
+                "pattern": "110110",
+                "original": "來兌，凶。",
+                "meaning": "外から喜びに寄ってくる。凶。",
+                "fortune": "凶",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "うまい話に寄らない。受け身の誘惑に注意。"
+        },
+        {
+                "id": 58,
+                "name": "兌為沢",
+                "yao": "九四",
+                "pattern": "110110",
+                "original": "商兌未寧，介疾有喜。",
+                "meaning": "喜びをはかり迷って落ち着かない。間にある悪いものを断てば喜びがある。",
+                "fortune": "後に喜び",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "迷いの原因を切る。すぐ決めない。"
+        },
+        {
+                "id": 58,
+                "name": "兌為沢",
+                "yao": "九五",
+                "pattern": "110110",
+                "original": "孚于剝，有厲。",
+                "meaning": "剥がすもの、損なうものを信じてしまう。危うい。",
+                "fortune": "厲",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "信じる相手を間違えやすい。今日は避ける。"
+        },
+        {
+                "id": 58,
+                "name": "兌為沢",
+                "yao": "上六",
+                "pattern": "110110",
+                "original": "引兌。",
+                "meaning": "喜びに引かれる。",
+                "fortune": "誘引",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "楽しさに引っ張られやすい。少し距離を置く。"
+        },
+        {
+                "id": 59,
+                "name": "風水渙",
+                "yao": "初六",
+                "pattern": "010011",
+                "original": "用拯馬壯，吉。",
+                "meaning": "強い馬で救う。吉。",
+                "fortune": "吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "早めに助けを使えばよい。自力にこだわらない。"
+        },
+        {
+                "id": 59,
+                "name": "風水渙",
+                "yao": "九二",
+                "pattern": "010011",
+                "original": "渙奔其机，悔亡。",
+                "meaning": "散らばる中で、机に駆け寄る。悔いは消える。",
+                "fortune": "悔亡",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "拠点に戻る。落ち着く場所を確保する。"
+        },
+        {
+                "id": 59,
+                "name": "風水渙",
+                "yao": "六三",
+                "pattern": "010011",
+                "original": "渙其躬，无悔。",
+                "meaning": "自分への執着を散らす。悔いはない。",
+                "fortune": "无悔",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "こだわりを手放せば進める。"
+        },
+        {
+                "id": 59,
+                "name": "風水渙",
+                "yao": "六四",
+                "pattern": "010011",
+                "original": "渙其群，元吉。渙有丘，匪夷所思。",
+                "meaning": "群れを散らせば大いに吉。散らした先に大きなまとまりがある。普通には思いつかない。",
+                "fortune": "元吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "いったん分けるとよい。整理すれば大きくまとまる。"
+        },
+        {
+                "id": 59,
+                "name": "風水渙",
+                "yao": "九五",
+                "pattern": "010011",
+                "original": "渙汗其大號，渙王居，无咎。",
+                "meaning": "大きな号令が汗のように出て、王の居所に広がる。咎はない。",
+                "fortune": "无咎",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "方針を明確に出すとよい。広く知らせる。"
+        },
+        {
+                "id": 59,
+                "name": "風水渙",
+                "yao": "上九",
+                "pattern": "010011",
+                "original": "渙其血，去逖出，无咎。",
+                "meaning": "血のような害を散らし、遠ざけて出る。咎はない。",
+                "fortune": "无咎",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "危ないものから離れるならよい。距離を取る。"
+        },
+        {
+                "id": 60,
+                "name": "水沢節",
+                "yao": "初九",
+                "pattern": "110010",
+                "original": "不出戶庭，无咎。",
+                "meaning": "戸口や庭から出ない。咎はない。",
+                "fortune": "无咎",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "外へ広げない。内側で止める。"
+        },
+        {
+                "id": 60,
+                "name": "水沢節",
+                "yao": "九二",
+                "pattern": "110010",
+                "original": "不出門庭，凶。",
+                "meaning": "門や庭から出ない。凶。",
+                "fortune": "凶",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "閉じこもりすぎ。必要な外出・連絡を避けない。"
+        },
+        {
+                "id": 60,
+                "name": "水沢節",
+                "yao": "六三",
+                "pattern": "110010",
+                "original": "不節若，則嗟若，无咎。",
+                "meaning": "節度がなければ嘆くことになる。ただし咎はない。",
+                "fortune": "反省",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "やりすぎを見直す。まず制限を作る。"
+        },
+        {
+                "id": 60,
+                "name": "水沢節",
+                "yao": "六四",
+                "pattern": "110010",
+                "original": "安節，亨。",
+                "meaning": "安らかに節度を守る。通じる。",
+                "fortune": "亨",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "無理のない制限ならよい。続けられる形にする。"
+        },
+        {
+                "id": 60,
+                "name": "水沢節",
+                "yao": "九五",
+                "pattern": "110010",
+                "original": "甘節，吉，往有尚。",
+                "meaning": "甘く快い節度。吉で、進めば評価される。",
+                "fortune": "吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "気持ちよく続く制限なら進めてよい。"
+        },
+        {
+                "id": 60,
+                "name": "水沢節",
+                "yao": "上六",
+                "pattern": "110010",
+                "original": "苦節，貞凶，悔亡。",
+                "meaning": "苦しい節度。正しくても凶だが、悔いは消える。",
+                "fortune": "凶寄り",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "厳しすぎる制限は続かない。今日はやめる。"
+        },
+        {
+                "id": 61,
+                "name": "風沢中孚",
+                "yao": "初九",
+                "pattern": "110011",
+                "original": "虞吉，有他不燕。",
+                "meaning": "よく考えて備えれば吉。他に心を移すと安らかでない。",
+                "fortune": "吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "迷わず一つに絞るならよい。"
+        },
+        {
+                "id": 61,
+                "name": "風沢中孚",
+                "yao": "九二",
+                "pattern": "110011",
+                "original": "鳴鶴在陰，其子和之。我有好爵，吾與爾靡之。",
+                "meaning": "陰にいる鶴が鳴き、子が応える。よい杯を分かち合う。",
+                "fortune": "吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "気持ちが通じる。共有・相談に向く。"
+        },
+        {
+                "id": 61,
+                "name": "風沢中孚",
+                "yao": "六三",
+                "pattern": "110011",
+                "original": "得敵，或鼓或罷，或泣或歌。",
+                "meaning": "相手を得るが、進んだりやめたり、泣いたり歌ったり揺れる。",
+                "fortune": "不安定",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "感情が揺れやすい。すぐ決めない。"
+        },
+        {
+                "id": 61,
+                "name": "風沢中孚",
+                "yao": "六四",
+                "pattern": "110011",
+                "original": "月幾望，馬匹亡，无咎。",
+                "meaning": "月は満ちようとし、連れの馬を失うが咎はない。",
+                "fortune": "无咎",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "ほぼ整っているが、片方を手放す必要がある。"
+        },
+        {
+                "id": 61,
+                "name": "風沢中孚",
+                "yao": "九五",
+                "pattern": "110011",
+                "original": "有孚攣如，无咎。",
+                "meaning": "誠がしっかり結びついている。咎はない。",
+                "fortune": "无咎",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "信頼関係があるなら進めてよい。"
+        },
+        {
+                "id": 61,
+                "name": "風沢中孚",
+                "yao": "上九",
+                "pattern": "110011",
+                "original": "翰音登于天，貞凶。",
+                "meaning": "鶏の声が天に上る。声ばかり高く、正しくしても凶。",
+                "fortune": "凶",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "言葉だけが大きい。実体がないなら見送る。"
+        },
+        {
+                "id": 62,
+                "name": "雷山小過",
+                "yao": "初六",
+                "pattern": "001100",
+                "original": "飛鳥以凶。",
+                "meaning": "鳥が飛び上がりすぎて凶。",
+                "fortune": "凶",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "高く飛びすぎ。今は控える。"
+        },
+        {
+                "id": 62,
+                "name": "雷山小過",
+                "yao": "六二",
+                "pattern": "001100",
+                "original": "過其祖，遇其妣。不及其君，遇其臣，无咎。",
+                "meaning": "祖を過ぎて祖母に会う。君には及ばず臣に会う。咎はない。",
+                "fortune": "无咎",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "直接本丸へ行かず、手前の相手から整える。"
+        },
+        {
+                "id": 62,
+                "name": "雷山小過",
+                "yao": "九三",
+                "pattern": "001100",
+                "original": "弗過防之，從或戕之，凶。",
+                "meaning": "防ぎすぎなければ、従う者に害されることがある。凶。",
+                "fortune": "凶",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "油断しない。防御不足なら進めない。"
+        },
+        {
+                "id": 62,
+                "name": "雷山小過",
+                "yao": "九四",
+                "pattern": "001100",
+                "original": "无咎，弗過遇之。往厲，必戒，勿用永貞。",
+                "meaning": "咎はない。行き過ぎずに出会う。進めば危うく、必ず戒める。長く固執しない。",
+                "fortune": "厲",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "小さく当たるだけにする。深追いしない。"
+        },
+        {
+                "id": 62,
+                "name": "雷山小過",
+                "yao": "六五",
+                "pattern": "001100",
+                "original": "密雲不雨，自我西郊。公弋取彼在穴。",
+                "meaning": "雲は密だが雨は降らない。穴にいるものを取る。",
+                "fortune": "未成",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "機はあるがまだ降らない。隠れた要素を確認する。"
+        },
+        {
+                "id": 62,
+                "name": "雷山小過",
+                "yao": "上六",
+                "pattern": "001100",
+                "original": "弗遇過之，飛鳥離之，凶，是謂災眚。",
+                "meaning": "出会えず行き過ぎ、飛ぶ鳥が網にかかる。凶。災いである。",
+                "fortune": "災眚",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "行き過ぎている。今は完全に止める。"
+        },
+        {
+                "id": 63,
+                "name": "水火既済",
+                "yao": "初九",
+                "pattern": "101010",
+                "original": "曳其輪，濡其尾，无咎。",
+                "meaning": "車輪を引き止め、尾を濡らす。咎はない。",
+                "fortune": "无咎",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "ほぼ済んでいるが、最後は慎重に止める。"
+        },
+        {
+                "id": 63,
+                "name": "水火既済",
+                "yao": "六二",
+                "pattern": "101010",
+                "original": "婦喪其茀，勿逐，七日得。",
+                "meaning": "婦人が飾りを失う。追わなくても七日で得る。",
+                "fortune": "後に得る",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "慌てて追わない。自然に戻る。"
+        },
+        {
+                "id": 63,
+                "name": "水火既済",
+                "yao": "九三",
+                "pattern": "101010",
+                "original": "高宗伐鬼方，三年克之，小人勿用。",
+                "meaning": "高宗が鬼方を討ち、三年かけて勝つ。小人を用いてはならない。",
+                "fortune": "長期吉",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "長期戦なら可能。軽い気持ちでは進めない。"
+        },
+        {
+                "id": 63,
+                "name": "水火既済",
+                "yao": "六四",
+                "pattern": "101010",
+                "original": "繻有衣袽，終日戒。",
+                "meaning": "破れを繕う布がある。一日中戒める。",
+                "fortune": "戒め",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "仕上がった後ほど油断しない。補修と警戒。"
+        },
+        {
+                "id": 63,
+                "name": "水火既済",
+                "yao": "九五",
+                "pattern": "101010",
+                "original": "東鄰殺牛，不如西鄰之禴祭，實受其福。",
+                "meaning": "東隣の大きな牛の祭りより、西隣の簡素な祭りが福を受ける。",
+                "fortune": "福あり",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "派手さより実質。簡素で誠実ならよい。"
+        },
+        {
+                "id": 63,
+                "name": "水火既済",
+                "yao": "上六",
+                "pattern": "101010",
+                "original": "濡其首，厲。",
+                "meaning": "頭まで濡れる。危うい。",
+                "fortune": "厲",
+                "result": "NO",
+                "resultType": "no",
+                "memo": "完了後に深入りしすぎ。ここで止める。"
+        },
+        {
+                "id": 64,
+                "name": "火水未済",
+                "yao": "初六",
+                "pattern": "010101",
+                "original": "濡其尾，吝。",
+                "meaning": "尾を濡らす。まだ渡りきれず悔いがある。",
+                "fortune": "吝",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "まだ早い。最後まで渡る準備が足りない。"
+        },
+        {
+                "id": 64,
+                "name": "火水未済",
+                "yao": "九二",
+                "pattern": "010101",
+                "original": "曳其輪，貞吉。",
+                "meaning": "車輪を引き止める。正しければ吉。",
+                "fortune": "貞吉",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "あえて止めるのがよい。急がない。"
+        },
+        {
+                "id": 64,
+                "name": "火水未済",
+                "yao": "六三",
+                "pattern": "010101",
+                "original": "未濟，征凶，利涉大川。",
+                "meaning": "まだ済んでいない。進めば凶だが、大川を渡るには利がある。",
+                "fortune": "条件付き",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "普通に進むのは危うい。大きな覚悟がある時だけ。"
+        },
+        {
+                "id": 64,
+                "name": "火水未済",
+                "yao": "九四",
+                "pattern": "010101",
+                "original": "貞吉，悔亡。震用伐鬼方，三年有賞于大國。",
+                "meaning": "正しければ吉で悔いは消える。鬼方を討ち、三年後に大国から賞を受ける。",
+                "fortune": "長期吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "長期で取り組むなら進める。すぐの結果は求めない。"
+        },
+        {
+                "id": 64,
+                "name": "火水未済",
+                "yao": "六五",
+                "pattern": "010101",
+                "original": "貞吉，无悔。君子之光，有孚，吉。",
+                "meaning": "正しければ吉で悔いはない。君子の光があり、誠があって吉。",
+                "fortune": "吉",
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "明るさと誠がある。進めてよい。"
+        },
+        {
+                "id": 64,
+                "name": "火水未済",
+                "yao": "上九",
+                "pattern": "010101",
+                "original": "有孚于飲酒，无咎。濡其首，有孚失是。",
+                "meaning": "誠をもって酒を飲むなら咎はない。だが頭まで濡れれば、誠があっても正しさを失う。",
+                "fortune": "无咎・過ぎれば失",
+                "result": "待つ",
+                "resultType": "wait",
+                "memo": "楽しむのはよいが、やりすぎない。節度を残す。"
         }
+];
 
-        item.appendChild(left);
-        item.appendChild(right);
-        yaoList.appendChild(item);
+    const drawBtn = document.getElementById("drawBtn");
+    const resultEl = document.getElementById("result");
+    const judgementEl = document.getElementById("judgement");
+    const hexTitleEl = document.getElementById("hexTitle");
+    const originalEl = document.getElementById("original");
+    const meaningEl = document.getElementById("meaning");
+    const fortuneEl = document.getElementById("fortune");
+    const memoEl = document.getElementById("memo");
+    const linesEl = document.getElementById("lines");
+
+    function renderLines(pattern, activeIndex) {
+      linesEl.innerHTML = "";
+      for (let i = 6; i >= 1; i--) {
+        const bit = pattern[i - 1];
+        const line = document.createElement("div");
+        line.className = "yaoLine " + (bit === "1" ? "solid" : "broken");
+        if (i === activeIndex) line.classList.add("moving");
+        linesEl.appendChild(line);
       }
-
-      const lowerKey = yao.slice(0, 3).map(line => line.isYang ? "1" : "0").join("");
-      const upperKey = yao.slice(3, 6).map(line => line.isYang ? "1" : "0").join("");
-      const lower = trigrams[lowerKey];
-      const upper = trigrams[upperKey];
-      const name = hexagramMap[lowerKey + "-" + upperKey] || "名のない卦";
-
-      hexagramName.textContent = name;
-      hexagramMeta.textContent = "上卦：" + upper.name + "（" + upper.nature + "）／ 下卦：" + lower.name + "（" + lower.nature + "）";
-      hexagramNote.textContent = pickRandom(hexagramNotes);
     }
 
-    function divine() {
-      const question = questionInput.value.trim();
-
-      if (!question) {
-        resultBox.classList.add("show");
-        resultWord.textContent = "未入力";
-        resultWord.className = "result-word hold";
-        comment.textContent = "まずは、迷っていることを一文で書いてみてください。";
-        sub.textContent = "問いを言葉にした時点で、半分くらい占いは始まっています。";
-        createHexagram();
-        return;
-      }
-
-      const picked = weightedPick(results);
-      const pickedComment = pickRandom(picked.comments);
-
-      resultBox.classList.add("show");
-      resultWord.textContent = picked.word;
-      resultWord.className = "result-word " + picked.type;
-      comment.textContent = pickedComment;
-      sub.textContent = "結果を見た瞬間の自分の反応も、判断材料のひとつです。";
-      createHexagram();
+    function yaoIndex(yao) {
+      if (yao.includes("初")) return 1;
+      if (yao.includes("二")) return 2;
+      if (yao.includes("三")) return 3;
+      if (yao.includes("四")) return 4;
+      if (yao.includes("五")) return 5;
+      return 6;
     }
 
-    function reset() {
-      questionInput.value = "";
-      resultBox.classList.remove("show");
-      resultWord.textContent = "";
-      comment.textContent = "";
-      sub.textContent = "";
-      hexagramName.textContent = "";
-      hexagramMeta.textContent = "";
-      hexagramNote.textContent = "";
-      lines.innerHTML = "";
-      yaoList.innerHTML = "";
-      questionInput.focus();
+    function draw() {
+      const item = oracleData[Math.floor(Math.random() * oracleData.length)];
+      judgementEl.textContent = item.result;
+      judgementEl.className = "judgement " + item.resultType;
+      hexTitleEl.textContent = `第${item.id}卦　${item.name}　${item.yao}`;
+      originalEl.textContent = item.original;
+      meaningEl.textContent = item.meaning;
+      fortuneEl.textContent = item.fortune;
+      memoEl.textContent = item.memo;
+      renderLines(item.pattern, yaoIndex(item.yao));
+      resultEl.style.display = "block";
     }
 
-    divineButton.addEventListener("click", divine);
-    resetButton.addEventListener("click", reset);
-
-    questionInput.addEventListener("keydown", function(event) {
-      if ((event.ctrlKey || event.metaKey) && event.key === "Enter") {
-        divine();
-      }
-    });
+    drawBtn.addEventListener("click", draw);
   </script>
 </body>
 </html>

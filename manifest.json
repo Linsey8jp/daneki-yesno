@@ -1,10 +1,10 @@
 {
-  "name": "断易YES/NO",
+  "name": "断易YES/NO 完全版",
   "short_name": "断易YES/NO",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#f6f1e8",
-  "theme_color": "#f6f1e8",
+  "background_color": "#f7f0e6",
+  "theme_color": "#f3eadb",
   "icons": [
     {
       "src": "icon-180.png",
