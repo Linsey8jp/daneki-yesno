@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>断易YES/NO 試作版</title>
+  <title>断易YES/NO 5段階版</title>
   <meta name="theme-color" content="#f3eadb">
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="icon-180.png">
@@ -168,12 +168,24 @@
       font-size: 11px;
       line-height: 1.65;
     }
+  
+    .result.yeslean {
+      background: linear-gradient(135deg, #fff7da, #f5d27a);
+      color: #5a3b00;
+      border-color: rgba(170, 120, 20, 0.35);
+    }
+    .result.nolean {
+      background: linear-gradient(135deg, #f3e4df, #d59c8f);
+      color: #5a1e14;
+      border-color: rgba(150, 70, 45, 0.35);
+    }
+
   </style>
 </head>
 <body>
   <main class="app">
     <h1 class="title">断易YES/NO</h1>
-    <p class="subtitle">第1卦〜第64卦 完全版</p>
+    <p class="subtitle">第1卦〜第64卦 5段階版</p>
 
     <div class="wishBox">
       聞きたいことを、心の中でひとつ決めてください。<br>
@@ -246,8 +258,8 @@
                 "original": "君子終日乾乾，夕惕若，厲无咎。",
                 "meaning": "一日中努め、夜まで慎重であれば、危うくても咎はない。",
                 "fortune": "厲・无咎",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "やるなら慎重に。確認不足のまま進めない。"
         },
         {
@@ -258,8 +270,8 @@
                 "original": "或躍在淵，无咎。",
                 "meaning": "飛び出す手前の状態。進むか退くかを見極める時。",
                 "fortune": "无咎",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "すぐ決めず、条件が整えば進む。焦らない。"
         },
         {
@@ -282,8 +294,8 @@
                 "original": "亢龍有悔。",
                 "meaning": "行き過ぎた龍には悔いがある。勢いが強すぎると反動が来る。",
                 "fortune": "悔",
-                "result": "NO",
-                "resultType": "no",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "今は押しすぎない。引く・止める・控える判断がよい。"
         },
         {
@@ -294,8 +306,8 @@
                 "original": "履霜，堅冰至。",
                 "meaning": "霜を踏めば、やがて堅い氷になると知る。小さな兆しを軽く見ない。",
                 "fortune": "警戒",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "NO",
+                "resultType": "no",
                 "memo": "今は小さな違和感を確認する。見ないふりをして進めない。"
         },
         {
@@ -318,8 +330,8 @@
                 "original": "含章，可貞。或從王事，无成有終。",
                 "meaning": "才能や成果を内に含み、正しさを守る。人に従って働けば、手柄はなくても終わりは整う。",
                 "fortune": "条件付き吉",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "自分が主役になろうとしない。補佐役なら進めてよい。"
         },
         {
@@ -330,8 +342,8 @@
                 "original": "括囊，无咎无譽。",
                 "meaning": "袋の口をくくるように、言動を控える。咎はないが、誉れもない。",
                 "fortune": "无咎",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "今日は余計なことを言わない。静かに控えるのが無難。"
         },
         {
@@ -366,8 +378,8 @@
                 "original": "磐桓，利居貞，利建侯。",
                 "meaning": "進もうとしても足元が定まらない。まず正しく居場所を定め、人や体制を整えるとよい。",
                 "fortune": "条件付き吉",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "すぐ動かず、準備と足場づくりを優先する。"
         },
         {
@@ -414,8 +426,8 @@
                 "original": "屯其膏。小貞吉，大貞凶。",
                 "meaning": "恵みや力が詰まって流れにくい。小さく正しければ吉、大きく構えると凶。",
                 "fortune": "小吉・大凶",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES",
+                "resultType": "yes",
                 "memo": "小さくなら進める。大きな決断は避ける。"
         },
         {
@@ -438,8 +450,8 @@
                 "original": "發蒙，利用刑人，用說桎梏，以往吝。",
                 "meaning": "無知や迷いを開くには、まず規律が必要。束縛を外しても、そのまま進めば悔いがある。",
                 "fortune": "警戒",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "NO",
+                "resultType": "no",
                 "memo": "まず基本を整える。勢いだけで進めない。"
         },
         {
@@ -474,8 +486,8 @@
                 "original": "困蒙，吝。",
                 "meaning": "未熟なまま行き詰まる。視野が狭く、悔いが残りやすい。",
                 "fortune": "吝",
-                "result": "NO",
-                "resultType": "no",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "今のままでは詰まりやすい。先に学ぶ・聞く。"
         },
         {
@@ -498,8 +510,8 @@
                 "original": "擊蒙。不利為寇，利禦寇。",
                 "meaning": "迷いを打ち払う時。ただし攻めるのではなく、害を防ぐのがよい。",
                 "fortune": "条件付き吉",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "守りを固める。攻めずに、問題を遠ざける。"
         },
         {
@@ -510,9 +522,9 @@
                 "original": "需于郊，利用恆，无咎。",
                 "meaning": "郊外で待つように、危険から距離を置いて待つ。普段通りを守れば咎はない。",
                 "fortune": "无咎",
-                "result": "待つ",
-                "resultType": "wait",
-                "memo": "近づきすぎない。いつも通りで待つ。"
+                "result": "YES寄り",
+                "resultType": "yeslean",
+                "memo": "近づきすぎない。いつも通りで進める。"
         },
         {
                 "id": 5,
@@ -546,8 +558,8 @@
                 "original": "需于血，出自穴。",
                 "meaning": "血のある場所で待つ。危ういが、穴から出る道もある。",
                 "fortune": "危ういが脱出可",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "無理に進まず、まず安全な出口を探す。"
         },
         {
@@ -570,8 +582,8 @@
                 "original": "入于穴，有不速之客三人來，敬之終吉。",
                 "meaning": "穴に入る。思いがけない客が三人来るが、敬って接すれば最後は吉。",
                 "fortune": "終吉",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES",
+                "resultType": "yes",
                 "memo": "想定外を拒まず、丁寧に対応してから決める。"
         },
         {
@@ -582,8 +594,8 @@
                 "original": "不永所事，小有言，終吉。",
                 "meaning": "争いごとを長引かせなければ、少し言われることがあっても最後は吉。",
                 "fortune": "終吉",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES",
+                "resultType": "yes",
                 "memo": "今は押し通さない。早めに引けば整う。"
         },
         {
@@ -594,8 +606,8 @@
                 "original": "不克訟，歸而逋，其邑人三百戶，无眚。",
                 "meaning": "争って勝てない。退いて身を低くすれば、大きな災いは避けられる。",
                 "fortune": "无眚",
-                "result": "NO",
-                "resultType": "no",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "勝ちに行かない。今回は退くほうが安全。"
         },
         {
@@ -606,8 +618,8 @@
                 "original": "食舊德，貞厲，終吉。或從王事，无成。",
                 "meaning": "これまでの蓄えや信頼に頼る。正しくしても危ういが、最後は吉。功を求めすぎない。",
                 "fortune": "厲・終吉",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "新しく攻めず、今ある信頼を守る。"
         },
         {
@@ -666,8 +678,8 @@
                 "original": "在師中，吉无咎，王三錫命。",
                 "meaning": "組織や流れの中心にいて、正しく任を果たせば吉で咎なし。",
                 "fortune": "吉・无咎",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "役割が明確なら進めてよい。責任を持って動く。"
         },
         {
@@ -690,8 +702,8 @@
                 "original": "師左次，无咎。",
                 "meaning": "軍が退いて陣を移す。前進しなくても、退くことで咎を避ける。",
                 "fortune": "无咎",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "今日は退く・位置を変える。無理に進まない。"
         },
         {
@@ -702,8 +714,8 @@
                 "original": "田有禽，利執言，无咎。長子帥師，弟子輿尸，貞凶。",
                 "meaning": "獲物はあるが、指揮を誤ると凶。任せる相手や進め方が重要。",
                 "fortune": "条件付き",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "誰に任せるかを見直す。軽い判断で進めない。"
         },
         {
@@ -714,8 +726,8 @@
                 "original": "大君有命，開國承家，小人勿用。",
                 "meaning": "大きな任命や区切りの時。ただし小人物を用いると乱れる。",
                 "fortune": "条件付き吉",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "人選がよければ進めてよい。信用できない相手は避ける。"
         },
         {
@@ -726,8 +738,8 @@
                 "original": "有孚比之，无咎。有孚盈缶，終來有他吉。",
                 "meaning": "誠意をもって親しめば咎はない。飾らない信頼があれば、後から別の吉も来る。",
                 "fortune": "吉・无咎",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "素直な気持ちで関わるならよい。飾らず進める。"
         },
         {
@@ -834,8 +846,8 @@
                 "original": "有孚，血去惕出，无咎。",
                 "meaning": "誠意があれば、傷や恐れから抜け出し、咎はない。",
                 "fortune": "无咎",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "不安を減らしてから進む。誠実に対応する。"
         },
         {
@@ -846,8 +858,8 @@
                 "original": "有孚攣如，富以其鄰。",
                 "meaning": "誠意で強く結ばれ、豊かさを隣人と分かち合う。",
                 "fortune": "吉",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "一人で抱えず、周囲と分け合えばよい。"
         },
         {
@@ -870,8 +882,8 @@
                 "original": "素履，往无咎。",
                 "meaning": "飾らず素直に踏み行えば、進んでも咎はない。",
                 "fortune": "无咎",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "シンプルに進めてよい。背伸びしない。"
         },
         {
@@ -906,8 +918,8 @@
                 "original": "履虎尾，愬愬，終吉。",
                 "meaning": "虎の尾を踏むような危うさはあるが、恐れて慎重なら最後は吉。",
                 "fortune": "終吉",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "慎重に条件を確認する。怖さがあるならゆっくり進む。"
         },
         {
@@ -918,8 +930,8 @@
                 "original": "夬履，貞厲。",
                 "meaning": "強く決断して踏み出す。ただし正しくても危うさがある。",
                 "fortune": "厲",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "決める力はあるが、強引さに注意する。"
         },
         {
@@ -966,8 +978,8 @@
                 "original": "无平不陂，无往不復。艱貞无咎。勿恤其孚，于食有福。",
                 "meaning": "平らなものも傾き、行けば戻る。困難を知って正しければ咎はない。",
                 "fortune": "无咎",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "順調でも油断しない。変化を見込んで進める。"
         },
         {
@@ -978,8 +990,8 @@
                 "original": "翩翩，不富以其鄰，不戒以孚。",
                 "meaning": "軽やかに下る。富によらず、隣人と誠で通じ合う。",
                 "fortune": "吉寄り",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "利害より信頼で動くならよい。軽やかに進める。"
         },
         {
@@ -1002,8 +1014,8 @@
                 "original": "城復于隍，勿用師。自邑告命，貞吝。",
                 "meaning": "城壁が堀に崩れ戻る。兵を用いてはならない。正しくしても悔いが残る。",
                 "fortune": "吝",
-                "result": "NO",
-                "resultType": "no",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "崩れかけたものを力で戻さない。撤退や整理を優先する。"
         },
         {
@@ -1026,8 +1038,8 @@
                 "original": "包承，小人吉，大人否亨。",
                 "meaning": "包み従うことで小人には吉。大人は閉塞の中でも道を保つ。",
                 "fortune": "条件付き",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "迎合しすぎない。今は様子を見て、無理に前へ出ない。"
         },
         {
@@ -1038,8 +1050,8 @@
                 "original": "包羞。",
                 "meaning": "恥や不都合を包み隠している。内側に問題が残る。",
                 "fortune": "吝寄り",
-                "result": "NO",
-                "resultType": "no",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "違和感を隠したまま進めない。今日は見送る。"
         },
         {
@@ -1050,9 +1062,9 @@
                 "original": "有命无咎，疇離祉。",
                 "meaning": "命に従って動けば咎はない。同類も福を受ける。",
                 "fortune": "无咎",
-                "result": "待つ",
-                "resultType": "wait",
-                "memo": "自分勝手に動かず、条件や役割が整うのを待つ。"
+                "result": "YES寄り",
+                "resultType": "yeslean",
+                "memo": "自分勝手に動かず、条件や役割が整うのを進める。"
         },
         {
                 "id": 12,
@@ -1062,8 +1074,8 @@
                 "original": "休否，大人吉。其亡其亡，繫于苞桑。",
                 "meaning": "閉塞が休まり始める。大人には吉。ただし危機感を忘れない。",
                 "fortune": "吉",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "流れは改善に向かう。油断せず、慎重に進める。"
         },
         {
@@ -1074,8 +1086,8 @@
                 "original": "傾否，先否後喜。",
                 "meaning": "閉塞が傾き、崩れ始める。先は塞がっても後には喜びがある。",
                 "fortune": "後吉",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "NO",
+                "resultType": "no",
                 "memo": "今の停滞は抜けつつある。終わらせて次へ進む。"
         },
         {
@@ -1086,8 +1098,8 @@
                 "original": "同人于門，无咎。",
                 "meaning": "門の外で人と同じくする。開かれた関わりなら咎はない。",
                 "fortune": "无咎",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "オープンに関わるならよい。隠さず進める。"
         },
         {
@@ -1098,8 +1110,8 @@
                 "original": "同人于宗，吝。",
                 "meaning": "身内や仲間内だけで固まる。偏りが出て悔いがある。",
                 "fortune": "吝",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "内輪だけで決めない。外の視点を入れる。"
         },
         {
@@ -1110,8 +1122,8 @@
                 "original": "伏戎于莽，升其高陵，三歲不興。",
                 "meaning": "草むらに兵を伏せ、高みに登って様子を見る。長く動けない。",
                 "fortune": "停滞",
-                "result": "NO",
-                "resultType": "no",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "疑いや構えが強すぎる。今は進めにくい。"
         },
         {
@@ -1122,8 +1134,8 @@
                 "original": "乘其墉，弗克攻，吉。",
                 "meaning": "垣に登るが攻めきらない。攻めずに止まることで吉。",
                 "fortune": "吉",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES",
+                "resultType": "yes",
                 "memo": "攻めない判断がよい。距離を置けば整う。"
         },
         {
@@ -1134,8 +1146,8 @@
                 "original": "同人，先號咷而後笑。大師克相遇。",
                 "meaning": "はじめは泣き叫ぶほど隔たりがあるが、後には笑い合える。大きな力で出会える。",
                 "fortune": "後吉",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "最初は難しくても、誠実に向き合えば通じる。"
         },
         {
@@ -1146,8 +1158,8 @@
                 "original": "同人于郊，无悔。",
                 "meaning": "郊外で人と同じくする。中心から離れているが悔いはない。",
                 "fortune": "无悔",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES",
+                "resultType": "yes",
                 "memo": "深く入りすぎない。ほどよい距離なら問題ない。"
         },
         {
@@ -1158,8 +1170,8 @@
                 "original": "无交害，匪咎。艱則无咎。",
                 "meaning": "害と交わらなければ咎はない。困難を意識すれば問題は避けられる。",
                 "fortune": "无咎",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "調子に乗らず、リスクを避けてから進める。"
         },
         {
@@ -1170,8 +1182,8 @@
                 "original": "大車以載，有攸往，无咎。",
                 "meaning": "大きな車で荷を載せる。行くところがあっても咎はない。",
                 "fortune": "无咎",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "NO",
+                "resultType": "no",
                 "memo": "受け止める力がある。範囲を決めて進める。"
         },
         {
@@ -1182,8 +1194,8 @@
                 "original": "公用亨于天子，小人弗克。",
                 "meaning": "公が天子に献じる。大きな器があれば通じるが、小人には扱えない。",
                 "fortune": "条件付き吉",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "器量や責任が必要。軽い気持ちならまだ待つ。"
         },
         {
@@ -1194,8 +1206,8 @@
                 "original": "匪其彭，无咎。",
                 "meaning": "盛んさを誇りすぎなければ咎はない。",
                 "fortune": "无咎",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "持っているものを見せびらかさない。控えめならよい。"
         },
         {
@@ -1206,8 +1218,8 @@
                 "original": "厥孚交如，威如，吉。",
                 "meaning": "誠意が交わり、威厳もある。吉。",
                 "fortune": "吉",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "信頼と節度があるなら進めてよい。"
         },
         {
@@ -1230,8 +1242,8 @@
                 "original": "謙謙君子，用涉大川，吉。",
                 "meaning": "謙虚にまた謙虚である君子。大川を渡っても吉。",
                 "fortune": "吉",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "控えめに進めるならよい。大きなことにも挑める。"
         },
         {
@@ -1242,8 +1254,8 @@
                 "original": "鳴謙，貞吉。",
                 "meaning": "謙虚さが自然に表れる。正しければ吉。",
                 "fortune": "貞吉",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "誠実に進める。自分を大きく見せない。"
         },
         {
@@ -1278,8 +1290,8 @@
                 "original": "不富以其鄰，利用侵伐，无不利。",
                 "meaning": "富でなく隣人と通じる。必要な処置を取るには利があり、不利はない。",
                 "fortune": "条件付き吉",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "穏やかさを保ちつつ、必要な線引きはしてよい。"
         },
         {
@@ -1290,8 +1302,8 @@
                 "original": "鳴謙，利用行師，征邑國。",
                 "meaning": "謙虚さを掲げる。軍を動かし、内側の問題を正すのによい。",
                 "fortune": "条件付き吉",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "外へ攻めるより、まず身内や足元を整える。"
         },
         {
@@ -1326,8 +1338,8 @@
                 "original": "盱豫，悔。遲有悔。",
                 "meaning": "上を見て期待しすぎる。遅れると悔いがある。",
                 "fortune": "悔",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "人任せにしない。決めるなら早めに条件を切る。"
         },
         {
@@ -1350,8 +1362,8 @@
                 "original": "貞疾，恒不死。",
                 "meaning": "正しくても病のような重さがある。ただし長く続いても滅びない。",
                 "fortune": "厲寄り",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "無理に明るく進めない。負担を減らして様子を見る。"
         },
         {
@@ -1362,8 +1374,8 @@
                 "original": "冥豫，成有渝，无咎。",
                 "meaning": "喜びに暗く沈む。成ったあとに改めれば咎はない。",
                 "fortune": "改めて无咎",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "浮かれた後なら修正する。今から整え直せばよい。"
         },
         {
@@ -1410,8 +1422,8 @@
                 "original": "隨有獲，貞凶。有孚在道，以明，何咎。",
                 "meaning": "従って得るものはあるが、正しいだけでは凶に傾く。誠意と明るい判断があれば咎はない。",
                 "fortune": "凶含み",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "NO",
+                "resultType": "no",
                 "memo": "得になる話ほど慎重に見る。誠実さと透明性が必要。"
         },
         {
@@ -1422,8 +1434,8 @@
                 "original": "孚于嘉，吉。",
                 "meaning": "よいものに誠を尽くす。吉。",
                 "fortune": "吉",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "信頼できる相手や良い流れなら進めてよい。"
         },
         {
@@ -1446,8 +1458,8 @@
                 "original": "幹父之蠱，有子，考无咎。厲終吉。",
                 "meaning": "父の代からの乱れを正す。受け継ぐ者がいれば咎はなく、危うくても最後は吉。",
                 "fortune": "厲・終吉",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "古い問題を整える時。急がず、根本から直す。"
         },
         {
@@ -1482,8 +1494,8 @@
                 "original": "裕父之蠱，往見吝。",
                 "meaning": "古い乱れをゆるく放置する。進めば悔いを見る。",
                 "fortune": "吝",
-                "result": "NO",
-                "resultType": "no",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "問題を放置して進まない。先に片づける。"
         },
         {
@@ -1506,8 +1518,8 @@
                 "original": "不事王侯，高尚其事。",
                 "meaning": "王侯に仕えず、自分の志を高く保つ。",
                 "fortune": "高尚",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "NO",
+                "resultType": "no",
                 "memo": "利益より筋を取る。無理に関わらない。"
         },
         {
@@ -1518,8 +1530,8 @@
                 "original": "咸臨，貞吉。",
                 "meaning": "感じ合いながら近づく。正しければ吉。",
                 "fortune": "貞吉",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "相手や状況に自然に近づいてよい。礼儀は守る。"
         },
         {
@@ -1542,8 +1554,8 @@
                 "original": "甘臨，无攸利。既憂之，无咎。",
                 "meaning": "甘く近づくだけでは利がない。問題を憂えて改めれば咎はない。",
                 "fortune": "无利・无咎",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "甘く見ない。見直してから進める。"
         },
         {
@@ -1554,8 +1566,8 @@
                 "original": "至臨，无咎。",
                 "meaning": "近づくべきところに至る。咎はない。",
                 "fortune": "无咎",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "必要なところまで近づいてよい。踏み込みすぎない。"
         },
         {
@@ -1578,8 +1590,8 @@
                 "original": "敦臨，吉无咎。",
                 "meaning": "厚く誠実に近づく。吉で咎はない。",
                 "fortune": "吉无咎",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "誠実に関わればよい。丁寧さを保つ。"
         },
         {
@@ -1590,8 +1602,8 @@
                 "original": "童觀，小人无咎，君子吝。",
                 "meaning": "子どものような浅い見方。小人なら咎はないが、君子には悔いがある。",
                 "fortune": "吝",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "見方が浅い。もう少し観察してから決める。"
         },
         {
@@ -1602,8 +1614,8 @@
                 "original": "闚觀，利女貞。",
                 "meaning": "すき間からのぞき見るような観察。控えめに正しさを守るには利がある。",
                 "fortune": "条件付き",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "情報が限られている。小さく様子を見る。"
         },
         {
@@ -1638,8 +1650,8 @@
                 "original": "觀我生，君子无咎。",
                 "meaning": "自分の生き方や行いを観る。君子なら咎はない。",
                 "fortune": "无咎",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "自分の姿勢を点検する。整っていれば進める。"
         },
         {
@@ -1650,8 +1662,8 @@
                 "original": "觀其生，君子无咎。",
                 "meaning": "相手や全体のあり方を観る。君子なら咎はない。",
                 "fortune": "无咎",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES",
+                "resultType": "yes",
                 "memo": "周囲をよく見てから判断する。急がない。"
         },
         {
@@ -1662,8 +1674,8 @@
                 "original": "屨校滅趾，无咎。",
                 "meaning": "足かせで足先を傷める程度。早めの制止なら大きな咎はない。",
                 "fortune": "无咎",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "NO",
+                "resultType": "no",
                 "memo": "小さいうちに止める。軽い注意や修正で済ませる。"
         },
         {
@@ -1674,8 +1686,8 @@
                 "original": "噬膚滅鼻，无咎。",
                 "meaning": "柔らかい肉を噛み、鼻まで沈む。やり過ぎに見えても咎はない。",
                 "fortune": "无咎",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "問題を処理してよい。ただし踏み込みすぎに注意する。"
         },
         {
@@ -1686,8 +1698,8 @@
                 "original": "噬腊肉，遇毒。小吝，无咎。",
                 "meaning": "干し肉を噛んで毒に当たる。少し悔いはあるが大きな咎はない。",
                 "fortune": "小吝・无咎",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "面倒なものに当たりやすい。慎重に処理する。"
         },
         {
@@ -1698,8 +1710,8 @@
                 "original": "噬乾胏，得金矢。利艱貞，吉。",
                 "meaning": "骨つきの固い肉を噛み、金の矢を得る。困難でも正しくあれば吉。",
                 "fortune": "艱貞吉",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "難しいが進めてよい。手間を惜しまず処理する。"
         },
         {
@@ -1710,8 +1722,8 @@
                 "original": "噬乾肉，得黃金。貞厲，无咎。",
                 "meaning": "乾いた肉を噛み、黄金を得る。正しくしても危ういが咎はない。",
                 "fortune": "厲・无咎",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "得るものはあるが負担もある。条件を確認して進める。"
         },
         {
@@ -1734,8 +1746,8 @@
                 "original": "賁其趾，舍車而徒。",
                 "meaning": "足元を飾り、車を捨てて歩く。見栄より実直さを選ぶ。",
                 "fortune": "无咎寄り",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "小さく整えて進める。派手さより身軽さを取る。"
         },
         {
@@ -1746,8 +1758,8 @@
                 "original": "賁其須。",
                 "meaning": "ひげを飾る。外見や添え物を整える。",
                 "fortune": "小吉",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "見た目や細部を整えるにはよい。中身は変えすぎない。"
         },
         {
@@ -1782,8 +1794,8 @@
                 "original": "賁于丘園，束帛戔戔。吝，終吉。",
                 "meaning": "丘や園を飾る。贈り物は少ないが、悔いはあっても最後は吉。",
                 "fortune": "吝・終吉",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "豪華でなくてよい。小さく整えれば最後はまとまる。"
         },
         {
@@ -1794,8 +1806,8 @@
                 "original": "白賁，无咎。",
                 "meaning": "白く飾る。飾りを極めるとかえって素に戻り、咎はない。",
                 "fortune": "无咎",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "盛りすぎない。シンプルに戻すとよい。"
         },
         {
@@ -1830,8 +1842,8 @@
                 "original": "剝之，无咎。",
                 "meaning": "剥がれるが、咎はない。不要なものが落ちるだけなら問題は小さい。",
                 "fortune": "无咎",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "失うものがあっても必要な整理かもしれない。様子を見る。"
         },
         {
@@ -1866,8 +1878,8 @@
                 "original": "碩果不食，君子得輿，小人剝廬。",
                 "meaning": "大きな果実は食べられず残る。君子は車を得るが、小人は住まいを剥がされる。",
                 "fortune": "分かれ目",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "NO",
+                "resultType": "no",
                 "memo": "何を残すか見極める。軽い気持ちで動かない。"
         },
         {
@@ -1890,9 +1902,9 @@
                 "original": "休復，吉。",
                 "meaning": "よく休み、よい形で戻る。吉。",
                 "fortune": "吉",
-                "result": "YES",
-                "resultType": "yes",
-                "memo": "休んでから戻るならよい。無理に急がない。"
+                "result": "YES寄り",
+                "resultType": "yeslean",
+                "memo": "休んでから戻るならよい。無理に急がず進める。"
         },
         {
                 "id": 24,
@@ -1902,8 +1914,8 @@
                 "original": "頻復，厲无咎。",
                 "meaning": "何度も戻る。危うさはあるが咎はない。",
                 "fortune": "厲・无咎",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "同じ迷いを繰り返している。少し立ち止まって整える。"
         },
         {
@@ -1914,8 +1926,8 @@
                 "original": "中行獨復。",
                 "meaning": "中道を行き、ひとりで戻る。",
                 "fortune": "无咎寄り",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "周囲に合わせすぎず、自分だけでも正しい位置に戻る。"
         },
         {
@@ -1926,8 +1938,8 @@
                 "original": "敦復，无悔。",
                 "meaning": "厚く誠実に戻る。悔いはない。",
                 "fortune": "无悔",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "素直に戻ればよい。やり直しを恐れない。"
         },
         {
@@ -1962,8 +1974,8 @@
                 "original": "不耕穫，不菑畬，則利有攸往。",
                 "meaning": "耕さず収穫を求めず、開墾せず畑を得ようとしない。欲を出さなければ進んでよい。",
                 "fortune": "利あり",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "見返りを欲張らないなら進める。自然な流れを選ぶ。"
         },
         {
@@ -1998,8 +2010,8 @@
                 "original": "无妄之疾，勿藥有喜。",
                 "meaning": "思いがけない不調。薬を使わずとも喜びがある。自然に任せると整う。",
                 "fortune": "吉寄り",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES",
+                "resultType": "yes",
                 "memo": "手を入れすぎない。少し様子を見ると回復しやすい。"
         },
         {
@@ -2010,8 +2022,8 @@
                 "original": "无妄，行有眚，无攸利。",
                 "meaning": "私心がなくても、今進めば災いがある。進んでも利はない。",
                 "fortune": "眚・不利",
-                "result": "NO",
-                "resultType": "no",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "正しくても今は動かない。タイミングが悪い。"
         },
         {
@@ -2022,8 +2034,8 @@
                 "original": "有厲，利已。",
                 "meaning": "危うさがある。止まることに利がある。",
                 "fortune": "厲",
-                "result": "NO",
-                "resultType": "no",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "今は止める。勢いで進めない。"
         },
         {
@@ -2046,8 +2058,8 @@
                 "original": "良馬逐，利艱貞。曰閑輿衛，利有攸往。",
                 "meaning": "良馬が進む。困難に耐えて正しく、備えを整えれば進んでよい。",
                 "fortune": "艱貞吉",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "準備があるなら進める。守りも整える。"
         },
         {
@@ -2130,8 +2142,8 @@
                 "original": "顛頤，吉。虎視眈眈，其欲逐逐，无咎。",
                 "meaning": "逆に養いを求めるが吉。虎のように慎重に見定めれば咎はない。",
                 "fortune": "吉・无咎",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "必要な支えを求めてよい。慎重に選ぶ。"
         },
         {
@@ -2142,8 +2154,8 @@
                 "original": "拂經，居貞吉，不可涉大川。",
                 "meaning": "通常の筋とは違う。留まって正しければ吉だが、大きな冒険は不可。",
                 "fortune": "貞吉",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "小さく守るならよい。大きく動かない。"
         },
         {
@@ -2154,8 +2166,8 @@
                 "original": "由頤，厲吉。利涉大川。",
                 "meaning": "養いの源となる。危うさはあるが吉。大川を渡る利もある。",
                 "fortune": "厲吉",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "責任を持つなら進める。大きなことにも向く。"
         },
         {
@@ -2166,8 +2178,8 @@
                 "original": "藉用白茅，无咎。",
                 "meaning": "白い茅を敷くように、丁寧に受け止めれば咎はない。",
                 "fortune": "无咎",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "慎重に扱う。準備を敷いてから進める。"
         },
         {
@@ -2202,8 +2214,8 @@
                 "original": "棟隆，吉。有它吝。",
                 "meaning": "棟木が高くしっかりする。吉。ただし余計なものがあれば悔い。",
                 "fortune": "吉・吝",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "中心がしっかりしていれば進める。余計な条件は外す。"
         },
         {
@@ -2214,8 +2226,8 @@
                 "original": "枯楊生華，老婦得其士夫，无咎无譽。",
                 "meaning": "枯れた柳に花が咲く。咎はないが誉れもない。",
                 "fortune": "无咎无譽",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "見た目ほど実りはない。大きく期待しない。"
         },
         {
@@ -2274,8 +2286,8 @@
                 "original": "樽酒簋貳，用缶，納約自牖，終无咎。",
                 "meaning": "粗末な器でも誠意をもって差し入れる。小さな窓口から通じ、最後は咎がない。",
                 "fortune": "終无咎",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "正面突破しない。小さく誠実に通す。"
         },
         {
@@ -2288,7 +2300,7 @@
                 "fortune": "无咎",
                 "result": "待つ",
                 "resultType": "wait",
-                "memo": "もう少しで整う。焦らず水位が下がるのを待つ。"
+                "memo": "もう少しで整う。焦らず水位が下がるのを進める。"
         },
         {
                 "id": 29,
@@ -2310,8 +2322,8 @@
                 "original": "履錯然，敬之无咎。",
                 "meaning": "足元が乱れている。慎んで扱えば咎はない。",
                 "fortune": "无咎",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "まず足元を整える。軽く見ず、丁寧に始める。"
         },
         {
@@ -2358,8 +2370,8 @@
                 "original": "出涕沱若，戚嗟若，吉。",
                 "meaning": "涙を流し、嘆きつつも、真剣に向き合えば吉。",
                 "fortune": "吉",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "不安があっても向き合えばよい。誠実に進める。"
         },
         {
@@ -2370,8 +2382,8 @@
                 "original": "王用出征，有嘉折首，獲匪其醜，无咎。",
                 "meaning": "王が征伐に出て、首領を正し、従う者まで責めない。咎はない。",
                 "fortune": "无咎",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "問題の核心だけを処理するならよい。やりすぎない。"
         },
         {
@@ -2394,8 +2406,8 @@
                 "original": "咸其腓，凶，居吉。",
                 "meaning": "ふくらはぎが感じ動く。動けば凶、留まれば吉。",
                 "fortune": "居吉",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "反応で動かない。今は留まるのがよい。"
         },
         {
@@ -2406,8 +2418,8 @@
                 "original": "咸其股，執其隨，往吝。",
                 "meaning": "ももが感じて動き、後を追う。進めば悔いがある。",
                 "fortune": "吝",
-                "result": "NO",
-                "resultType": "no",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "流されて追わない。衝動で動くと後悔しやすい。"
         },
         {
@@ -2430,8 +2442,8 @@
                 "original": "咸其脢，无悔。",
                 "meaning": "背のあたりが感じる。深く反応しすぎず、悔いはない。",
                 "fortune": "无悔",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES",
+                "resultType": "yes",
                 "memo": "感情に飲まれない。距離を保てば問題ない。"
         },
         {
@@ -2442,8 +2454,8 @@
                 "original": "咸其輔頰舌。",
                 "meaning": "頬や舌が感じる。言葉だけが動きやすい。",
                 "fortune": "軽い",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "口先だけになりやすい。言う前に実態を見る。"
         },
         {
@@ -2478,8 +2490,8 @@
                 "original": "不恒其德，或承之羞，貞吝。",
                 "meaning": "徳が一定せず、恥を受けることがある。正しくしても悔いが残る。",
                 "fortune": "吝",
-                "result": "NO",
-                "resultType": "no",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "方針がぶれている。今は進めない。"
         },
         {
@@ -2490,8 +2502,8 @@
                 "original": "田无禽。",
                 "meaning": "狩りに行っても獲物がない。得るものがない。",
                 "fortune": "无得",
-                "result": "NO",
-                "resultType": "no",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "動いても収穫が少ない。今回はやめる。"
         },
         {
@@ -2502,9 +2514,9 @@
                 "original": "恒其德，貞。婦人吉，夫子凶。",
                 "meaning": "徳を保ち正しくある。受け身なら吉だが、主導する者には凶。",
                 "fortune": "条件付き",
-                "result": "待つ",
-                "resultType": "wait",
-                "memo": "受ける立場ならよい。主導権を握るなら待つ。"
+                "result": "YES寄り",
+                "resultType": "yeslean",
+                "memo": "受ける立場ならよい。主導権を握るなら進める。"
         },
         {
                 "id": 32,
@@ -2526,8 +2538,8 @@
                 "original": "遯尾，厲，勿用有攸往。",
                 "meaning": "退くのが遅れて、尾をつかまれる。危うく、進んではならない。",
                 "fortune": "厲",
-                "result": "NO",
-                "resultType": "no",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "今は進めない。遅れる前に退く。"
         },
         {
@@ -2538,8 +2550,8 @@
                 "original": "執之用黃牛之革，莫之勝說。",
                 "meaning": "黄牛の革でしっかり結び留める。簡単にはほどけない。",
                 "fortune": "固定",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "すぐ動けない。縛りや条件を確認する。"
         },
         {
@@ -2550,8 +2562,8 @@
                 "original": "係遯，有疾厲，畜臣妾吉。",
                 "meaning": "退こうとしても引っかかる。危ういが、身近なものを養うには吉。",
                 "fortune": "厲・小吉",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "大きく動かず、身近な用事や守りに回る。"
         },
         {
@@ -2574,8 +2586,8 @@
                 "original": "嘉遯，貞吉。",
                 "meaning": "立派に退く。正しければ吉。",
                 "fortune": "貞吉",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "今は退く判断がよい。体面より安全を取る。"
         },
         {
@@ -2622,8 +2634,8 @@
                 "original": "小人用壯，君子用罔，貞厲。羝羊觸藩，羸其角。",
                 "meaning": "小人は力を使い、君子はむやみに使わない。雄羊が垣に角をかけるように危うい。",
                 "fortune": "厲",
-                "result": "NO",
-                "resultType": "no",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "強引に押すと引っかかる。今日は抑える。"
         },
         {
@@ -2634,8 +2646,8 @@
                 "original": "貞吉，悔亡。藩決不羸，壯于大輿之輹。",
                 "meaning": "正しければ吉で悔いは消える。垣が開き、車軸も強い。",
                 "fortune": "吉",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "道が開いている。準備があるなら進める。"
         },
         {
@@ -2646,8 +2658,8 @@
                 "original": "喪羊于易，无悔。",
                 "meaning": "羊を失うが、穏やかに済み悔いはない。",
                 "fortune": "无悔",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES",
+                "resultType": "yes",
                 "memo": "少し失ってもよい。執着せず、軽く手放す。"
         },
         {
@@ -2658,8 +2670,8 @@
                 "original": "羝羊觸藩，不能退，不能遂，无攸利，艱則吉。",
                 "meaning": "雄羊が垣に角をかけ、退けず進めない。利はないが、苦労を知れば吉。",
                 "fortune": "艱則吉",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "詰まりを認める。無理に進まず、苦労して整える。"
         },
         {
@@ -2670,9 +2682,9 @@
                 "original": "晉如摧如，貞吉。罔孚，裕无咎。",
                 "meaning": "進もうとして押し戻される。信じられなくても、余裕を持てば咎はない。",
                 "fortune": "貞吉",
-                "result": "待つ",
-                "resultType": "wait",
-                "memo": "すぐ通らなくても焦らない。余裕を持って待つ。"
+                "result": "YES",
+                "resultType": "yes",
+                "memo": "すぐ通らなくても焦らない。余裕を持って進める。"
         },
         {
                 "id": 35,
@@ -2682,8 +2694,8 @@
                 "original": "晉如愁如，貞吉。受茲介福，于其王母。",
                 "meaning": "進むが憂いもある。正しければ吉で、大きな福を受ける。",
                 "fortune": "貞吉",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "不安があっても、正しい道なら進めてよい。"
         },
         {
@@ -2706,8 +2718,8 @@
                 "original": "晉如鼫鼠，貞厲。",
                 "meaning": "進むが大ねずみのように欲深い。正しくしても危うい。",
                 "fortune": "厲",
-                "result": "NO",
-                "resultType": "no",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "欲張ると危ない。今日は控える。"
         },
         {
@@ -2730,8 +2742,8 @@
                 "original": "晉其角，維用伐邑，厲吉无咎，貞吝。",
                 "meaning": "角で進む。内側の問題を正すにはよいが、危うく悔いもある。",
                 "fortune": "厲吉・吝",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "外へ攻めず、内側の整理に使う。"
         },
         {
@@ -2742,8 +2754,8 @@
                 "original": "明夷于飛，垂其翼。君子于行，三日不食。有攸往，主人有言。",
                 "meaning": "明るさが傷つき、飛ぶ翼が垂れる。進めば苦労し、言われることもある。",
                 "fortune": "厲寄り",
-                "result": "NO",
-                "resultType": "no",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "今は無理に進めない。消耗が大きい。"
         },
         {
@@ -2766,8 +2778,8 @@
                 "original": "明夷于南狩，得其大首，不可疾貞。",
                 "meaning": "南で狩りをして大きな首を得る。急いで正そうとしてはならない。",
                 "fortune": "条件付き吉",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "問題の核心は見える。急がず慎重に処理する。"
         },
         {
@@ -2778,8 +2790,8 @@
                 "original": "入于左腹，獲明夷之心，于出門庭。",
                 "meaning": "内側深くに入り、傷ついた明るさの心を知り、外へ出る。",
                 "fortune": "脱出",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "内情を見てから離れる。深追いしない。"
         },
         {
@@ -2838,8 +2850,8 @@
                 "original": "家人嗃嗃，悔厲吉。婦子嘻嘻，終吝。",
                 "meaning": "家の中で厳しすぎると危ういが吉。ゆるみすぎると最後は悔い。",
                 "fortune": "厲吉・終吝",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "厳しさと甘さの加減を見る。ゆるめすぎない。"
         },
         {
@@ -2874,8 +2886,8 @@
                 "original": "有孚威如，終吉。",
                 "meaning": "誠実さと威厳がある。最後は吉。",
                 "fortune": "終吉",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "優しさだけでなく締まりも必要。誠実に通せばよい。"
         },
         {
@@ -2886,9 +2898,9 @@
                 "original": "悔亡，喪馬勿逐，自復。見惡人，无咎。",
                 "meaning": "悔いは消える。失った馬は追わなくても戻る。嫌な相手に会っても咎はない。",
                 "fortune": "无咎",
-                "result": "待つ",
-                "resultType": "wait",
-                "memo": "追いかけない。自然に戻るものを待つ。"
+                "result": "YES寄り",
+                "resultType": "yeslean",
+                "memo": "追いかけない。自然に戻るものを進める。"
         },
         {
                 "id": 38,
@@ -2898,8 +2910,8 @@
                 "original": "遇主于巷，无咎。",
                 "meaning": "路地で主人に会う。正式でなくても通じ、咎はない。",
                 "fortune": "无咎",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "思わぬ形でも話は通じる。柔らかく進める。"
         },
         {
@@ -2910,8 +2922,8 @@
                 "original": "見輿曳，其牛掣，其人天且劓，无初有終。",
                 "meaning": "車は引かれ、牛は止められ、人は傷つく。初めは悪いが終わりはある。",
                 "fortune": "後に通じる",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "最初はこじれやすい。すぐ結論を出さない。"
         },
         {
@@ -2922,8 +2934,8 @@
                 "original": "睽孤，遇元夫，交孚，厲无咎。",
                 "meaning": "そむき孤立するが、よい相手に会い、誠で交われば危うくても咎はない。",
                 "fortune": "厲・无咎",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "孤立しても、信頼できる相手がいれば整う。"
         },
         {
@@ -2946,9 +2958,9 @@
                 "original": "睽孤，見豕負塗，載鬼一車。先張之弧，後說之弧。匪寇婚媾，往遇雨則吉。",
                 "meaning": "孤立して疑いが強まり、汚れた豚や鬼の車を見るように見誤る。敵ではなく縁であり、雨に会えば吉。",
                 "fortune": "後吉",
-                "result": "待つ",
-                "resultType": "wait",
-                "memo": "疑いすぎている。敵と決めつけず、流れが和らぐのを待つ。"
+                "result": "YES寄り",
+                "resultType": "yeslean",
+                "memo": "疑いすぎている。敵と決めつけず、流れが和らぐのを進める。"
         },
         {
                 "id": 39,
@@ -2958,8 +2970,8 @@
                 "original": "往蹇，來譽。",
                 "meaning": "進めば困難、戻れば誉れがある。",
                 "fortune": "戻って吉",
-                "result": "NO",
-                "resultType": "no",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "今は進まない。引き返す判断がよい。"
         },
         {
@@ -2970,8 +2982,8 @@
                 "original": "王臣蹇蹇，匪躬之故。",
                 "meaning": "王の臣が困難に重ねて当たる。自分のためではない苦労。",
                 "fortune": "苦労あり",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "自分の得だけで動かない。役割なら慎重に受ける。"
         },
         {
@@ -2982,8 +2994,8 @@
                 "original": "往蹇，來反。",
                 "meaning": "進めば困難、戻って反省する。",
                 "fortune": "戻るべき",
-                "result": "NO",
-                "resultType": "no",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "前進より立て直し。いったん戻る。"
         },
         {
@@ -2994,8 +3006,8 @@
                 "original": "往蹇，來連。",
                 "meaning": "進めば困難、戻ればつながりを得る。",
                 "fortune": "戻って連携",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "単独で進まない。戻って協力を探す。"
         },
         {
@@ -3030,8 +3042,8 @@
                 "original": "无咎。",
                 "meaning": "咎はない。ほどけ始めている。",
                 "fortune": "无咎",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "軽く進めてよい。大きな問題はなさそう。"
         },
         {
@@ -3042,8 +3054,8 @@
                 "original": "田獲三狐，得黃矢，貞吉。",
                 "meaning": "狩りで三匹の狐を得、黄色い矢を得る。正しければ吉。",
                 "fortune": "貞吉",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "問題の元を処理できる。正面から進める。"
         },
         {
@@ -3054,8 +3066,8 @@
                 "original": "負且乘，致寇至，貞吝。",
                 "meaning": "荷を背負う身で車に乗り、盗賊を招く。分不相応で悔いがある。",
                 "fortune": "吝",
-                "result": "NO",
-                "resultType": "no",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "背伸びすると問題を招く。今回は見送る。"
         },
         {
@@ -3066,8 +3078,8 @@
                 "original": "解而拇，朋至斯孚。",
                 "meaning": "足の親指の束縛を解けば、友が来て信頼が通じる。",
                 "fortune": "信頼回復",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "小さな引っかかりを外す。そこから関係が戻る。"
         },
         {
@@ -3078,8 +3090,8 @@
                 "original": "君子維有解，吉。有孚于小人。",
                 "meaning": "君子が解き放つことができれば吉。小人にも誠が伝わる。",
                 "fortune": "吉",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "許す・ほどく方向ならよい。こじれを解消する。"
         },
         {
@@ -3102,8 +3114,8 @@
                 "original": "已事遄往，无咎，酌損之。",
                 "meaning": "用事を終えたら速やかに行く。咎はないが、減らし方をよく考える。",
                 "fortune": "无咎",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "不要なものを減らすなら進めてよい。やりすぎない。"
         },
         {
@@ -3114,8 +3126,8 @@
                 "original": "利貞，征凶，弗損益之。",
                 "meaning": "正しさを守るには利があるが、進めば凶。無理に減らさず、むしろ益する。",
                 "fortune": "貞利・征凶",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "NO",
+                "resultType": "no",
                 "memo": "動いて削りすぎない。今は現状を守る。"
         },
         {
@@ -3126,8 +3138,8 @@
                 "original": "三人行，則損一人。一人行，則得其友。",
                 "meaning": "三人で行けば一人を減らす。一人で行けば友を得る。",
                 "fortune": "調整",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "人数や関係を整理する。多すぎるなら絞る。"
         },
         {
@@ -3138,8 +3150,8 @@
                 "original": "損其疾，使遄有喜，无咎。",
                 "meaning": "病や悪いところを減らす。早くすれば喜びがあり、咎はない。",
                 "fortune": "喜・无咎",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "悪い習慣や負担を減らすならよい。早めに動く。"
         },
         {
@@ -3162,8 +3174,8 @@
                 "original": "弗損益之，无咎，貞吉，利有攸往，得臣无家。",
                 "meaning": "減らさず益する。咎なく、正しければ吉。進む利があり、私心のない助けを得る。",
                 "fortune": "貞吉",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "減らす段階は終わり。増やす・進める方向でよい。"
         },
         {
@@ -3198,8 +3210,8 @@
                 "original": "益之用凶事，无咎。有孚中行，告公用圭。",
                 "meaning": "凶事を通して益を得る。誠をもって中道を行けば咎はない。",
                 "fortune": "无咎",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "困りごとの処理から益が出る。正直に進める。"
         },
         {
@@ -3210,8 +3222,8 @@
                 "original": "中行，告公從。利用為依遷國。",
                 "meaning": "中道を行き、公に告げれば従われる。拠り所を移すような大きな変更に利がある。",
                 "fortune": "利あり",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "相談して動くならよい。環境変更にも向く。"
         },
         {
@@ -3246,8 +3258,8 @@
                 "original": "壯于前趾，往不勝，為咎。",
                 "meaning": "足先だけが強く進もうとする。進んでも勝てず、咎となる。",
                 "fortune": "咎",
-                "result": "NO",
-                "resultType": "no",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "勢いだけで行かない。今は踏み出しすぎ。"
         },
         {
@@ -3258,8 +3270,8 @@
                 "original": "惕號，莫夜有戎，勿恤。",
                 "meaning": "警戒して呼びかける。夜に敵があっても、心配しすぎなくてよい。",
                 "fortune": "警戒して可",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "備えがあれば大丈夫。すぐ動かず警戒する。"
         },
         {
@@ -3270,8 +3282,8 @@
                 "original": "壯于頄，有凶。君子夬夬，獨行遇雨，若濡有慍，无咎。",
                 "meaning": "頬に強さが出て凶。決然と一人で行けば濡れて不快でも咎はない。",
                 "fortune": "凶含み・无咎",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "感情を顔に出さない。一人で静かに処理する。"
         },
         {
@@ -3282,8 +3294,8 @@
                 "original": "臀无膚，其行次且。牽羊悔亡，聞言不信。",
                 "meaning": "腰を落ち着けられず進みづらい。羊に引かれるように従えば悔いは消えるが、忠告を信じにくい。",
                 "fortune": "悔亡条件",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "忠告を聞く。自力で押すより従うほうがよい。"
         },
         {
@@ -3294,8 +3306,8 @@
                 "original": "莧陸夬夬，中行无咎。",
                 "meaning": "雑草を決然と断つ。中道を守れば咎はない。",
                 "fortune": "无咎",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "不要なものを切るならよい。やりすぎず中道で。"
         },
         {
@@ -3318,8 +3330,8 @@
                 "original": "繫于金柅，貞吉。有攸往，見凶。羸豕孚蹢躅。",
                 "meaning": "金の止め具につなぐ。留めれば吉だが、進めば凶。弱い豚も本気で暴れる。",
                 "fortune": "貞吉・往凶",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "NO",
+                "resultType": "no",
                 "memo": "まず止める。動かすと乱れやすい。"
         },
         {
@@ -3342,9 +3354,9 @@
                 "original": "臀无膚，其行次且，厲，无大咎。",
                 "meaning": "腰を落ち着けられず進みにくい。危ういが大きな咎はない。",
                 "fortune": "厲・无大咎",
-                "result": "待つ",
-                "resultType": "wait",
-                "memo": "無理に進まず、足場が整うまで待つ。"
+                "result": "NO寄り",
+                "resultType": "nolean",
+                "memo": "無理に進まず、足場が整うまで進める。"
         },
         {
                 "id": 44,
@@ -3366,8 +3378,8 @@
                 "original": "以杞包瓜，含章，有隕自天。",
                 "meaning": "杞で瓜を包み、内に美質を含む。天から落ちてくるものがある。",
                 "fortune": "吉兆",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "内側に価値がある。焦らず受け取ればよい。"
         },
         {
@@ -3378,8 +3390,8 @@
                 "original": "姤其角，吝，无咎。",
                 "meaning": "角で出会う。悔いはあるが咎はない。",
                 "fortune": "吝・无咎",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "ぶつかりやすい。強く出ず、距離を取る。"
         },
         {
@@ -3390,8 +3402,8 @@
                 "original": "有孚不終，乃亂乃萃。若號，一握為笑，勿恤，往无咎。",
                 "meaning": "誠はあるが続かず、乱れて集まる。呼びかければ笑いに変わる。心配せず進めば咎はない。",
                 "fortune": "无咎",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "まとまりきらなくても進めてよい。声をかけて整える。"
         },
         {
@@ -3402,8 +3414,8 @@
                 "original": "引吉，无咎。孚乃利用禴。",
                 "meaning": "引き寄せられて吉、咎はない。誠があれば簡素な祭りでも利がある。",
                 "fortune": "吉・无咎",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "自然に引かれる流れならよい。飾らず誠実に進める。"
         },
         {
@@ -3414,8 +3426,8 @@
                 "original": "萃如，嗟如，无攸利。往无咎，小吝。",
                 "meaning": "集まってもため息が出る。大きな利はないが、進んでも咎はなく少し悔いがある。",
                 "fortune": "小吝",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "期待ほど得るものは少ない。小さく関わる程度にする。"
         },
         {
@@ -3438,8 +3450,8 @@
                 "original": "萃有位，无咎。匪孚，元永貞，悔亡。",
                 "meaning": "集まりの中に位があり、咎はない。信頼が薄くても、長く正しければ悔いは消える。",
                 "fortune": "无咎・悔亡",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "立場を整えて進める。信頼は時間をかけて作る。"
         },
         {
@@ -3450,8 +3462,8 @@
                 "original": "齎咨涕洟，无咎。",
                 "meaning": "嘆き、涙や鼻水を流すような状態だが、咎はない。",
                 "fortune": "无咎",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "感情が強い。泣き言を出してから落ち着いて決める。"
         },
         {
@@ -3474,8 +3486,8 @@
                 "original": "孚乃利用禴，无咎。",
                 "meaning": "誠があれば簡素な祭りでも利があり、咎はない。",
                 "fortune": "无咎",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "飾らなくてよい。誠実に進める。"
         },
         {
@@ -3486,8 +3498,8 @@
                 "original": "升虛邑。",
                 "meaning": "空の邑に上る。妨げは少ないが、中身も薄い。",
                 "fortune": "通じる",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "待つ",
+                "resultType": "wait",
                 "memo": "進みやすい。中身を確認しながら進める。"
         },
         {
@@ -3498,8 +3510,8 @@
                 "original": "王用亨于岐山，吉无咎。",
                 "meaning": "王が岐山で祭る。吉で咎はない。",
                 "fortune": "吉无咎",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "正式な手順を踏めばよい。礼を整えて進める。"
         },
         {
@@ -3522,8 +3534,8 @@
                 "original": "冥升，利于不息之貞。",
                 "meaning": "暗い中で上る。休まず正しさを守るには利がある。",
                 "fortune": "条件付き",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "見通しが暗い。続けるなら慎重に、無理はしない。"
         },
         {
@@ -3546,8 +3558,8 @@
                 "original": "困于酒食，朱紱方來，利用享祀，征凶，无咎。",
                 "meaning": "酒食に困るほど満ちているが、正式な役目が来る。祭りには利があるが、進めば凶。",
                 "fortune": "待機吉・進凶",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "受け身で整える。自分から攻めない。"
         },
         {
@@ -3572,7 +3584,7 @@
                 "fortune": "吝・有終",
                 "result": "待つ",
                 "resultType": "wait",
-                "memo": "時間がかかる。急がず、詰まりが解けるのを待つ。"
+                "memo": "時間がかかる。急がず、詰まりが解けるのを見送る。"
         },
         {
                 "id": 47,
@@ -3594,8 +3606,8 @@
                 "original": "困于葛藟，于臲卼，曰動悔。有悔，征吉。",
                 "meaning": "つる草に絡まり、不安定。動けば悔いと言うが、悔いを知って進めば吉。",
                 "fortune": "悔後吉",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "絡まりを自覚する。反省してからなら動ける。"
         },
         {
@@ -3618,8 +3630,8 @@
                 "original": "井谷射鮒，甕敝漏。",
                 "meaning": "井戸の谷で小魚を射る。甕は壊れて漏れる。",
                 "fortune": "不十分",
-                "result": "NO",
-                "resultType": "no",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "器や仕組みが足りない。進めても漏れが出る。"
         },
         {
@@ -3630,8 +3642,8 @@
                 "original": "井渫不食，為我心惻。可用汲，王明，並受其福。",
                 "meaning": "井戸はさらわれているのに飲まれず、心が痛む。汲めば使え、王が明らかなら皆が福を受ける。",
                 "fortune": "用いれば吉",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "能力や準備はある。使ってもらえる場を整える。"
         },
         {
@@ -3642,8 +3654,8 @@
                 "original": "井甃，无咎。",
                 "meaning": "井戸を修理して整える。咎はない。",
                 "fortune": "无咎",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "まず補修する。使う前に土台を整える。"
         },
         {
@@ -3690,8 +3702,8 @@
                 "original": "己日乃革之，征吉，无咎。",
                 "meaning": "時が満ちてから変える。進めば吉で咎はない。",
                 "fortune": "吉・无咎",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "タイミングが来ているなら変えてよい。"
         },
         {
@@ -3738,8 +3750,8 @@
                 "original": "君子豹變，小人革面。征凶，居貞吉。",
                 "meaning": "君子は豹のように変わり、小人は表面だけ変わる。進めば凶、留まって正しければ吉。",
                 "fortune": "居貞吉",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "仕上げ段階。さらに攻めず、定着させる。"
         },
         {
@@ -3750,8 +3762,8 @@
                 "original": "鼎顚趾，利出否。得妾以其子，无咎。",
                 "meaning": "鼎が足をひっくり返す。悪いものを出すには利がある。",
                 "fortune": "无咎",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "古いものを捨てるならよい。入れ替えの始まり。"
         },
         {
@@ -3774,8 +3786,8 @@
                 "original": "鼎耳革，其行塞，雉膏不食。方雨虧悔，終吉。",
                 "meaning": "鼎の耳が変わり、運べず詰まる。よいものを食べられないが、雨が降れば悔いは減り、最後は吉。",
                 "fortune": "終吉",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES",
+                "resultType": "yes",
                 "memo": "仕組みが詰まっている。整えば後で使える。"
         },
         {
@@ -3798,8 +3810,8 @@
                 "original": "鼎黃耳金鉉，利貞。",
                 "meaning": "鼎に黄色い耳と金のつるがある。正しさに利がある。",
                 "fortune": "利貞",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "器が整っている。正しく扱えばよい。"
         },
         {
@@ -3846,8 +3858,8 @@
                 "original": "震蘇蘇，震行无眚。",
                 "meaning": "雷におののくが、それをきっかけに動けば災いはない。",
                 "fortune": "无眚",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "不安を合図にして動けばよい。"
         },
         {
@@ -3858,8 +3870,8 @@
                 "original": "震遂泥。",
                 "meaning": "雷が泥に沈む。勢いが鈍り、動きが悪い。",
                 "fortune": "停滞",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "NO",
+                "resultType": "no",
                 "memo": "勢いが泥に取られている。今は無理に進めない。"
         },
         {
@@ -3870,8 +3882,8 @@
                 "original": "震往來厲，億无喪，有事。",
                 "meaning": "雷が行き来して危ういが、大きく失うことはない。するべき事がある。",
                 "fortune": "厲・有事",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "揺れはある。必要なことだけ処理する。"
         },
         {
@@ -3906,9 +3918,9 @@
                 "original": "艮其腓，不拯其隨，其心不快。",
                 "meaning": "ふくらはぎを止めるが、従うものを救えず心が快くない。",
                 "fortune": "不快",
-                "result": "待つ",
-                "resultType": "wait",
-                "memo": "止まるしかないが、気持ちは残る。急がない。"
+                "result": "NO",
+                "resultType": "no",
+                "memo": "止まるしかないが、気持ちは残る。今は動かない。"
         },
         {
                 "id": 52,
@@ -3930,8 +3942,8 @@
                 "original": "艮其身，无咎。",
                 "meaning": "身を止める。咎はない。",
                 "fortune": "无咎",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "NO",
+                "resultType": "no",
                 "memo": "自分を抑える。動かないことで保てる。"
         },
         {
@@ -3942,8 +3954,8 @@
                 "original": "艮其輔，言有序，悔亡。",
                 "meaning": "頬を止める。言葉に順序があれば悔いは消える。",
                 "fortune": "悔亡",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "NO",
+                "resultType": "no",
                 "memo": "口を慎む。話すなら順序立てる。"
         },
         {
@@ -3954,8 +3966,8 @@
                 "original": "敦艮，吉。",
                 "meaning": "厚く止まる。吉。",
                 "fortune": "吉",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "NO",
+                "resultType": "no",
                 "memo": "しっかり止める判断がよい。無理に動かないことが吉。"
         },
         {
@@ -4002,8 +4014,8 @@
                 "original": "鴻漸于木，或得其桷，无咎。",
                 "meaning": "雁が木に進む。枝に足場を得れば咎はない。",
                 "fortune": "无咎",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "不安定だが足場はある。安定点を探す。"
         },
         {
@@ -4014,8 +4026,8 @@
                 "original": "鴻漸于陵，婦三歲不孕，終莫之勝，吉。",
                 "meaning": "雁が丘へ進む。長く実らなくても、最後には妨げられず吉。",
                 "fortune": "終吉",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "時間はかかるが進めてよい。焦らない。"
         },
         {
@@ -4038,8 +4050,8 @@
                 "original": "歸妹以娣，跛能履，征吉。",
                 "meaning": "妹が従う立場で嫁ぐ。足が不自由でも歩ける。進めば吉。",
                 "fortune": "吉",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "主役でなく補助なら進める。控えめに動く。"
         },
         {
@@ -4050,8 +4062,8 @@
                 "original": "眇能視，利幽人之貞。",
                 "meaning": "片目でも見ることはできる。静かに正しさを守る人には利がある。",
                 "fortune": "利貞",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "見える範囲が限られる。静かに守る。"
         },
         {
@@ -4062,8 +4074,8 @@
                 "original": "歸妹以須，反歸以娣。",
                 "meaning": "妹が待たされ、結局は従う立場で戻る。",
                 "fortune": "不本意",
-                "result": "NO",
-                "resultType": "no",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "条件が弱い。望む形では進みにくい。"
         },
         {
@@ -4076,7 +4088,7 @@
                 "fortune": "後に時あり",
                 "result": "待つ",
                 "resultType": "wait",
-                "memo": "今でなくてもよい。時期を待つ。"
+                "memo": "今でなくてもよい。時期を進める。"
         },
         {
                 "id": 54,
@@ -4086,8 +4098,8 @@
                 "original": "帝乙歸妹，其君之袂，不如其娣之袂良，月幾望，吉。",
                 "meaning": "帝乙が妹を嫁がせる。正妻の袖は従者ほど立派でないが、月は満ちようとして吉。",
                 "fortune": "吉",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "見た目より中身。控えめでも進めてよい。"
         },
         {
@@ -4110,8 +4122,8 @@
                 "original": "遇其配主，雖旬无咎，往有尚。",
                 "meaning": "ふさわしい相手に会う。十日ほどなら咎はなく、進めば評価される。",
                 "fortune": "有尚",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "相手や条件が合う。短期なら進めてよい。"
         },
         {
@@ -4124,7 +4136,7 @@
                 "fortune": "後吉",
                 "result": "待つ",
                 "resultType": "wait",
-                "memo": "見通しが悪い。誠実さが伝わるまで待つ。"
+                "memo": "見通しが悪い。誠実さが伝わるまで進める。"
         },
         {
                 "id": 55,
@@ -4134,8 +4146,8 @@
                 "original": "豐其沛，日中見沬。折其右肱，无咎。",
                 "meaning": "覆いがさらに厚く、昼に小星を見る。右腕を折るような不自由があるが咎はない。",
                 "fortune": "无咎",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "NO",
+                "resultType": "no",
                 "memo": "力を十分に使えない。無理に進めない。"
         },
         {
@@ -4194,8 +4206,8 @@
                 "original": "旅即次，懷其資，得童僕貞。",
                 "meaning": "旅先で宿に入り、資財を持ち、従者も得る。正しければよい。",
                 "fortune": "貞",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "最低限の拠点と助けがある。進めてよい。"
         },
         {
@@ -4206,8 +4218,8 @@
                 "original": "旅焚其次，喪其童僕，貞厲。",
                 "meaning": "旅先の宿を焼き、従者を失う。正しくしても危うい。",
                 "fortune": "厲",
-                "result": "NO",
-                "resultType": "no",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "拠点や助けを失いやすい。見送る。"
         },
         {
@@ -4218,9 +4230,9 @@
                 "original": "旅于處，得其資斧，我心不快。",
                 "meaning": "旅先で一時の居場所を得て、資財と道具もあるが、心は快くない。",
                 "fortune": "不快",
-                "result": "待つ",
-                "resultType": "wait",
-                "memo": "形は整うが気が進まない。急がない。"
+                "result": "YES寄り",
+                "resultType": "yeslean",
+                "memo": "形は整うが気が進まない。急がず進める。"
         },
         {
                 "id": 56,
@@ -4266,8 +4278,8 @@
                 "original": "巽在牀下，用史巫紛若，吉，无咎。",
                 "meaning": "寝台の下に入るほど低く従う。史官や巫のように細かく調べれば吉で咎はない。",
                 "fortune": "吉・无咎",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "丁寧に調べれば進めてよい。低姿勢がよい。"
         },
         {
@@ -4278,8 +4290,8 @@
                 "original": "頻巽，吝。",
                 "meaning": "何度もへりくだる。かえって悔いがある。",
                 "fortune": "吝",
-                "result": "NO",
-                "resultType": "no",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "気を使いすぎている。今日はやめる。"
         },
         {
@@ -4302,8 +4314,8 @@
                 "original": "貞吉悔亡，无不利。无初有終。先庚三日，後庚三日，吉。",
                 "meaning": "正しければ吉で悔いは消え、不利はない。初めは不十分でも終わりはある。前後をよく整えれば吉。",
                 "fortune": "吉",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "準備と後始末を整えれば進めてよい。"
         },
         {
@@ -4338,8 +4350,8 @@
                 "original": "孚兌，吉，悔亡。",
                 "meaning": "誠のある喜び。吉で悔いは消える。",
                 "fortune": "吉",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "信頼できる楽しさならよい。"
         },
         {
@@ -4362,8 +4374,8 @@
                 "original": "商兌未寧，介疾有喜。",
                 "meaning": "喜びをはかり迷って落ち着かない。間にある悪いものを断てば喜びがある。",
                 "fortune": "後に喜び",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "迷いの原因を切る。すぐ決めない。"
         },
         {
@@ -4374,8 +4386,8 @@
                 "original": "孚于剝，有厲。",
                 "meaning": "剥がすもの、損なうものを信じてしまう。危うい。",
                 "fortune": "厲",
-                "result": "NO",
-                "resultType": "no",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "信じる相手を間違えやすい。今日は避ける。"
         },
         {
@@ -4386,8 +4398,8 @@
                 "original": "引兌。",
                 "meaning": "喜びに引かれる。",
                 "fortune": "誘引",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "楽しさに引っ張られやすい。少し距離を置く。"
         },
         {
@@ -4446,8 +4458,8 @@
                 "original": "渙汗其大號，渙王居，无咎。",
                 "meaning": "大きな号令が汗のように出て、王の居所に広がる。咎はない。",
                 "fortune": "无咎",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "方針を明確に出すとよい。広く知らせる。"
         },
         {
@@ -4458,8 +4470,8 @@
                 "original": "渙其血，去逖出，无咎。",
                 "meaning": "血のような害を散らし、遠ざけて出る。咎はない。",
                 "fortune": "无咎",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "危ないものから離れるならよい。距離を取る。"
         },
         {
@@ -4494,8 +4506,8 @@
                 "original": "不節若，則嗟若，无咎。",
                 "meaning": "節度がなければ嘆くことになる。ただし咎はない。",
                 "fortune": "反省",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "やりすぎを見直す。まず制限を作る。"
         },
         {
@@ -4578,8 +4590,8 @@
                 "original": "月幾望，馬匹亡，无咎。",
                 "meaning": "月は満ちようとし、連れの馬を失うが咎はない。",
                 "fortune": "无咎",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "ほぼ整っているが、片方を手放す必要がある。"
         },
         {
@@ -4590,8 +4602,8 @@
                 "original": "有孚攣如，无咎。",
                 "meaning": "誠がしっかり結びついている。咎はない。",
                 "fortune": "无咎",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "信頼関係があるなら進めてよい。"
         },
         {
@@ -4626,8 +4638,8 @@
                 "original": "過其祖，遇其妣。不及其君，遇其臣，无咎。",
                 "meaning": "祖を過ぎて祖母に会う。君には及ばず臣に会う。咎はない。",
                 "fortune": "无咎",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "直接本丸へ行かず、手前の相手から整える。"
         },
         {
@@ -4650,8 +4662,8 @@
                 "original": "无咎，弗過遇之。往厲，必戒，勿用永貞。",
                 "meaning": "咎はない。行き過ぎずに出会う。進めば危うく、必ず戒める。長く固執しない。",
                 "fortune": "厲",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "小さく当たるだけにする。深追いしない。"
         },
         {
@@ -4710,8 +4722,8 @@
                 "original": "高宗伐鬼方，三年克之，小人勿用。",
                 "meaning": "高宗が鬼方を討ち、三年かけて勝つ。小人を用いてはならない。",
                 "fortune": "長期吉",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "NO寄り",
+                "resultType": "nolean",
                 "memo": "長期戦なら可能。軽い気持ちでは進めない。"
         },
         {
@@ -4734,8 +4746,8 @@
                 "original": "東鄰殺牛，不如西鄰之禴祭，實受其福。",
                 "meaning": "東隣の大きな牛の祭りより、西隣の簡素な祭りが福を受ける。",
                 "fortune": "福あり",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "派手さより実質。簡素で誠実ならよい。"
         },
         {
@@ -4772,7 +4784,7 @@
                 "fortune": "貞吉",
                 "result": "待つ",
                 "resultType": "wait",
-                "memo": "あえて止めるのがよい。急がない。"
+                "memo": "あえて止めるのがよい。急がず進める。"
         },
         {
                 "id": 64,
@@ -4794,8 +4806,8 @@
                 "original": "貞吉，悔亡。震用伐鬼方，三年有賞于大國。",
                 "meaning": "正しければ吉で悔いは消える。鬼方を討ち、三年後に大国から賞を受ける。",
                 "fortune": "長期吉",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "長期で取り組むなら進める。すぐの結果は求めない。"
         },
         {
@@ -4806,8 +4818,8 @@
                 "original": "貞吉，无悔。君子之光，有孚，吉。",
                 "meaning": "正しければ吉で悔いはない。君子の光があり、誠があって吉。",
                 "fortune": "吉",
-                "result": "YES",
-                "resultType": "yes",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "明るさと誠がある。進めてよい。"
         },
         {
@@ -4818,8 +4830,8 @@
                 "original": "有孚于飲酒，无咎。濡其首，有孚失是。",
                 "meaning": "誠をもって酒を飲むなら咎はない。だが頭まで濡れれば、誠があっても正しさを失う。",
                 "fortune": "无咎・過ぎれば失",
-                "result": "待つ",
-                "resultType": "wait",
+                "result": "YES寄り",
+                "resultType": "yeslean",
                 "memo": "楽しむのはよいが、やりすぎない。節度を残す。"
         }
 ];
